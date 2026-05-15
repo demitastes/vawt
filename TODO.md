@@ -17,13 +17,13 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 1.1: Data Transformation & Tournament Data
 *Blocker for all other work. Data pipelines working, distillery metadata in progress.*
 
-- [x] Task 1: Design JSON schemas for bracket, distilleries, votes
-- [x] Task 2: Create `/data/distilleries.json` with all distillery profiles (veteran-owned flags, bios, images)
-- [x] Task 3: Write `scripts/gen-bracket` Rust binary to parse BRACKET.md → JSON
-- [x] Task 4: Generate `/data/bracket-2026.json` with rounds, bouts, voting dates, participant IDs
-- [x] Task 5: Write `scripts/test-bracket.py` to validate bracket structure (31 bouts, feeder logic, dates)
-- 🚀 [ ] Task 6: Create CSV export for non-coder editing (`/data/bracket-2026.csv` from generated JSON)
-- 🚀 [ ] Task 7: Add CSV import back to JSON for round-trip editing (CSV → JSON idempotent pipeline)
+- [x] ✅ Task 1: Design JSON schemas for bracket, distilleries, votes
+- [x] ✅ Task 2: Create `/data/distilleries.json` with all distillery profiles (veteran-owned flags, bios, images)
+- [x] ✅ Task 3: Write `scripts/gen-bracket` Rust binary to parse BRACKET.md → JSON
+- [x] ✅ Task 4: Generate `/data/bracket-2026.json` with rounds, bouts, voting dates, participant IDs
+- [x] ✅ Task 5: Write `scripts/test-bracket.py` to validate bracket structure (31 bouts, feeder logic, dates)
+- [ ] 🚀 Task 6: Create CSV export for non-coder editing (`/data/bracket-2026.csv` from generated JSON)
+- [ ] 🚀 Task 7: Add CSV import back to JSON for round-trip editing (CSV → JSON idempotent pipeline)
 
 **Parallel work**: Tasks 1-5 complete. Tasks 6-7 optional (non-coders can edit JSON directly for now).
 
@@ -32,13 +32,13 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 1.2: Static Website
 *Can start after Phase 1.1 data available. HTML skeleton exists, not yet consuming JSON.*
 
-- 🚀 [ ] Task 8: Refactor `bracket.html` to load `/data/bracket-2026.json` dynamically
-- 🚫 [ ] Task 9: Render bracket structure (rounds → bouts) with distillery names and images
-- 🚫 [ ] Task 10: Add distillery profile modals (name, veteran-owned, founding date, awards, website link)
-- 🚫 [ ] Task 11: Add bout detail view (click bout → show participants, voting dates, vote counts)
-- 🚫 [ ] Task 12: Add search/filter by distillery name, round, or status
-- 🚫 [ ] Task 13: Add year/tournament selector (load different `/data/bracket-*.json` files)
-- 🚫 [ ] Task 14: Add "View Results" link in bout details (show active voting if round is live)
+- [ ] 🚀 Task 8: Refactor `bracket.html` to load `/data/bracket-2026.json` dynamically
+- [ ] 🚫 Task 9: Render bracket structure (rounds → bouts) with distillery names and images
+- [ ] 🚫 Task 10: Add distillery profile modals (name, veteran-owned, founding date, awards, website link)
+- [ ] 🚫 Task 11: Add bout detail view (click bout → show participants, voting dates, vote counts)
+- [ ] 🚫 Task 12: Add search/filter by distillery name, round, or status
+- [ ] 🚫 Task 13: Add year/tournament selector (load different `/data/bracket-*.json` files)
+- [ ] 🚫 Task 14: Add "View Results" link in bout details (show active voting if round is live)
 
 **Dependencies**: Task 4 (data) must be complete. Task 14 depends on Task 16 (voting system).
 **Parallel work**: Tasks 8-14 can run in parallel once Task 4 done.
@@ -50,12 +50,12 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 2.1: API Infrastructure
 *Blocker for 2.2, 2.3, 2.4. Basic API structure in place, needs endpoints.*
 
-- 🔄 [ ] Task 15: Set up Rust/axum API server (`api/` Cargo project) with middleware (CORS, JSON, error handling)
-- 🚫 [ ] Task 16: Implement read-only tournament endpoints (GET /tournaments/:year/bracket, /bouts, /rounds)
-- 🚀 [ ] Task 17: Implement user auth endpoints (POST /users/register, /login with JWT)
-- 🚫 [ ] Task 18: Implement bracket CRUD endpoints (POST/GET/PUT/DELETE /brackets/:bracketId)
-- 🚫 [ ] Task 19: Add bracket validation (enforce voting windows, validate bout/pick IDs)
-- 🚫 [ ] Task 20: Add bracket scoring logic (calculate score, GET /brackets/:bracketId/score)
+- [ ] 🔄 Task 15: Set up Rust/axum API server (`api/` Cargo project) with middleware (CORS, JSON, error handling)
+- [ ] 🚫 Task 16: Implement read-only tournament endpoints (GET /tournaments/:year/bracket, /bouts, /rounds)
+- [ ] 🚀 Task 17: Implement user auth endpoints (POST /users/register, /login with JWT)
+- [ ] 🚫 Task 18: Implement bracket CRUD endpoints (POST/GET/PUT/DELETE /brackets/:bracketId)
+- [ ] 🚫 Task 19: Add bracket validation (enforce voting windows, validate bout/pick IDs)
+- [ ] 🚫 Task 20: Add bracket scoring logic (calculate score, GET /brackets/:bracketId/score)
 
 **Dependencies**: Task 15 unblocks 16-20. Task 17 can start immediately.
 **Parallel work**: Tasks 16, 18-20 can parallelize once Task 15 done.
@@ -65,11 +65,11 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 2.2: Voting System
 *Depends on Phase 2.1. Feeds Phase 1.2 & 3.*
 
-- 🚀 [ ] Task 21: Design vote data schema (boutId, participantId, source, voter_id, timestamp, source_id)
-- 🚫 [ ] Task 22: Implement vote endpoints (POST /vote, GET /votes, GET /active-bout, GET /votes/results)
-- 🚫 [ ] Task 23: Add vote storage (SQLite or in-memory JSON cache)
-- 🚫 [ ] Task 24: Implement vote aggregation by source (website, discord, twitter, instagram, mastodon, bluesky, threads)
-- 🚫 [ ] Task 25: Add historical vote import (admin endpoint to bulk import past voting data from CSV)
+- [ ] 🚀 Task 21: Design vote data schema (boutId, participantId, source, voter_id, timestamp, source_id)
+- [ ] 🚫 Task 22: Implement vote endpoints (POST /vote, GET /votes, GET /active-bout, GET /votes/results)
+- [ ] 🚫 Task 23: Add vote storage (SQLite or in-memory JSON cache)
+- [ ] 🚫 Task 24: Implement vote aggregation by source (website, discord, twitter, instagram, mastodon, bluesky, threads)
+- [ ] 🚫 Task 25: Add historical vote import (admin endpoint to bulk import past voting data from CSV)
 
 **Dependencies**: Task 21 can start anytime (design only). Task 15 unblocks 22-25.
 **Parallel work**: Tasks 23-25 parallelize once Task 22 done.
@@ -79,12 +79,12 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 2.3: Discord Bot
 *Depends on Phase 2.1 voting endpoints.*
 
-- 🔄 [ ] Task 26: Set up Rust/poise Discord bot (`discord-bot/` Cargo project) with configuration
-- 🚫 [ ] Task 27: Implement `/round` command (show current round + voting dates)
-- 🚫 [ ] Task 28: Implement `/bout <boutId>` command (show participants + vote counts)
-- 🚫 [ ] Task 29: Implement `/vote <boutId> <participant>` command
-- 🚫 [ ] Task 30: Implement `/standings` and `/stats` commands
-- 🚫 [ ] Task 31: Add real-time vote updates (polling or webhook to display live vote counts)
+- [ ] 🔄 Task 26: Set up Rust/poise Discord bot (`discord-bot/` Cargo project) with configuration
+- [ ] 🚫 Task 27: Implement `/round` command (show current round + voting dates)
+- [ ] 🚫 Task 28: Implement `/bout <boutId>` command (show participants + vote counts)
+- [ ] 🚫 Task 29: Implement `/vote <boutId> <participant>` command
+- [ ] 🚫 Task 30: Implement `/standings` and `/stats` commands
+- [ ] 🚫 Task 31: Add real-time vote updates (polling or webhook to display live vote counts)
 
 **Dependencies**: Task 26 (setup) is independent. Tasks 27-31 blocked by Task 22.
 **Parallel work**: Tasks 27-31 can parallelize once Task 22 done.
@@ -96,10 +96,10 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 3.1: Website Login/Voting Landing Page
 *Depends on Phase 2.1.*
 
-- 🚀 [ ] Task 32: Add login/register UI to website (forms, JWT token storage in localStorage)
-- 🚫 [ ] Task 33: Build voting landing page (show active bout, participants, voting buttons)
-- 🚫 [ ] Task 34: Display vote count + source breakdown on landing page (website, discord, twitter, etc.)
-- 🚫 [ ] Task 35: Add "Create Bracket" button (authenticated users only, links to Task 40)
+- [ ] 🚀 Task 32: Add login/register UI to website (forms, JWT token storage in localStorage)
+- [ ] 🚫 Task 33: Build voting landing page (show active bout, participants, voting buttons)
+- [ ] 🚫 Task 34: Display vote count + source breakdown on landing page (website, discord, twitter, etc.)
+- [ ] 🚫 Task 35: Add "Create Bracket" button (authenticated users only, links to Task 40)
 
 **Dependencies**: Task 32 depends on Task 17 (auth endpoints). Tasks 33-35 depend on Task 22 (voting endpoints).
 **Parallel work**: Tasks 32-35 can parallelize once dependencies met.
@@ -109,12 +109,12 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 3.2: Interactive Bracket Picker
 *Depends on Phase 2.1.*
 
-- 🚫 [ ] Task 36: Build interactive bracket picker UI (show all rounds, click to pick winners)
-- 🚫 [ ] Task 37: Add visual feedback (highlight picked/unpicked bouts, show voting window status)
-- 🚫 [ ] Task 38: Save picks to API (PUT /brackets/:bracketId on each pick change)
-- 🚫 [ ] Task 39: Show user's current bracket score on page
-- 🚫 [ ] Task 40: Add "Your Brackets" page (list user's brackets, allow delete/view)
-- 🚫 [ ] Task 41: Add leaderboard view (show all users' scores, sortable, highlight current user)
+- [ ] 🚫 Task 36: Build interactive bracket picker UI (show all rounds, click to pick winners)
+- [ ] 🚫 Task 37: Add visual feedback (highlight picked/unpicked bouts, show voting window status)
+- [ ] 🚫 Task 38: Save picks to API (PUT /brackets/:bracketId on each pick change)
+- [ ] 🚫 Task 39: Show user's current bracket score on page
+- [ ] 🚫 Task 40: Add "Your Brackets" page (list user's brackets, allow delete/view)
+- [ ] 🚫 Task 41: Add leaderboard view (show all users' scores, sortable, highlight current user)
 
 **Dependencies**: Task 36 depends on Task 9 (rendered bracket). Tasks 36-41 depend on Task 18 (bracket CRUD).
 **Parallel work**: Tasks 36-41 can parallelize once bracket infrastructure done.
