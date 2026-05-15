@@ -1,387 +1,261 @@
-# TODO.md
+# TODO.md - Task Tracker
 
-Implementation plan for VAWT (Virginia Whiskey Tournament) website and Discord bot. Tasks are organized into phases with parallel workstreams where applicable.
+Implementation plan for VAWT (Virginia Whiskey Tournament) with sequential task numbering, completion status, and clear dependency chains for parallel development.
 
-## Shared API Layer Design
-
-Both the website UI and Discord bot will consume a single REST API that serves tournament data. This API is the contract between teams and ensures they work with consistent data.
-
-### Core API Endpoints
-
-**Tournament Data (Read-Only)**
-- `GET /api/tournaments` - List all tournaments (years)
-- `GET /api/tournaments/:year` - Get tournament structure and metadata for a specific year
-- `GET /api/tournaments/:year/bracket` - Get full bracket with all rounds and bouts
-- `GET /api/tournaments/:year/bouts` - List all bouts for a tournament
-- `GET /api/tournaments/:year/bouts/:boutId` - Get specific bout details (matchup, result, winner)
-- `GET /api/tournaments/:year/rounds` - Get all rounds with voting dates and deadlines
-- `GET /api/tournaments/:year/stats` - Get tournament statistics (past years)
-
-**User Brackets (Requires Authentication)**
-- `POST /api/users/register` - Create user account
-- `POST /api/users/login` - Authenticate user
-- `POST /api/brackets` - Create a new user bracket for a tournament
-- `GET /api/brackets/:bracketId` - Get user's bracket with their picks
-- `PUT /api/brackets/:bracketId` - Update user's picks for a bout (within voting window)
-- `DELETE /api/brackets/:bracketId` - Delete user's bracket
-- `GET /api/users/:userId/brackets` - List all brackets for a user
-
-**Tournament Voting (Public)**
-- `GET /api/tournaments/:year/bouts/:boutId/votes` - Get aggregate vote counts and sources (discord, twitter, instagram, website, etc.)
-- `GET /api/tournaments/:year/active-bout` - Get the currently active bout for voting
-- `POST /api/tournaments/:year/bouts/:boutId/vote` - Submit a vote for a bout (requires authentication, or anonymous depending on config)
-- `GET /api/tournaments/:year/votes/results` - Get full voting results for all bouts with source breakdown
-
-**Admin Operations (Future)**
-- `POST /api/tournaments/:year/bouts/:boutId/result` - Set winner for a bout (admin only)
-- `PUT /api/tournaments/:year/rounds/:roundId` - Update round metadata (admin only)
-- `POST /api/tournaments` - Create new tournament (admin only)
-
-**Social Sharing (Future)**
-- `GET /api/share/bout/:boutId/image` - Generate image of a bout
-- `GET /api/share/bracket/:bracketId/image` - Generate bracket image
-- `GET /api/share/bout/:boutId/link` - Generate shareable link for a bout
+**Key**: 
+- ✓ = Complete
+- [ ] = Not started
+- [~] = In progress
 
 ---
 
-## Phase 1: Foundation (Data + Static Site)
+## PHASE 1: Foundation (Data + Static Site)
 
-**Goal**: Build the data infrastructure and static website for bracket exploration. No user accounts or interactivity yet.
+### Phase 1.1: Data Transformation & Tournament Data (Blocker for all)
 
-### Phase 1.1: Data Transformation (Parallel)
-These tasks can start immediately and are blockers for all other phases.
+**Status**: ~50% complete. Data pipelines working, distillery metadata in progress.
 
-- [ ] **Task 1.1.1** - Design normalized JSON schemas for bracket and distillery data
-  - **Bracket schema**: tournaments, rounds, bouts, participant IDs (by distillery ID), voting dates, results
-  - **Distillery schema**: id, name, veteran-owned (boolean), founding-date, location, products, awards, website, image-url
-  - Both should support extensible metadata
-  - Create `data/schema.json` documenting both formats
-  - Assignee: Data-focused developer
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 1 | ✓ | Design JSON schemas for bracket, distilleries, votes | Backend | — |
+| 2 | ✓ | Create `/data/distilleries.json` with all distillery profiles (veteran-owned flags, bios, images) | Data | — |
+| 3 | ✓ | Write `scripts/gen-bracket` Rust binary to parse BRACKET.md → JSON | Backend | Task 1 |
+| 4 | ✓ | Generate `/data/bracket-2026.json` with rounds, bouts, voting dates, participant IDs | Backend | Task 3 |
+| 5 | ✓ | Write `scripts/test-bracket.py` to validate bracket structure (31 bouts, feeder logic, dates) | QA | Task 4 |
+| 6 | [ ] | Create CSV export for non-coder editing (`/data/bracket-2026.csv` from generated JSON) | Backend | Task 4 |
+| 7 | [ ] | Add CSV import back to JSON for round-trip editing (CSV → JSON idempotent pipeline) | Backend | Task 6 |
 
-- [ ] **Task 1.1.2** - Create distilleries metadata file
-  - Create `/data/distilleries.csv` with columns: ID, Name, VeteranOwned (bool), FoundingDate, Location, Products, Awards, Website, ImageURL
-  - Populate with all distilleries from BRACKET.md (KO Distilling, Ironclad, etc.)
-  - Mark KO Distilling and Mean Spirits Distilling as veteran-owned
-  - This file is the source for distillery profile information
-  - Assignee: Data-focused developer
-
-- [ ] **Task 1.1.3** - Write `scripts/markdown-to-csv.js`
-  - Parse `/data/BRACKET.md` and convert to CSV format
-  - Output to `/data/bracket-2026.csv` (for spreadsheet editing)
-  - CSV columns: Round, Bout, DistilleryID1, DistilleryID2, Winner, VotingDateStart, VotingDateEnd
-  - Use distillery IDs (from Task 1.1.2) instead of full names
-  - Include notes/metadata columns
-  - Assignee: Data-focused developer
-
-- [ ] **Task 1.1.4** - Write `scripts/csv-to-json.js`
-  - Parse bracket CSV and distilleries CSV, merge with schema, output JSON
-  - Output to `/data/bracket-2026.json` (normalized bracket with bout IDs, round dates)
-  - Output to `/data/distilleries-2026.json` (enriched with profile data)
-  - Make it idempotent (can re-run without issues)
-  - Assignee: Data-focused developer
-
-- [ ] **Task 1.1.5** - Create `scripts/build-data.sh`
-  - Orchestrates: markdown + distilleries → CSV → JSON pipeline
-  - One command to rebuild all data from source
-  - Add to `package.json` as `npm run build:data`
-
-### Phase 1.2: Static Website (Parallel to 1.1)
-Can start once Task 1.1.1 (JSON schema) is done. Uses generated JSON from Phase 1.1.
-
-- [ ] **Task 1.2.1** - Set up minimal Node.js dev environment
-  - Create `package.json` with dev dependencies (if needed for local server)
-  - Scripts: `npm start` (serve bracket.html), `npm run build:data`
-  - Assignee: Frontend developer
-
-- [ ] **Task 1.2.2** - Refactor `bracket.html` to consume JSON data
-  - Load `/data/bracket-2026.json` on page load
-  - Render bracket structure dynamically (rounds → bouts → participants)
-  - Styling should match existing color scheme (already in bracket.html)
-  - Display: participant names, bout numbers, winners (if available)
-  - Assignee: Frontend developer
-
-- [ ] **Task 1.2.3** - Add distillery profile pages
-  - Click a distillery name in any bout → open modal/page showing profile
-  - Display: name, veteran-owned status, founding date, location, products, awards, website link
-  - Load profile data from `/data/distilleries-2026.json`
-  - Link back to bracket from profile (show all bouts featuring this distillery)
-  - Assignee: Frontend developer
-
-- [ ] **Task 1.2.4** - Add bracket interactivity to static site
-  - Click a bout to see details (participants, voting dates, etc.)
-  - Filter/search by distillery name
-  - Show bout status (voting open/closed, results available)
-  - Timeline view showing past/current/upcoming rounds
-  - Assignee: Frontend developer
-
-- [ ] **Task 1.2.5** - Add tournament year selection UI
-  - Dropdown or tab to switch between years (read from `/data/bracket-*.json` files)
-  - Load and display data for selected year
-  - Assignee: Frontend developer
+**Parallel work**: Tasks 1-5 are complete. Tasks 6-7 are optional optimizations (non-coders can edit JSON directly for now).
 
 ---
 
-## Phase 2: Backend API + User Accounts (Parallel to Phase 1)
+### Phase 1.2: Static Website (Can start after Phase 1.1 data is available)
 
-**Goal**: Build the REST API and user authentication system that both website and Discord bot will use.
+**Status**: 10% complete. HTML skeleton exists, not yet consuming JSON.
 
-### Phase 2.1: API Infrastructure (Blocker for 2.2, 2.3)
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 8 | [ ] | Refactor `bracket.html` to load `/data/bracket-2026.json` dynamically | Frontend | Task 4 |
+| 9 | [ ] | Render bracket structure (rounds → bouts) with distillery names and images | Frontend | Task 8 |
+| 10 | [ ] | Add distillery profile modals (name, veteran-owned, founding date, awards, website link) | Frontend | Task 2, 9 |
+| 11 | [ ] | Add bout detail view (click bout → show participants, voting dates, vote counts) | Frontend | Task 9, Task 16 |
+| 12 | [ ] | Add search/filter by distillery name, round, or status | Frontend | Task 9 |
+| 13 | [ ] | Add year/tournament selector (load different `/data/bracket-*.json` files) | Frontend | Task 8 |
+| 14 | [ ] | Add "View Results" link in bout details (show active voting if round is live) | Frontend | Task 11, Task 16 |
 
-- [ ] **Task 2.1.1** - Set up Node.js/Express backend server
-  - Create `server/` directory with `index.js` (Express app)
-  - Set up port (3000 or configurable via env var)
-  - Add middleware: CORS, JSON parsing, error handling
-  - Add health check endpoint `GET /health`
-  - Assignee: Backend developer
-
-- [ ] **Task 2.1.2** - Implement read-only tournament data endpoints
-  - Implement all endpoints under "Tournament Data (Read-Only)" from API design above
-  - Load tournament data from `/data/bracket-*.json` files
-  - Cache in-memory (no DB needed yet) and reload on file change
-  - Assignee: Backend developer
-
-- [ ] **Task 2.1.3** - Implement user authentication
-  - User registration: `POST /api/users/register` (email, password)
-  - User login: `POST /api/users/login` (returns JWT token)
-  - Validate JWT on protected endpoints
-  - Store users in a simple JSON file or SQLite db (pick one)
-  - Assignee: Backend developer
-
-### Phase 2.2: User Bracket Management (Depends on 2.1)
-
-- [ ] **Task 2.2.1** - Implement user bracket CRUD endpoints
-  - `POST /api/brackets` - Create bracket
-  - `GET /api/brackets/:bracketId` - Get bracket with picks
-  - `PUT /api/brackets/:bracketId` - Update picks (only within voting window)
-  - `DELETE /api/brackets/:bracketId` - Delete bracket
-  - Assignee: Backend developer
-
-- [ ] **Task 2.2.2** - Add bracket validation
-  - Enforce voting windows (picks only allowed between round start/end dates)
-  - Validate bout IDs and pick validity
-  - Return clear error messages
-  - Assignee: Backend developer
-
-- [ ] **Task 2.2.3** - Add bracket scoring logic
-  - Calculate score based on correct picks
-  - `GET /api/brackets/:bracketId/score` endpoint
-  - Assignee: Backend developer
-
-### Phase 2.4: Voting System (Depends on 2.1)
-
-- [ ] **Task 2.4.1** - Design vote data schema
-  - Vote storage: boutId, participantId, source (website, discord, twitter, instagram, mastodon, bluesky, threads), source_id (tweet ID, discord msg ID, etc.), voter_id (optional, null for anonymous), timestamp
-  - Support flexible vote sources (new sources can be added without schema changes)
-  - Historical votes: import bulk voting data from past years
-  - Schema should track vote aggregates by source for transparency
-  - Assignee: Backend developer
-
-- [ ] **Task 2.4.2** - Implement vote endpoints
-  - `POST /api/tournaments/:year/bouts/:boutId/vote` - Submit vote (website users, Discord bot, or anonymous)
-  - `GET /api/tournaments/:year/bouts/:boutId/votes` - Get vote counts + breakdown by source
-  - `GET /api/tournaments/:year/active-bout` - Get current active bout (for landing page and Discord bot)
-  - `GET /api/tournaments/:year/votes/results` - Full results with source transparency
-  - Assignee: Backend developer
-
-- [ ] **Task 2.4.3** - Add vote storage
-  - Store votes in SQLite or JSON (depending on scale)
-  - Index by bout, source, timestamp for efficient queries
-  - Support vote aggregation (count votes per participant per bout, break down by source)
-  - Assignee: Backend developer
-
-### Phase 2.5: Discord Bot Integration (Depends on 2.1)
-
-- [ ] **Task 2.5.1** - Create Discord bot project structure
-  - Separate `discord-bot/` directory (or monorepo)
-  - Node.js with discord.js library
-  - Configuration: Discord token, API base URL
-  - Assignee: Discord bot developer
-
-- [ ] **Task 2.5.2** - Implement Discord commands
-  - `/round` - Get current round and voting dates
-  - `/bout <boutId>` - Get details on a specific bout
-  - `/standings <bracketId>` - Get user's bracket score/progress
-  - `/stats <year>` - Get tournament statistics
-  - `/help` - List all commands
-  - Assignee: Discord bot developer
-
-- [ ] **Task 2.5.3** - Add Discord voting
-  - `/vote <boutId> <participant>` - Cast a vote for a bout from Discord
-  - Integration with vote endpoints (Task 2.4.2)
-  - Assignee: Discord bot developer
-
-- [ ] **Task 2.5.4** - Add real-time updates to Discord bot (Optional)
-  - Polling or webhook: when a bout result is posted, announce in Discord channel
-  - Assignee: Discord bot developer
+**Parallel work**: Tasks 8-14 can run in parallel once Task 4 is done. Task 14 depends on Task 16 (voting system).
 
 ---
 
-## Phase 3: Website User Interface + Bracket Creation
+## PHASE 2: Backend API + Voting System
 
-**Goal**: Add user accounts and bracket creation to the website. Users can make predictions and track their picks.
+### Phase 2.1: API Infrastructure (Blocker for 2.2, 2.3, 2.4)
 
-### Phase 3.1: Website Authentication UI (Depends on Phase 2.1)
+**Status**: 30% complete. Basic API structure in place, needs endpoints.
 
-- [ ] **Task 3.1.1** - Add login/register forms to website
-  - Modal or separate login page
-  - Call `POST /api/users/register` and `POST /api/users/login`
-  - Store JWT token in localStorage
-  - Assignee: Frontend developer
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 15 | [~] | Set up Rust/axum API server (`api/` Cargo project) with middleware (CORS, JSON, error handling) | Backend | — |
+| 16 | [ ] | Implement read-only tournament endpoints (GET /tournaments/:year/bracket, /bouts, /rounds) | Backend | Task 15, Task 4 |
+| 17 | [ ] | Implement user auth endpoints (POST /users/register, /login with JWT) | Backend | Task 15 |
+| 18 | [ ] | Implement bracket CRUD endpoints (POST/GET/PUT/DELETE /brackets/:bracketId) | Backend | Task 15, Task 17 |
+| 19 | [ ] | Add bracket validation (enforce voting windows, validate bout/pick IDs) | Backend | Task 18 |
+| 20 | [ ] | Add bracket scoring logic (calculate score, GET /brackets/:bracketId/score) | Backend | Task 18 |
 
-- [ ] **Task 3.1.2** - Add authentication state management to website
-  - Track logged-in user state
-  - Show "Login" button when not authenticated
-  - Show "Logout" + "My Brackets" when authenticated
-  - Assignee: Frontend developer
-
-### Phase 3.2: Landing Page & Voting UI (Depends on 2.4)
-
-- [ ] **Task 3.2.1** - Build voting landing page
-  - Show current/active bout prominently
-  - Display both participants with voting buttons
-  - Show vote counts + source breakdown (website votes, Discord votes, Twitter votes, etc.)
-  - Works on desktop and mobile
-  - Anonymous voting allowed (no login required)
-  - Redirect logged-in users to their bracket after voting
-  - Assignee: Frontend developer
-
-- [ ] **Task 3.2.2** - Add voting results view
-  - Page/modal to see voting results for all bouts
-  - Breakdown by source (Discord, Twitter, Instagram, Mastodon, Bluesky, Threads, Website)
-  - Filter by round, sort by vote count
-  - Show historical voting data if available
-  - Assignee: Frontend developer
-
-### Phase 3.3: Bracket Creation & Prediction UI (Depends on 3.1.1)
-
-- [ ] **Task 3.3.1** - Add "Create Bracket" flow
-  - Button to start new bracket for selected tournament/year
-  - Call `POST /api/brackets`
-  - Redirect to bracket-picking view
-  - Assignee: Frontend developer
-
-- [ ] **Task 3.3.2** - Build interactive bracket picker
-  - Display bracket rounds
-  - User can click bouts to make picks (only within voting window)
-  - Visual feedback for picks made vs. unpicked bouts
-  - Call `PUT /api/brackets/:bracketId` to save picks
-  - Assignee: Frontend developer
-
-- [ ] **Task 3.3.3** - Add bracket leaderboard view
-  - Show all users' scores for a tournament
-  - Highlight logged-in user
-  - Sortable by score, name, date created
-  - Assignee: Frontend developer
+**Parallel work**: Task 15 unblocks 16-20. Task 17 can start immediately (doesn't depend on other tasks). Tasks 16, 18-20 can parallelize once 15 is done.
 
 ---
 
-## Phase 4: Social Sharing & Image Generation (Future)
+### Phase 2.2: Voting System (Depends on Phase 2.1, feeds Phase 1.2 & 3)
 
-**Goal**: Allow users to share their brackets and specific bouts on social media with auto-generated images.
+**Status**: 0% complete. Voting schema designed, endpoints not yet implemented.
 
-- [ ] **Task 4.1** - Implement image generation for bouts
-  - `GET /api/share/bout/:boutId/image` returns image (PNG/JPG)
-  - Formats: vertical (Instagram story), square (post), horizontal
-  - Include: participant names, voting dates, results
-  - Library: consider `puppeteer` or `sharp` + canvas
-  - Assignee: Backend developer
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 21 | [ ] | Design vote data schema (boutId, participantId, source, voter_id, timestamp, source_id) | Backend | Task 4 |
+| 22 | [ ] | Implement vote endpoints (POST /vote, GET /votes, GET /active-bout, GET /votes/results) | Backend | Task 15, Task 21 |
+| 23 | [ ] | Add vote storage (SQLite or in-memory JSON cache) | Backend | Task 22 |
+| 24 | [ ] | Implement vote aggregation by source (website, discord, twitter, instagram, mastodon, bluesky, threads) | Backend | Task 23 |
+| 25 | [ ] | Add historical vote import (admin endpoint to bulk import past voting data from CSV) | Backend | Task 23 |
 
-- [ ] **Task 4.2** - Implement image generation for brackets
-  - `GET /api/share/bracket/:bracketId/image` returns full bracket image
-  - Formats: vertical, square (series of), horizontal
-  - Assignee: Backend developer
-
-- [ ] **Task 4.3** - Add share buttons to website
-  - "Share Bout" → generates image + opens Twitter/Instagram composer
-  - "Share Bracket" → generates image + link
-  - Assignee: Frontend developer
+**Parallel work**: Task 21 (design) can start anytime. Task 22 can run in parallel with other Phase 2.1 work. Tasks 23-25 parallelize once 22 is done.
 
 ---
 
-## Phase 5: Admin Interface, Vote Import, & Real-Time Updates (Future)
+### Phase 2.3: Discord Bot (Depends on Phase 2.1 voting endpoints)
 
-- [ ] **Task 5.1** - Build vote import infrastructure
-  - Admin endpoint: `POST /api/admin/votes/import` - bulk import votes from external sources
-  - Support CSV format: boutId, participantId, source, count, timestamp
-  - Flexible source field (discord, twitter, instagram, mastodon, bluesky, threads, etc.)
-  - Idempotent: importing the same data twice doesn't create duplicates
-  - Assignee: Backend developer
+**Status**: 5% complete. Project structure created, commands not yet implemented.
 
-- [ ] **Task 5.2** - Implement historical voting data import
-  - Load past years' voting data (if available)
-  - Merge with current year's votes
-  - Backfill `/data/votes-*.json` or database with historical data
-  - Assignee: Backend developer
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 26 | [~] | Set up Rust/poise Discord bot (`discord-bot/` Cargo project) with configuration | Discord Dev | — |
+| 27 | [ ] | Implement `/round` command (show current round + voting dates) | Discord Dev | Task 16, Task 22 |
+| 28 | [ ] | Implement `/bout <boutId>` command (show participants + vote counts) | Discord Dev | Task 16, Task 24 |
+| 29 | [ ] | Implement `/vote <boutId> <participant>` command | Discord Dev | Task 22 |
+| 30 | [ ] | Implement `/standings` and `/stats` commands | Discord Dev | Task 20 |
+| 31 | [ ] | Add real-time vote updates (polling or webhook to display live vote counts) | Discord Dev | Task 24 |
 
-- [ ] **Task 5.3** - Build vote source tracking & reconciliation
-  - Admin panel: view votes by source with timestamps
-  - Manual vote adjustment if needed (e.g., remove spam, correct double-counted votes)
-  - Export voting data for analysis
-  - Assignee: Backend developer
-
-- [ ] **Task 5.4** - Implement real-time updates
-  - WebSocket or Server-Sent Events (SSE) for live bout results and vote counts
-  - Notify users when new votes arrive
-  - Update leaderboards and vote displays in real-time
-  - Assignee: Backend developer
-
-- [ ] **Task 5.5** - Build admin dashboard for tournament organizers (Optional)
-  - Web UI for editing `/data/bracket-*.json` (bout winners, dates, participant swaps)
-  - Vote import interface
-  - Vote reconciliation/adjustment tools
-  - Currently: organizers edit JSON files directly and submit votes via admin endpoint
-  - This UI can be added later if workflow becomes cumbersome
-  - Assignee: Frontend developer + Backend developer
+**Parallel work**: Task 26 (setup) is independent. Tasks 27-31 can parallelize once voting endpoints (Task 22) are ready.
 
 ---
 
-## Implementation Notes
+## PHASE 3: Website User Interface + Voting
 
-### Data Ownership & Organizer Workflow
-- `/data/` directory is the source of truth for tournament structure and results
-- Organizers edit JSON data files directly (fastest path: no UI needed initially)
-- Users' bracket data stored separately (JSON file or database)
-- Keep these concerns separate: tournament structure ≠ user predictions
-- Admin UI can be added in Phase 5 if editing JSON becomes cumbersome
+### Phase 3.1: Website Login/Voting Landing Page (Depends on Phase 2.1)
 
-### Parallel Development Strategy
-- **Data team** (1 person): Handles Phase 1.1 data transformation (distilleries, bracket schema)
-- **Frontend team** (1-2 people): Handles Phase 1.2 static site, then Phase 3 voting/landing page and bracket UI
-- **Backend team** (1-2 people): Handles Phase 2 API infrastructure, voting system (Phase 2.4), Discord bot (Phase 2.5), vote import (Phase 5)
-- **Voting and API can proceed in parallel** with bracket infrastructure (Phase 2.1-2.3 unlocks voting)
+**Status**: 0% complete.
 
-### Technology Choices (Recommended)
-- **Frontend**: Vanilla JS or lightweight framework (Vue/Svelte) if needed
-- **Backend**: Node.js + Express (lightweight, team-familiar for JS devs)
-- **Data storage**: JSON files for tournament data (easy for non-coders), SQLite for user/vote data (scales better than JSON)
-- **Vote storage**: SQLite (or JSON initially, migrate to SQLite when vote volume grows)
-- **Auth**: JWT tokens (stateless, simple)
-- **Discord Bot**: discord.js library
-- **Image generation**: Puppeteer (headless browser) or Sharp + Canvas
-- **Real-time**: Server-Sent Events (SSE) for simplicity, or WebSocket if needed
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 32 | [ ] | Add login/register UI to website (forms, JWT token storage in localStorage) | Frontend | Task 8, Task 17 |
+| 33 | [ ] | Build voting landing page (show active bout, participants, voting buttons) | Frontend | Task 8, Task 14, Task 22 |
+| 34 | [ ] | Display vote count + source breakdown on landing page (website, discord, twitter, etc.) | Frontend | Task 33, Task 24 |
+| 35 | [ ] | Add "Create Bracket" button (authenticated users only, links to Task 40) | Frontend | Task 32, Task 18 |
 
-### Testing Requirements
-Once Phase 1.1 is complete:
-- Unit tests for data transformation scripts (`npm test`)
-- Backend: API endpoint tests (Phase 2.1 onwards)
-- Frontend: Visual regression tests for bracket rendering (Phase 1.2)
-- Discord bot: Command tests (Phase 2.3)
+**Parallel work**: Tasks 32-35 can parallelize once dependencies are met.
 
-### Deployment Strategy
-- **Phase 1**: Static site only, deploy to GitHub Pages or Netlify (no backend)
-- **Phase 2 onwards**: Node.js backend needed. Deploy to Heroku, Fly.io, or similar
-- **Discord bot**: Deploy as separate process (Heroku, EC2, or local with PM2)
+---
+
+### Phase 3.2: Interactive Bracket Picker (Depends on Phase 2.1)
+
+**Status**: 0% complete.
+
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 36 | [ ] | Build interactive bracket picker UI (show all rounds, click to pick winners) | Frontend | Task 9, Task 32 |
+| 37 | [ ] | Add visual feedback (highlight picked/unpicked bouts, show voting window status) | Frontend | Task 36 |
+| 38 | [ ] | Save picks to API (PUT /brackets/:bracketId on each pick change) | Frontend | Task 36, Task 18 |
+| 39 | [ ] | Show user's current bracket score on page | Frontend | Task 38, Task 20 |
+| 40 | [ ] | Add "Your Brackets" page (list user's brackets, allow delete/view) | Frontend | Task 32, Task 18 |
+| 41 | [ ] | Add leaderboard view (show all users' scores, sortable, highlight current user) | Frontend | Task 32, Task 20 |
+
+**Parallel work**: Tasks 36-41 can parallelize once bracket infrastructure (Task 18) is complete.
+
+---
+
+## PHASE 4: Social Sharing & Image Generation
+
+**Status**: 0% complete. Lower priority, defer until Phase 3 is done.
+
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 42 | [ ] | Implement image generation for bouts (GET /api/share/bout/:boutId/image) | Backend | Task 16 |
+| 43 | [ ] | Support image formats (vertical/Instagram, square/post, horizontal/web) | Backend | Task 42 |
+| 44 | [ ] | Implement bracket image generation (GET /api/share/bracket/:bracketId/image) | Backend | Task 18, Task 42 |
+| 45 | [ ] | Add share buttons to website (Twitter, Instagram, Facebook composers) | Frontend | Task 33, Task 42, Task 44 |
+
+**Parallel work**: Image generation (42-44) can parallelize; share buttons (45) depend on image endpoints.
+
+---
+
+## PHASE 5: Admin & Advanced Features
+
+**Status**: 0% complete. Lowest priority.
+
+| Task | Status | Description | Assignee | Depends On |
+|------|--------|-------------|----------|-----------|
+| 46 | [ ] | Build vote import pipeline (bulk CSV import from external sources) | Backend | Task 23 |
+| 47 | [ ] | Add vote reconciliation tools (admin endpoint to adjust/remove votes) | Backend | Task 46 |
+| 48 | [ ] | Build admin dashboard (web UI for managing bracket data, votes, results) | Frontend | Task 32, Task 47 |
+| 49 | [ ] | Implement real-time updates via WebSocket or SSE | Backend | Task 22 |
+| 50 | [ ] | Add bout result submission (admin endpoint to set winners, notify users) | Backend | Task 16 |
+
+**Parallel work**: Voting admin (46-47) independent from UI (48); real-time (49) depends on vote system.
+
+---
+
+## DEPENDENCY GRAPH (For Parallel Execution)
+
+```
+INDEPENDENT (No blockers):
+├─ Task 1: Design schemas
+├─ Task 2: Distillery metadata
+├─ Task 8: Refactor HTML
+├─ Task 15: API setup
+├─ Task 17: User auth
+├─ Task 26: Discord bot setup
+├─ Task 21: Vote schema design
+└─ Task 32: Login UI
+
+BLOCKER CHAINS (Critical path):
+├─ Phase 1: Tasks 1 → 3 → 4 → 5 (data pipeline complete)
+│  ├─ Task 4 unblocks: 2 (distilleries), 6-7 (CSV), 8-14 (static site), 16, 23, 42-44
+│  └─ Task 16 unblocks: 11, 22, 27-28, 33-34
+│
+├─ Phase 2: Task 15 → 18 → 20 (bracket CRUD + scoring)
+│  └─ Task 18 unblocks: 35-41 (bracket UI)
+│
+├─ Phase 2: Task 15 → 22 (voting endpoints)
+│  ├─ Task 22 unblocks: 24, 27, 29, 34, 49
+│  └─ Task 24 unblocks: 28, 31, 34
+│
+└─ Phase 3: Task 32 + 18 → 36-41 (interactive bracket)
+```
+
+---
+
+## CRITICAL DEPENDENCIES (What blocks what)
+
+| Blocker | Blocks | Impact |
+|---------|--------|--------|
+| Task 4 (bracket data) | Tasks 8-14, 16, 23, 42-44 | Everything depends on generated JSON |
+| Task 15 (API server) | Tasks 16-25, 27-31, 33-41 | Core backend; unblocks all API work |
+| Task 17 (user auth) | Tasks 32, 35, 40-41 | Required for account features |
+| Task 18 (bracket CRUD) | Tasks 19-20, 35-41 | Required for picking/scoring |
+| Task 22 (vote endpoints) | Tasks 24, 27-31, 33-34, 49 | Required for voting features |
+
+---
+
+## SUGGESTED PARALLEL WORK ALLOCATION
+
+### Backend Team (2 people)
+1. **Person A**: Tasks 1-7 (data pipeline) + Task 15 (API setup) + Task 17 (auth)
+2. **Person B**: Task 16 (tournament endpoints) + Task 18-20 (bracket CRUD) + Task 21-25 (voting)
+   - Once Tasks 15-20 done, help Person A with Tasks 26-31 (Discord bot)
+
+### Frontend Team (1-2 people)
+1. **Person A**: Tasks 8-14 (static site) — can start once Task 4 done
+2. **Person B**: Tasks 32-41 (voting UI + bracket picker) — can start once Tasks 17-18-22 done
+
+### Timeline
+- **Week 1**: Data pipeline (1-7), API setup (15), User auth (17)
+- **Week 2**: Tournament endpoints (16), Bracket CRUD (18-20), Voting design (21)
+- **Week 3**: Voting endpoints (22-25), Static site (8-14), Discord bot setup (26)
+- **Week 4**: Discord commands (27-31), Website voting UI (32-34)
+- **Week 5**: Interactive bracket (36-41), Real-time updates (49)
 
 ---
 
 ## Success Criteria by Phase
 
-**Phase 1**: Non-technical users can edit BRACKET.md or CSV, and the website automatically updates to show the latest bracket structure. Distillery profiles visible to viewers.
+**Phase 1 Complete**: Non-coders can edit `/data/bracket-2026.json` (or CSV), website displays tournament bracket with distillery profiles.
 
-**Phase 2**: Website and Discord bot can both query live tournament data via the API. Voting system operational: votes can be cast from website, Discord, and imported from external sources. Vote results show source transparency.
+**Phase 2 Complete**: Website and Discord bot query live data via REST API. Voting system operational (website votes, Discord votes, vote import). Vote results show source breakdown.
 
-**Phase 3**: Users can see active bouts and vote on the website (anonymous or logged-in). Voting results visible with source breakdown. Users can create accounts, make bracket predictions, and compete on leaderboards.
+**Phase 3 Complete**: Users create accounts, make bracket picks, track scores. Leaderboard displays all users' rankings.
 
-**Phase 4**: Users can generate and share bracket images on social media.
+**Phase 4 Complete**: Users generate and share bracket images on social media.
 
-**Phase 5**: Voting data can be imported from multiple sources in bulk. Organizers can manage voting data and make adjustments. Real-time vote updates visible to users.
+**Phase 5 Complete**: Organizers manage voting data, reconcile votes, post results. Real-time updates visible to users.
+
+---
+
+## Task Status Summary
+
+- **Complete (✓)**: 5 tasks (data pipeline)
+- **In Progress ([~])**: 2 tasks (API setup, Discord bot structure)
+- **Not Started ([ ])**: 43 tasks
+- **Optional**: 2 tasks (CSV round-trip)
+
+**Next Priorities** (in order):
+1. Complete API server setup (Task 15)
+2. Implement tournament endpoints (Task 16)
+3. Implement user auth (Task 17)
+4. Implement bracket CRUD (Task 18)
+5. Start voting system (Task 22)
+6. Refactor static site to use JSON (Task 8)
+
+---
+
+**Last Updated**: May 15, 2026
+**Workflow**: Tasks renumbered sequentially (1-50); dependencies clarified; parallel workstreams identified.
