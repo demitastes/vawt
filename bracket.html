@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAWT Bracket</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .side {
+      flex: 1;
+    }
+    .left-side {
+      text-align: right;
+    }
+    .right-side {
+      text-align: left;
+    }
+    .round {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+    .round-label {
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    .matchup {
+      border: 1px solid #333;
+      background: white;
+      margin: 8px 0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .competitor {
+      padding: 6px 10px;
+      font-size: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+    .competitor:last-child {
+      border-bottom: none;
+    }
+    .final-round {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    .final-matchup {
+      border: 2px solid #333;
+      background: white;
+      border-radius: 3px;
+      overflow: hidden;
+      min-width: 180px;
+    }
+    .champion {
+      border: 3px solid #333;
+      background: #ffd700;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      border-radius: 3px;
+      min-width: 180px;
+    }
+    .left-r1 { display: flex; flex-direction: column; gap: 8px; }
+    .left-r2 { display: flex; flex-direction: column; gap: 40px; margin-top: -20px; }
+    .left-r3 { display: flex; flex-direction: column; gap: 100px; margin-top: -40px; }
+    .left-r4 { display: flex; flex-direction: column; gap: 215px; margin-top: -60px; }
+  </style>
+</head>
+<body>
+  <h1>Virginia Aged Whiskey Tournament</h1>
+  
+  <div class="container">
+    <!-- LEFT SIDE -->
+    <div class="side left-side">
+      <!-- Left R1 -->
+      <div class="round">
+        <div class="round-label">Round 1</div>
+        <div class="left-r1">
+          <div class="matchup">
+            <div class="competitor">Open Road</div>
+            <div class="competitor">Brady's</div>
+            <div class="competitor">Old House</div>
+            <div class="competitor">3 Crosses</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">New Realm</div>
+            <div class="competitor">Lost Whiskey Co</div>
+            <div class="competitor">Highlands</div>
+            <div class="competitor">Springfield</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">KO Distilling</div>
+            <div class="competitor">Mean Spirits</div>
+            <div class="competitor">Reservoir</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Deep Creek</div>
+            <div class="competitor">Five Mile Mountain</div>
+            <div class="competitor">Ironclad</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">River Hill</div>
+            <div class="competitor">Cape Charles</div>
+            <div class="competitor">Virginia Distillery Co</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Silverback</div>
+            <div class="competitor">River City</div>
+            <div class="competitor">Spirit Lab</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Reverend Spirits</div>
+            <div class="competitor">Bon Durant Brothers</div>
+            <div class="competitor">Twin Creeks</div>
+            <div class="competitor">GW's Grist Mill</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Ragged Branch</div>
+            <div class="competitor">Devil's Backbone</div>
+            <div class="competitor">Tarnished Truth</div>
+            <div class="competitor">Blue Sky</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left R2 -->
+      <div class="round">
+        <div class="round-label">Round 2</div>
+        <div class="left-r2">
+          <div class="matchup">
+            <div class="competitor">R1B1 Winner</div>
+            <div class="competitor">R1B3 Winner</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">R1B2 Winner</div>
+            <div class="competitor">R1B4 Winner</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">R1B5 Winner</div>
+            <div class="competitor">R1B7 Winner</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">R1B6 Winner</div>
+            <div class="competitor">R1B8 Winner</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left R3 -->
+      <div class="round">
+        <div class="round-label">Round 3</div>
+        <div class="left-r3">
+          <div class="matchup">
+            <div class="competitor">R2B1 Winner</div>
+            <div class="competitor">R2B3 Winner</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">R2B2 Winner</div>
+            <div class="competitor">R2B4 Winner</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Left R4 -->
+      <div class="round">
+        <div class="round-label">Round 4</div>
+        <div class="left-r4">
+          <div class="matchup">
+            <div class="competitor">R3B1 Winner</div>
+            <div class="competitor">R3B2 Winner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="final-round">
+      <div style="text-align: center; font-weight: bold;">FINAL</div>
+      <div class="final-matchup">
+        <div class="competitor">Left Champion</div>
+        <div class="competitor">Right Champion</div>
+      </div>
+      <div class="champion">🏆 CHAMPION 🏆</div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="side right-side">
+      <!-- Right R1 -->
+      <div class="round">
+        <div class="round-label">Round 1</div>
+        <div class="left-r1">
+          <div class="matchup">
+            <div class="competitor">Blue Shepherd</div>
+            <div class="competitor">Caiseal</div>
+            <div class="competitor">Bold Rock</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Three Wives</div>
+            <div class="competitor">Davis Valley</div>
+            <div class="competitor">Climax</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Filibuster</div>
+            <div class="competitor">A. Smith Bowman</div>
+            <div class="competitor">Mt Defiance</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Catoctin Creek</div>
+            <div class="competitor">Virginia Foothills</div>
+            <div class="competitor">Copper Fox</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Appalachian Heritage</div>
+            <div class="competitor">Sandy River</div>
+            <div class="competitor">Belmont Farm</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Creek Bottom</div>
+            <div class="competitor">Cool Springs</div>
+            <div class="competitor">Trial & Error</div>
+            <div class="competitor">J.H. Bards</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Murlarkey</div>
+            <div class="competitor">Three Notches</div>
+            <div class="competitor">Lincoln Ridge</div>
+            <div class="competitor">Hilltop</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">Sleepy Fox</div>
+            <div class="competitor">Bell Isle</div>
+            <div class="competitor">Franklin County</div>
+            <div class="competitor">Axe Handle</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right R2 -->
+      <div class="round">
+        <div class="round-label">Round 2</div>
+        <div class="left-r2">
+          <div class="matchup">
+            <div class="competitor">R1B9 Winner</div>
+            <div class="competitor">R1B11 Winner</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">R1B10 Winner</div>
+            <div class="competitor">R1B12 Winner</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">R1B13 Winner</div>
+            <div class="competitor">R1B15 Winner</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">R1B14 Winner</div>
+            <div class="competitor">R1B16 Winner</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right R3 -->
+      <div class="round">
+        <div class="round-label">Round 3</div>
+        <div class="left-r3">
+          <div class="matchup">
+            <div class="competitor">R2B5 Winner</div>
+            <div class="competitor">R2B7 Winner</div>
+          </div>
+          <div class="matchup">
+            <div class="competitor">R2B6 Winner</div>
+            <div class="competitor">R2B8 Winner</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right R4 -->
+      <div class="round">
+        <div class="round-label">Round 4</div>
+        <div class="left-r4">
+          <div class="matchup">
+            <div class="competitor">R3B3 Winner</div>
+            <div class="competitor">R3B4 Winner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
