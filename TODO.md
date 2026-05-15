@@ -52,7 +52,7 @@ Sequential task list with completion tracking and parallel development guidance.
 
 - [x] ✅ Task 15: Set up Rust/axum API server (`api/` Cargo project) with middleware (CORS, JSON, error handling)
 - [x] ✅ Task 16: Implement read-only tournament endpoints (GET /tournaments/:year/bracket, /bouts, /rounds)
-- [ ] 🚀 Task 17: Implement user auth endpoints (POST /users/register, /login with JWT)
+- [x] ✅ Task 17: Implement user auth endpoints (POST /users/register, /login with JWT)
 - [ ] 🚫 Task 18: Implement bracket CRUD endpoints (POST/GET/PUT/DELETE /brackets/:bracketId)
 - [ ] 🚫 Task 19: Add bracket validation (enforce voting windows, validate bout/pick IDs)
 - [ ] 🚫 Task 20: Add bracket scoring logic (calculate score, GET /brackets/:bracketId/score)
@@ -65,7 +65,7 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 2.2: Voting System
 *Depends on Phase 2.1. Feeds Phase 1.2 & 3.*
 
-- [ ] 🚀 Task 21: Design vote data schema (boutId, participantId, source, voter_id, timestamp, source_id)
+- [x] ✅ Task 21: Design vote data schema (boutId, participantId, source, voter_id, timestamp, source_id)
 - [ ] 🚫 Task 22: Implement vote endpoints (POST /vote, GET /votes, GET /active-bout, GET /votes/results)
 - [ ] 🚫 Task 23: Add vote storage (SQLite or in-memory JSON cache)
 - [ ] 🚫 Task 24: Implement vote aggregation by source (website, discord, twitter, instagram, mastodon, bluesky, threads)
@@ -165,12 +165,12 @@ Sequential task list with completion tracking and parallel development guidance.
 
 ## Next Priorities (In Order)
 
-1. 🔄 Task 15: Complete API server setup (in progress)
-2. 🚀 Task 16: Implement tournament endpoints (ready to start)
-3. 🚀 Task 17: Implement user auth (ready to start)
-4. 🚫 Task 18: Implement bracket CRUD (blocked by Task 17)
-5. 🚀 Task 21: Design vote schema (ready to start)
-6. 🚀 Task 22: Implement voting endpoints (ready to start after Task 15)
+1. ✅ Task 15: Complete API server setup (done)
+2. ✅ Task 16: Implement tournament endpoints (done)
+3. ✅ Task 17: Implement user auth (done)
+4. 🚀 Task 18: Implement bracket CRUD (ready to start, depends on Task 17 ✅)
+5. ✅ Task 21: Design vote schema (done)
+6. 🚀 Task 22: Implement voting endpoints (ready to start, depends on Task 15 ✅)
 7. 🚀 Task 8: Refactor static site to use JSON (ready to start, Task 4 done)
 
 ---
