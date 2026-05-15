@@ -5,299 +5,462 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VAWT Bracket</title>
   <style>
+    :root {
+      --bg: #f6f1e8;
+      --ink: #201a17;
+      --muted: #6e625b;
+      --line: #a66c3b;
+      --panel: #fffdf9;
+      --panel-strong: #fff6df;
+      --accent: #8e431d;
+      --accent-soft: #f4dfc3;
+      --border: #d7b992;
+      --shadow: 0 12px 30px rgba(63, 36, 18, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f5f5f5;
+      overflow-x: hidden;
     }
-    .container {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-bottom: 40px;
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 253, 249, 0.85), rgba(246, 241, 232, 0.95)),
+        radial-gradient(circle at top left, rgba(166, 108, 59, 0.18), transparent 32rem);
+      font-family: Arial, Helvetica, sans-serif;
     }
-    .side {
-      flex: 1;
+
+    header {
+      position: relative;
+      width: 100vw;
+      padding: 28px 32px 10px;
+      text-align: center;
     }
-    .left-side {
+
+    h1 {
+      max-width: calc(100vw - 64px);
+      margin: 0;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
+
+    .bracket-shell {
+      padding: 22px 30px 40px;
+      overflow-x: auto;
+    }
+
+    .bracket-stage {
+      position: relative;
+      width: 1556px;
+      margin: 0 auto;
+    }
+
+    .bracket {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 148px) 180px repeat(4, 148px);
+      gap: 24px;
+      min-height: 1260px;
+      padding: 10px 0;
+      z-index: 1;
+    }
+
+    .connectors {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .connectors path {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.68;
+    }
+
+    .round-column {
+      position: relative;
+      min-height: 1200px;
+    }
+
+    .round-column[data-side="left"] {
       text-align: right;
     }
-    .right-side {
+
+    .round-column[data-side="right"] {
       text-align: left;
     }
-    .round {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      margin-bottom: 20px;
+
+    .bout {
+      position: absolute;
+      width: 100%;
+      min-width: 0;
     }
-    .round-label {
-      font-weight: bold;
-      margin-bottom: 15px;
-      font-size: 14px;
+
+    .bout-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-transform: uppercase;
     }
+
+    .bout-date {
+      margin: 2px 0 6px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
     .matchup {
-      border: 1px solid #333;
-      background: white;
-      margin: 8px 0;
-      border-radius: 3px;
       overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
     }
+
     .competitor {
-      padding: 6px 10px;
+      display: block;
+      width: 100%;
+      min-height: 31px;
+      padding: 8px 10px;
+      border: 0;
+      border-bottom: 1px solid #eadbc8;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
       font-size: 12px;
-      border-bottom: 1px solid #ddd;
+      line-height: 1.2;
+      text-align: inherit;
+      cursor: pointer;
     }
+
     .competitor:last-child {
-      border-bottom: none;
+      border-bottom: 0;
     }
-    .final-round {
+
+    .competitor:hover:not(:disabled),
+    .competitor:focus-visible:not(:disabled) {
+      outline: none;
+      background: var(--accent-soft);
+    }
+
+    .competitor.is-winner {
+      background: var(--accent);
+      color: #fffdf9;
+      font-weight: 700;
+    }
+
+    .competitor:disabled {
+      color: #978a80;
+      cursor: default;
+    }
+
+    .championship {
+      position: relative;
       display: flex;
+      min-height: 1200px;
       flex-direction: column;
+      align-items: stretch;
       justify-content: center;
-      align-items: center;
-      gap: 20px;
-    }
-    .final-matchup {
-      border: 2px solid #333;
-      background: white;
-      border-radius: 3px;
-      overflow: hidden;
-      min-width: 180px;
-    }
-    .champion {
-      border: 3px solid #333;
-      background: #ffd700;
-      padding: 10px;
+      gap: 18px;
       text-align: center;
-      font-weight: bold;
-      border-radius: 3px;
-      min-width: 180px;
     }
-    .left-r1 { display: flex; flex-direction: column; gap: 8px; }
-    .left-r2 { display: flex; flex-direction: column; gap: 40px; margin-top: -20px; }
-    .left-r3 { display: flex; flex-direction: column; gap: 100px; margin-top: -40px; }
-    .left-r4 { display: flex; flex-direction: column; gap: 215px; margin-top: -60px; }
+
+    .championship .bout {
+      position: static;
+    }
+
+    .champion {
+      border: 2px solid #7c551d;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #ffe9a8, #ffd769);
+      box-shadow: var(--shadow);
+      padding: 13px 10px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.3;
+      min-height: 46px;
+    }
+
+    @media (max-width: 720px) {
+      h1 {
+        font-size: 26px;
+        line-height: 1.15;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Virginia Aged Whiskey Tournament</h1>
-  
-  <div class="container">
-    <!-- LEFT SIDE -->
-    <div class="side left-side">
-      <!-- Left R1 -->
-      <div class="round">
-        <div class="round-label">Round 1</div>
-        <div class="left-r1">
-          <div class="matchup">
-            <div class="competitor">Open Road</div>
-            <div class="competitor">Brady's</div>
-            <div class="competitor">Old House</div>
-            <div class="competitor">3 Crosses</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">New Realm</div>
-            <div class="competitor">Lost Whiskey Co</div>
-            <div class="competitor">Highlands</div>
-            <div class="competitor">Springfield</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">KO Distilling</div>
-            <div class="competitor">Mean Spirits</div>
-            <div class="competitor">Reservoir</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Deep Creek</div>
-            <div class="competitor">Five Mile Mountain</div>
-            <div class="competitor">Ironclad</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">River Hill</div>
-            <div class="competitor">Cape Charles</div>
-            <div class="competitor">Virginia Distillery Co</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Silverback</div>
-            <div class="competitor">River City</div>
-            <div class="competitor">Spirit Lab</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Reverend Spirits</div>
-            <div class="competitor">Bon Durant Brothers</div>
-            <div class="competitor">Twin Creeks</div>
-            <div class="competitor">GW's Grist Mill</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Ragged Branch</div>
-            <div class="competitor">Devil's Backbone</div>
-            <div class="competitor">Tarnished Truth</div>
-            <div class="competitor">Blue Sky</div>
-          </div>
-        </div>
-      </div>
+  <header>
+    <h1>Virginia Whiskey Tournament 2026</h1>
+  </header>
 
-      <!-- Left R2 -->
-      <div class="round">
-        <div class="round-label">Round 2</div>
-        <div class="left-r2">
-          <div class="matchup">
-            <div class="competitor">R1B1 Winner</div>
-            <div class="competitor">R1B3 Winner</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">R1B2 Winner</div>
-            <div class="competitor">R1B4 Winner</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">R1B5 Winner</div>
-            <div class="competitor">R1B7 Winner</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">R1B6 Winner</div>
-            <div class="competitor">R1B8 Winner</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Left R3 -->
-      <div class="round">
-        <div class="round-label">Round 3</div>
-        <div class="left-r3">
-          <div class="matchup">
-            <div class="competitor">R2B1 Winner</div>
-            <div class="competitor">R2B3 Winner</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">R2B2 Winner</div>
-            <div class="competitor">R2B4 Winner</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Left R4 -->
-      <div class="round">
-        <div class="round-label">Round 4</div>
-        <div class="left-r4">
-          <div class="matchup">
-            <div class="competitor">R3B1 Winner</div>
-            <div class="competitor">R3B2 Winner</div>
-          </div>
-        </div>
-      </div>
+  <main class="bracket-shell">
+    <div class="bracket-stage">
+      <svg class="connectors" aria-hidden="true"></svg>
+      <section class="bracket" id="bracket" aria-label="Virginia Whiskey Tournament 2026 bracket"></section>
     </div>
+  </main>
 
-    <!-- CENTER -->
-    <div class="final-round">
-      <div style="text-align: center; font-weight: bold;">FINAL</div>
-      <div class="final-matchup">
-        <div class="competitor">Left Champion</div>
-        <div class="competitor">Right Champion</div>
-      </div>
-      <div class="champion">🏆 CHAMPION 🏆</div>
-    </div>
+  <script>
+    const firstRound = [
+      ["Open Road", "Brady's", "Old House", "3 Crosses"],
+      ["New Realm", "Lost Whiskey Co", "Highlands", "Springfield"],
+      ["KO Distilling", "Mean Spirits", "Reservoir"],
+      ["Deep Creek", "Five Mile Mountain", "Ironclad"],
+      ["River Hill", "Cape Charles", "Virginia Distillery Co"],
+      ["Silverback", "River City", "Spirit Lab"],
+      ["Reverend Spirits", "Bon Durant Brothers", "Twin Creeks", "GW's Grist Mill"],
+      ["Ragged Branch", "Devil's Backbone", "Tarnished Truth", "Blue Sky"],
+      ["Blue Shepherd", "Caiseal", "Bold Rock"],
+      ["Three Wives", "Davis Valley", "Climax"],
+      ["Filibuster", "A. Smith Bowman", "Mt Defiance"],
+      ["Catoctin Creek", "Virginia Foothills", "Copper Fox"],
+      ["Appalachian Heritage", "Sandy River", "Belmont Farm"],
+      ["Creek Bottom", "Cool Springs", "Trial & Error", "J.H. Bards"],
+      ["Murlarkey", "Three Notches", "Lincoln Ridge", "Hilltop"],
+      ["Sleepy Fox", "Bell Isle", "Franklin County", "Axe Handle"]
+    ];
 
-    <!-- RIGHT SIDE -->
-    <div class="side right-side">
-      <!-- Right R1 -->
-      <div class="round">
-        <div class="round-label">Round 1</div>
-        <div class="left-r1">
-          <div class="matchup">
-            <div class="competitor">Blue Shepherd</div>
-            <div class="competitor">Caiseal</div>
-            <div class="competitor">Bold Rock</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Three Wives</div>
-            <div class="competitor">Davis Valley</div>
-            <div class="competitor">Climax</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Filibuster</div>
-            <div class="competitor">A. Smith Bowman</div>
-            <div class="competitor">Mt Defiance</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Catoctin Creek</div>
-            <div class="competitor">Virginia Foothills</div>
-            <div class="competitor">Copper Fox</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Appalachian Heritage</div>
-            <div class="competitor">Sandy River</div>
-            <div class="competitor">Belmont Farm</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Creek Bottom</div>
-            <div class="competitor">Cool Springs</div>
-            <div class="competitor">Trial & Error</div>
-            <div class="competitor">J.H. Bards</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Murlarkey</div>
-            <div class="competitor">Three Notches</div>
-            <div class="competitor">Lincoln Ridge</div>
-            <div class="competitor">Hilltop</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">Sleepy Fox</div>
-            <div class="competitor">Bell Isle</div>
-            <div class="competitor">Franklin County</div>
-            <div class="competitor">Axe Handle</div>
-          </div>
-        </div>
-      </div>
+    const rounds = [
+      { round: 1, bouts: 16 },
+      { round: 2, bouts: 8 },
+      { round: 3, bouts: 4 },
+      { round: 4, bouts: 2 },
+      { round: 5, bouts: 1 }
+    ];
 
-      <!-- Right R2 -->
-      <div class="round">
-        <div class="round-label">Round 2</div>
-        <div class="left-r2">
-          <div class="matchup">
-            <div class="competitor">R1B9 Winner</div>
-            <div class="competitor">R1B11 Winner</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">R1B10 Winner</div>
-            <div class="competitor">R1B12 Winner</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">R1B13 Winner</div>
-            <div class="competitor">R1B15 Winner</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">R1B14 Winner</div>
-            <div class="competitor">R1B16 Winner</div>
-          </div>
-        </div>
-      </div>
+    const bracket = document.querySelector("#bracket");
+    const connectors = document.querySelector(".connectors");
+    const winners = new Map();
+    const tournamentStartMonday = new Date(2026, 4, 18);
 
-      <!-- Right R3 -->
-      <div class="round">
-        <div class="round-label">Round 3</div>
-        <div class="left-r3">
-          <div class="matchup">
-            <div class="competitor">R2B5 Winner</div>
-            <div class="competitor">R2B7 Winner</div>
-          </div>
-          <div class="matchup">
-            <div class="competitor">R2B6 Winner</div>
-            <div class="competitor">R2B8 Winner</div>
-          </div>
-        </div>
-      </div>
+    function key(round, bout) {
+      return `r${round}b${bout}`;
+    }
 
-      <!-- Right R4 -->
-      <div class="round">
-        <div class="round-label">Round 4</div>
-        <div class="left-r4">
-          <div class="matchup">
-            <div class="competitor">R3B3 Winner</div>
-            <div class="competitor">R3B4 Winner</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    function sideForBout(bout) {
+      return bout % 2 === 1 ? "left" : "right";
+    }
+
+    function columnFor(round, side) {
+      if (round === 5) return 5;
+      return side === "left" ? round : 10 - round;
+    }
+
+    function topPercent(round, bout) {
+      if (round === 5) return 50;
+      const sideBouts = rounds[round - 1].bouts / 2;
+      const sideIndex = Math.ceil(bout / 2);
+      return ((sideIndex - 0.5) / sideBouts) * 100;
+    }
+
+    function spacingNudge(round, bout) {
+      return round === 1 && bout === 16 ? 34 : 0;
+    }
+
+    function boutSequence(round, bout) {
+      return rounds.slice(0, round - 1).reduce((total, item) => total + item.bouts, 0) + bout;
+    }
+
+    function boutDate(round, bout) {
+      const date = new Date(tournamentStartMonday);
+      date.setDate(tournamentStartMonday.getDate() + ((boutSequence(round, bout) - 1) * 7));
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      });
+    }
+
+    function feedersFor(round, bout) {
+      if (round === 5) {
+        return [
+          { round: 4, bout: 1 },
+          { round: 4, bout: 2 }
+        ];
+      }
+
+      const sideIndex = Math.ceil(bout / 2);
+      const firstFeeder = bout % 2 === 1 ? (sideIndex * 4) - 3 : (sideIndex * 4) - 2;
+      return [
+        { round: round - 1, bout: firstFeeder },
+        { round: round - 1, bout: firstFeeder + 2 }
+      ];
+    }
+
+    function targetFor(round, bout) {
+      if (round === 4) {
+        return { round: 5, bout: 1 };
+      }
+
+      const sideIndex = Math.ceil(bout / 2);
+      const nextSideIndex = Math.ceil(sideIndex / 2);
+      const nextBout = bout % 2 === 1 ? (nextSideIndex * 2) - 1 : nextSideIndex * 2;
+      return { round: round + 1, bout: nextBout };
+    }
+
+    function entrantsFor(round, bout) {
+      if (round === 1) return firstRound[bout - 1];
+      if (round === 5) return [winners.get(key(4, 1)) || "Round 4 Bout 1 Winner", winners.get(key(4, 2)) || "Round 4 Bout 2 Winner"];
+
+      return feedersFor(round, bout).map((feeder) => {
+        return winners.get(key(feeder.round, feeder.bout)) || `Round ${feeder.round} Bout ${feeder.bout} Winner`;
+      });
+    }
+
+    function clearDownstream(round, bout) {
+      let target = targetFor(round, bout);
+
+      while (target.round <= 5) {
+        winners.delete(key(target.round, target.bout));
+        if (target.round === 5) break;
+        target = targetFor(target.round, target.bout);
+      }
+    }
+
+    function selectWinner(round, bout, winner) {
+      clearDownstream(round, bout);
+      winners.set(key(round, bout), winner);
+      render();
+    }
+
+    function createBout(round, bout) {
+      const boutEl = document.createElement("article");
+      boutEl.className = "bout";
+      boutEl.dataset.round = round;
+      boutEl.dataset.bout = bout;
+      boutEl.dataset.side = round === 5 ? "center" : sideForBout(bout);
+
+      if (round !== 5) {
+        boutEl.style.top = `calc(${topPercent(round, bout)}% + ${spacingNudge(round, bout)}px)`;
+        boutEl.style.transform = "translateY(-50%)";
+      }
+
+      const label = document.createElement("div");
+      label.className = "bout-label";
+      label.textContent = `Round ${round} Bout ${bout}`;
+
+      const date = document.createElement("div");
+      date.className = "bout-date";
+      date.textContent = boutDate(round, bout);
+
+      const matchup = document.createElement("div");
+      matchup.className = "matchup";
+
+      entrantsFor(round, bout).forEach((name) => {
+        const competitor = document.createElement("button");
+        competitor.type = "button";
+        competitor.className = "competitor";
+        competitor.textContent = name;
+        competitor.disabled = name.includes(" Winner");
+
+        if (winners.get(key(round, bout)) === name) {
+          competitor.classList.add("is-winner");
+        }
+
+        competitor.addEventListener("click", () => selectWinner(round, bout, name));
+        matchup.appendChild(competitor);
+      });
+
+      boutEl.append(label, date, matchup);
+      return boutEl;
+    }
+
+    function createColumn(round, side) {
+      const column = document.createElement("div");
+      column.className = "round-column";
+      column.dataset.round = round;
+      column.dataset.side = side;
+      column.style.gridColumn = columnFor(round, side);
+
+      for (let bout = 1; bout <= rounds[round - 1].bouts; bout += 1) {
+        if (sideForBout(bout) === side) {
+          column.appendChild(createBout(round, bout));
+        }
+      }
+
+      return column;
+    }
+
+    function createCenter() {
+      const center = document.createElement("div");
+      center.className = "championship";
+      center.style.gridColumn = "5";
+      center.appendChild(createBout(5, 1));
+
+      const champion = document.createElement("div");
+      champion.className = "champion";
+      champion.textContent = winners.get(key(5, 1)) || "Champion";
+      center.appendChild(champion);
+      return center;
+    }
+
+    function drawConnectors() {
+      connectors.innerHTML = "";
+      const svgRect = connectors.getBoundingClientRect();
+      connectors.setAttribute("viewBox", `0 0 ${svgRect.width} ${svgRect.height}`);
+
+      function pointFor(el, side) {
+        const rect = el.querySelector(".matchup").getBoundingClientRect();
+        const x = (side === "left" ? rect.left : rect.right) - svgRect.left;
+        const y = rect.top + (rect.height / 2) - svgRect.top;
+        return { x, y };
+      }
+
+      for (let round = 1; round <= 4; round += 1) {
+        for (let bout = 1; bout <= rounds[round - 1].bouts; bout += 1) {
+          const source = document.querySelector(`.bout[data-round="${round}"][data-bout="${bout}"]`);
+          const next = targetFor(round, bout);
+          const target = document.querySelector(`.bout[data-round="${next.round}"][data-bout="${next.bout}"]`);
+          if (!source || !target) continue;
+
+          const sourceSide = source.dataset.side;
+          const start = pointFor(source, sourceSide === "left" ? "right" : "left");
+          const end = pointFor(target, sourceSide === "left" ? "left" : "right");
+          const run = Math.max(22, Math.abs(end.x - start.x) * 0.38);
+          const c1x = sourceSide === "left" ? start.x + run : start.x - run;
+          const c2x = sourceSide === "left" ? end.x - run : end.x + run;
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+          path.setAttribute("d", `M ${start.x} ${start.y} C ${c1x} ${start.y}, ${c2x} ${end.y}, ${end.x} ${end.y}`);
+          connectors.appendChild(path);
+        }
+      }
+    }
+
+    function render() {
+      bracket.innerHTML = "";
+
+      for (let round = 1; round <= 4; round += 1) {
+        bracket.appendChild(createColumn(round, "left"));
+      }
+
+      bracket.appendChild(createCenter());
+
+      for (let round = 4; round >= 1; round -= 1) {
+        bracket.appendChild(createColumn(round, "right"));
+      }
+
+      requestAnimationFrame(drawConnectors);
+    }
+
+    window.addEventListener("resize", drawConnectors);
+    render();
+  </script>
 </body>
 </html>
