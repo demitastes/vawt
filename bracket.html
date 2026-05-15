@@ -193,6 +193,21 @@
       min-height: 46px;
     }
 
+    .status-message {
+      grid-column: 1 / -1;
+      max-width: 560px;
+      margin: 64px auto;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      text-align: center;
+    }
+
     @media (max-width: 720px) {
       h1 {
         font-size: 26px;
@@ -214,37 +229,46 @@
   </main>
 
   <script>
-    const firstRound = [
-      ["Open Road", "Brady's", "Old House", "3 Crosses"],
-      ["New Realm", "Lost Whiskey Co", "Highlands", "Springfield"],
-      ["KO Distilling", "Mean Spirits", "Reservoir"],
-      ["Deep Creek", "Five Mile Mountain", "Ironclad"],
-      ["River Hill", "Cape Charles", "Virginia Distillery Co"],
-      ["Silverback", "River City", "Spirit Lab"],
-      ["Reverend Spirits", "Bon Durant Brothers", "Twin Creeks", "GW's Grist Mill"],
-      ["Ragged Branch", "Devil's Backbone", "Tarnished Truth", "Blue Sky"],
-      ["Blue Shepherd", "Caiseal", "Bold Rock"],
-      ["Three Wives", "Davis Valley", "Climax"],
-      ["Filibuster", "A. Smith Bowman", "Mt Defiance"],
-      ["Catoctin Creek", "Virginia Foothills", "Copper Fox"],
-      ["Appalachian Heritage", "Sandy River", "Belmont Farm"],
-      ["Creek Bottom", "Cool Springs", "Trial & Error", "J.H. Bards"],
-      ["Murlarkey", "Three Notches", "Lincoln Ridge", "Hilltop"],
-      ["Sleepy Fox", "Bell Isle", "Franklin County", "Axe Handle"]
-    ];
-
-    const rounds = [
-      { round: 1, bouts: 16 },
-      { round: 2, bouts: 8 },
-      { round: 3, bouts: 4 },
-      { round: 4, bouts: 2 },
-      { round: 5, bouts: 1 }
-    ];
-
     const bracket = document.querySelector("#bracket");
     const connectors = document.querySelector(".connectors");
     const winners = new Map();
-    const tournamentStartMonday = new Date(2026, 4, 18);
+    const bracketDataUrl = "data/bracket.json";
+    let firstRound = [];
+    let rounds = [];
+    let tournamentStartMonday = null;
+
+    function parseLocalDate(value) {
+      const [year, month, day] = value.split("-").map(Number);
+      return new Date(year, month - 1, day);
+    }
+
+    function showStatus(message) {
+      connectors.innerHTML = "";
+      bracket.innerHTML = "";
+      bracket.style.height = "";
+
+      const status = document.createElement("p");
+      status.className = "status-message";
+      status.textContent = message;
+      bracket.appendChild(status);
+    }
+
+    function normalizeBracketData(data) {
+      firstRound = data.firstRound
+        .slice()
+        .sort((a, b) => a.bout - b.bout)
+        .map((item) => item.entrants);
+
+      rounds = data.rounds.map((item) => ({
+        round: item.round,
+        bouts: item.boutCount
+      }));
+
+      tournamentStartMonday = parseLocalDate(data.startDate);
+      document.title = data.title;
+      document.querySelector("h1").textContent = data.title;
+      bracket.setAttribute("aria-label", `${data.title} bracket`);
+    }
 
     function key(round, bout) {
       return `r${round}b${bout}`;
@@ -344,11 +368,12 @@
       matchup.className = "matchup";
 
       entrantsFor(round, bout).forEach((name) => {
+        const isPlaceholder = name.endsWith(" Winner");
         const competitor = document.createElement("button");
         competitor.type = "button";
         competitor.className = "competitor";
         competitor.textContent = name;
-        competitor.disabled = name.includes(" Winner");
+        competitor.disabled = isPlaceholder;
 
         if (winners.get(key(round, bout)) === name) {
           competitor.classList.add("is-winner");
@@ -501,10 +526,28 @@
     }
 
     window.addEventListener("resize", () => {
+      if (!tournamentStartMonday) return;
       layoutBracket();
       drawConnectors();
     });
-    render();
+
+    async function init() {
+      showStatus("Loading bracket data...");
+
+      try {
+        const response = await fetch(bracketDataUrl);
+        if (!response.ok) {
+          throw new Error(`Unable to load ${bracketDataUrl}`);
+        }
+
+        normalizeBracketData(await response.json());
+        render();
+      } catch (error) {
+        showStatus(`Bracket data could not be loaded from ${bracketDataUrl}. Serve this folder over local HTTP and try again.`);
+      }
+    }
+
+    init();
   </script>
 </body>
 </html>

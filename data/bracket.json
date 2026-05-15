@@ -1,0 +1,163 @@
+{
+  "title": "Virginia Whiskey Tournament 2026",
+  "startDate": "2026-05-18",
+  "rounds": [
+    {
+      "round": 1,
+      "boutCount": 16
+    },
+    {
+      "round": 2,
+      "boutCount": 8
+    },
+    {
+      "round": 3,
+      "boutCount": 4
+    },
+    {
+      "round": 4,
+      "boutCount": 2
+    },
+    {
+      "round": 5,
+      "boutCount": 1
+    }
+  ],
+  "firstRound": [
+    {
+      "bout": 1,
+      "entrants": [
+        "Open Road",
+        "Brady's",
+        "Old House",
+        "3 Crosses"
+      ]
+    },
+    {
+      "bout": 2,
+      "entrants": [
+        "New Realm Brewing & Distilling",
+        "Lost Whiskey Co",
+        "Highlands Distilling Co",
+        "Springfield Distillery"
+      ]
+    },
+    {
+      "bout": 3,
+      "entrants": [
+        "KO Distilling",
+        "Mean Spirits Distilling",
+        "Reservoir Distillery"
+      ]
+    },
+    {
+      "bout": 4,
+      "entrants": [
+        "Deep Creek",
+        "Five Mile Mountain",
+        "Ironclad"
+      ]
+    },
+    {
+      "bout": 5,
+      "entrants": [
+        "River Hill",
+        "Cape Charles",
+        "Virginia Distillery Co."
+      ]
+    },
+    {
+      "bout": 6,
+      "entrants": [
+        "Silverback",
+        "River City",
+        "Spirit Lab Distilling"
+      ]
+    },
+    {
+      "bout": 7,
+      "entrants": [
+        "Reverend Spirits",
+        "Bon Durant Brothers Distillery",
+        "Twin Creeks Distillery",
+        "George Washington's Grist Mill Distillery"
+      ]
+    },
+    {
+      "bout": 8,
+      "entrants": [
+        "Ragged Branch",
+        "Devil's Backbone",
+        "Tarnished Truth",
+        "Blue Sky"
+      ]
+    },
+    {
+      "bout": 9,
+      "entrants": [
+        "Blue Shepherd Spirits",
+        "Caiseal",
+        "Bold Rock Distillery"
+      ]
+    },
+    {
+      "bout": 10,
+      "entrants": [
+        "Three Wives Distillery Winchester",
+        "Davis Valley Distillery",
+        "Climax"
+      ]
+    },
+    {
+      "bout": 11,
+      "entrants": [
+        "Filibuster Distillery",
+        "A. Smith Bowman",
+        "Mt Defiance Cidery & Distillery"
+      ]
+    },
+    {
+      "bout": 12,
+      "entrants": [
+        "Catoctin Creek Distilling Co.",
+        "Virginia Foothills Distillery",
+        "Copper Fox"
+      ]
+    },
+    {
+      "bout": 13,
+      "entrants": [
+        "Appalachian Heritage Distillery",
+        "Sandy River Distillery",
+        "Belmont Farm Distillery"
+      ]
+    },
+    {
+      "bout": 14,
+      "entrants": [
+        "Creek Bottom",
+        "Cool Springs",
+        "Trial & Error",
+        "J.H. Bards"
+      ]
+    },
+    {
+      "bout": 15,
+      "entrants": [
+        "Murlarkey",
+        "Three Notches",
+        "Lincoln Ridge Distillery",
+        "Hilltop Distillery"
+      ]
+    },
+    {
+      "bout": 16,
+      "entrants": [
+        "Sleepy Fox",
+        "Bell Isle",
+        "Franklin County Distillers",
+        "Axe Handle Distilling"
+      ]
+    }
+  ]
+}
