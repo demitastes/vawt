@@ -1,0 +1,9 @@
+[package]
+name = "gen-bracket"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+vawt-common = { path = "../../common" }
+serde_json  = { workspace = true }
+chrono      = { workspace = true }
