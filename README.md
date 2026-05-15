@@ -4,7 +4,7 @@ A web application and Discord bot for showcasing and participating in a single-e
 
 ## Project Status
 
-- **Phase 1**: Data infrastructure and static website (in progress)
+- **Phase 1**: Data infrastructure and React frontend (in progress)
 - **Phase 2**: Backend API and Discord bot (planned)
 - **Phase 3**: User accounts and interactive bracket creation (planned)
 - **Phase 4**: Social sharing with image generation (planned)
@@ -100,7 +100,7 @@ Both the website and Discord bot consume the same REST API. This ensures:
 ### 3. **Parallel Development**
 Five phases with clear dependencies allow multiple teams to work simultaneously:
 - **Phase 1.1**: Data transformation scripts (blocker for everything)
-- **Phase 1.2**: Static website (parallelizes with Phase 2)
+- **Phase 1.2**: React frontend (parallelizes with Phase 2)
 - **Phase 2.1**: API infrastructure (blocker for Phases 2.2 and 2.3)
 - **Phase 2.2 & 2.3**: User brackets and Discord bot (can parallelize)
 - **Phases 3-5**: User features, social sharing, admin interface
@@ -164,7 +164,7 @@ npm start
 - Create CSV export for non-coders
 
 **Frontend Team**: Focus on Phase 1.2
-- Build static website (uses generated JSON)
+- Build the React frontend (uses generated JSON)
 - Can run locally without backend until Phase 2 API is ready
 
 **Backend Team**: Focus on Phase 2.1 + 2.2
@@ -205,7 +205,7 @@ No code changes or git commits required by non-coders.
 
 ## Future Roadmap
 
-- **Phase 1** (Now): Data infrastructure + static website
+- **Phase 1** (Now): Data infrastructure + React frontend
 - **Phase 2** (Next): Backend API + user accounts + Discord bot
 - **Phase 3**: Interactive bracket creation and leaderboards
 - **Phase 4**: Social sharing with auto-generated images (vertical, square, horizontal)

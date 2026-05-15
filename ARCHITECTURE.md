@@ -21,12 +21,12 @@ None of these refactorings require architectural changes — they're rename + sc
 
 ```
 vawt-website/
-├── bracket.html                        # legacy/static prototype; replace with frontend app
-├── frontend/
-│   ├── package.json
-│   ├── vite.config.ts
-│   ├── index.html
-│   └── src/                            # React + TypeScript application
+├── package.json                        # frontend scripts and dependencies
+├── vite.config.ts                      # Vite configuration
+├── index.html                          # Vite entry point
+├── src/                                # React + TypeScript application
+├── public/
+│   └── data/                           # frontend-served JSON copied from /data
 ├── data/
 │   ├── BRACKET.md                      # source of truth for organizers
 │   ├── distilleries.json               # distillery profiles (slug, veteran-owned, etc.)
@@ -83,11 +83,11 @@ vawt-website/
 ```
 
 **Key decisions:**
-- Frontend is React + TypeScript + Vite, replacing the single-file prototype as the product UI
+- Frontend is React + TypeScript + Vite at the repository root, replacing the single-file prototype as the product UI
 - Deployment should assume Vercel unless a later decision changes it
 - Backend should be the easiest thing to deploy and maintain on Vercel: Node/TypeScript API routes or a Vercel-compatible lightweight server, not Rust/axum
 - Rust is reserved for the Discord bot, where a long-running service outside Vercel is reasonable
-- `frontend/`, `server/`, and `discord-bot/` should remain independently understandable; avoid monorepo tooling until it clearly pays for itself
+- Frontend source, `server/`, and `discord-bot/` should remain independently understandable; avoid monorepo tooling until it clearly pays for itself
 - Bot calls the API over HTTP only — no shared code, only shared API contract and `SERVICE_KEY`
 - If Express remains the local API implementation, keep an `app` factory split from deployment entrypoints so tests and Vercel handlers can reuse it
 

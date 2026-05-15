@@ -6,22 +6,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 VAWT (Virginia Whiskey Tournament) is a web application for showcasing a single-elimination bracket tournament. The project is designed to be extensible for multiple years and tournament formats, with data stored in non-code files (markdown/JSON) so non-coders can easily update tournament information.
 
-The full vision is in ROADMAP.md. Current phase: static website for bracket exploration.
+The full vision is in ROADMAP.md. Current phase: React frontend for bracket exploration, backed by local generated JSON.
 
 ## Architecture
 
 The project is split into distinct subsystems that can be developed in parallel:
 
-- **Static Website** (`bracket.html` + data): Initial phase. HTML file displaying bracket data from markdown files in `/data`.
+- **Frontend** (`index.html`, `/src`, `/public/data`): React + TypeScript + Vite app displaying bracket data from local generated JSON.
 - **Backend** (future): Node.js/API layer to handle user accounts, bracket creation, real-time updates. Will read/write tournament data.
 - **Discord Bot** (future): Separate service querying the same data source about tournament progress and voting dates.
 - **Data Layer** (`/data`): Single source of truth. Initially markdown (BRACKET.md, TOURNAMENT_NOTES.md), will transition to CSV and JSON formats as tool complexity grows.
 
 ## Current State
 
-- `bracket.html`: Static HTML file with embedded CSS. Displays tournament bracket structure. Currently a skeleton; needs to be populated with data from `/data/BRACKET.md`.
+- `index.html` + `/src`: React + TypeScript + Vite frontend. Displays tournament bracket structure from `/public/data/bracket-2026.json`.
 - `/data/BRACKET.md`: Tournament bracket structure in markdown. Contains round definitions and bout matchups. Non-coders will edit this.
-- `/data/TOURNAMENT_NOTES.md`: Metadata like new distilleries, annotations, notes about participants.
+- `/public/data/bracket-2026.json`: Frontend-served copy of generated bracket data.
 
 ## Data Format Transition
 
@@ -29,9 +29,10 @@ As per ROADMAP: BRACKET.md → CSV export (for non-coders to edit in spreadsheet
 
 ## Common Development Tasks
 
-### View the static bracket site locally
+### View the frontend locally
 ```bash
-open bracket.html  # or serve via local HTTP server if needed for CORS
+npm install
+npm run dev
 ```
 
 ### Understanding the bracket structure
@@ -43,10 +44,10 @@ open bracket.html  # or serve via local HTTP server if needed for CORS
 - Write a script to convert CSV → JSON format (for website/bot consumption)
 - Store the JSON output in `/data/bracket.json` or similar
 
-### Add features to the static site
-- Modify `bracket.html` to parse and render `/data/BRACKET.md` (or future JSON)
-- Consider using a templating approach or markdown parser library when complexity grows
-- For now: keep it simple and vanilla JS if needed; avoid heavy frameworks until backend is required
+### Add features to the frontend
+- Modify React components in `/src`
+- Keep the frontend data-driven against local JSON/API-shaped data
+- Run `npm run build` before handing off frontend changes
 
 ### Future: Add a backend
 - Will serve the JSON data and handle real-time updates
@@ -63,7 +64,7 @@ open bracket.html  # or serve via local HTTP server if needed for CORS
 1. **Data first**: The bracket data should remain easy to edit by non-coders. JSON/CSV formats are safer than database-only storage.
 2. **Extensible structure**: Design the bracket format so it can handle different tournament formats (single-elimination, double-elimination, etc.) in the future without major refactors.
 3. **Parallel development**: Website, backend, and Discord bot can be developed independently as long as they all read from the same `/data` source (or a shared data API).
-4. **Phases**: Static site → Accounts & user bracket creation → Social sharing & image generation → Discord bot. Don't over-engineer early phases.
+4. **Phases**: React bracket exploration → Accounts & user bracket creation → Social sharing & image generation → Discord bot. Don't over-engineer early phases.
 
 ## TODO.md Update Policy
 
@@ -82,11 +83,14 @@ open bracket.html  # or serve via local HTTP server if needed for CORS
 
 ```
 vawt-website/
-├── bracket.html              # Static site entry point
+├── index.html                # Vite entry point
+├── src/                      # React + TypeScript frontend
+├── public/
+│   └── data/                 # Frontend-served generated JSON
 ├── data/
 │   ├── BRACKET.md           # Raw bracket data (edited by non-coders)
 │   ├── TOURNAMENT_NOTES.md   # Tournament metadata
-│   └── bracket.json         # Compiled normalized format (generated from CSV)
+│   └── bracket.json         # Current normalized format
 ├── scripts/                  # Data transformation scripts
 │   ├── markdown-to-csv.js
 │   └── csv-to-json.js
@@ -96,12 +100,13 @@ vawt-website/
 
 ## Testing
 
-Currently minimal testing needed (static HTML). As the project grows:
+Currently minimal testing is needed for the frontend. As the project grows:
+- Build checks for the React frontend (`npm run build`)
 - Unit tests for data transformation scripts (JS/Node)
 - Integration tests for backend API endpoints
 - E2E tests for the website (bracket exploration) and Discord bot commands
 
-Run tests (once defined):
+Run frontend checks:
 ```bash
-npm test
+npm run build
 ```

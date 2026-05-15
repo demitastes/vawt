@@ -19,7 +19,7 @@ Record of key architectural and organizational decisions for the VAWT project.
 - Organized by resource type (/api/tournaments, /api/brackets, /api/users)
 - Backend implementation should be the easiest option to maintain on Vercel, using Vercel-compatible serverless/API patterns and managed persistence where needed.
 
-**Impact**: Phase 2 (Backend API) is a critical blocker for both Phase 1.2 (static website) and Phase 2.3 (Discord bot) if they want live data. However, Phase 1.2 can proceed with hardcoded/local JSON until Phase 2 API is ready.
+**Impact**: Phase 2 (Backend API) is a critical blocker for Phase 1.2 frontend and Phase 2.3 Discord bot work if they want live data. However, Phase 1.2 can proceed with hardcoded/local JSON until Phase 2 API is ready.
 
 ---
 
@@ -177,11 +177,14 @@ Record of key architectural and organizational decisions for the VAWT project.
 **Rationale**: Clear separation of concerns makes onboarding and collaboration easier.
 
 **Root level**:
-- `bracket.html` — Legacy static prototype, to be replaced by the React frontend
+- `index.html` — Vite frontend entry point
+- `package.json` / `vite.config.ts` / `tsconfig.json` — React + TypeScript + Vite configuration
 - `AGENTS.md` — Agent instructions (development guidance)
 - `CLAUDE.md` — Symlink to AGENTS.md (backwards compatibility)
 - `TODO.md` — Task breakdown and phases
 - `DECISIONS.md` — This file (rationale for key choices)
+- `src/` — React frontend source
+- `public/data/` — frontend-served bracket JSON copied from `/data`
 
 **`/data`**:
 - `BRACKET.md` — Source of truth (markdown, edited by non-coders via CSV)
@@ -191,6 +194,7 @@ Record of key architectural and organizational decisions for the VAWT project.
 - `schema.json` — JSON schema documentation
 
 **`/scripts`**:
+- `sync-public-data.mjs` — Copy local tournament JSON into `public/data` for Vite
 - `markdown-to-csv.js` — BRACKET.md → CSV
 - `csv-to-json.js` — CSV → JSON
 - `build-data.sh` — Orchestrates the pipeline
@@ -293,6 +297,7 @@ Record of key architectural and organizational decisions for the VAWT project.
 
 - **2026-05-15**: Initial decisions documented. All major phases and architectural choices captured.
 - **2026-05-15**: Accepted React + TypeScript + Vite on Vercel, Vercel-maintainable backend direction, Rust only for Discord bot, authenticated-only voting, public read-only tournament data, earlier admin scheduling/import/manual override capability, and homepage active-bout personalization by authenticated vote status.
+- **2026-05-15**: Implemented the React + TypeScript + Vite frontend at the repository root. The app currently reads local bracket JSON from `public/data`, supports bracket browsing, search/filter controls, bout detail views, distillery profile fallbacks, local winner selection, and a year selector seeded with 2026.
 - **2026-05-15 (Progress)**:
   - Decision 1 (Shared REST API): ✅ Confirmed. Axum/Rust API implemented with tournament endpoints.
   - Decision 5 (Technology Stack): ✅ Validated. Rust + axum for API, JWT for auth working well.
