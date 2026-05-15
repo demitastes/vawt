@@ -1,8 +1,8 @@
-# VAWT Backend Architecture Decisions
+# VAWT Application Architecture Decisions
 
 ## Context
 
-Settling all backend/data/API architectural decisions before implementation begins. Frontend is deferred to a separate agent. The goal is a concrete, opinionated spec that any developer or agent can implement against without further architectural questions.
+Settling frontend, backend, data, API, and deployment architectural decisions before implementation begins. The goal is a concrete, opinionated spec that any developer or agent can implement against without further architectural questions.
 
 ### Extensibility Note
 
@@ -21,7 +21,12 @@ None of these refactorings require architectural changes — they're rename + sc
 
 ```
 vawt-website/
-├── bracket.html                        # static frontend (separate agent)
+├── bracket.html                        # legacy/static prototype; replace with frontend app
+├── frontend/
+│   ├── package.json
+│   ├── vite.config.ts
+│   ├── index.html
+│   └── src/                            # React + TypeScript application
 ├── data/
 │   ├── BRACKET.md                      # source of truth for organizers
 │   ├── distilleries.json               # distillery profiles (slug, veteran-owned, etc.)
@@ -30,69 +35,90 @@ vawt-website/
 │   ├── markdown-to-csv.js
 │   ├── csv-to-json.js
 │   └── build-data.sh
-├── server/
+├── server/                             # Node/TypeScript API, Vercel-friendly deployment target
 │   ├── package.json
 │   ├── .env.example
-│   ├── index.js                        # entry: load config, init DB, start Express
-│   ├── app.js                          # createApp() factory — testable without listen()
-│   ├── config.js                       # reads + validates all env vars via zod
+│   ├── index.ts                        # entry: load config, init DB, start API handler/server
+│   ├── app.ts                          # createApp() factory — testable without listen()
+│   ├── config.ts                       # reads + validates all env vars via zod
 │   ├── db/
-│   │   ├── client.js                   # better-sqlite3 singleton
-│   │   ├── migrate.js                  # runs numbered .sql files, tracks in _migrations
+│   │   ├── client.ts                   # database client singleton
+│   │   ├── migrate.ts                  # runs numbered .sql files, tracks in _migrations
 │   │   └── migrations/
 │   │       └── 001_initial_schema.sql
 │   ├── data/
-│   │   └── loader.js                   # loads JSON data into memory, fs.watch reload
+│   │   └── loader.ts                   # loads JSON data into memory, fs.watch reload
 │   ├── middleware/
-│   │   ├── auth.js                     # requireAuth / optionalAuth (JWT verify + session check)
-│   │   ├── requireAdmin.js             # checks users.is_admin = 1
-│   │   ├── requireServiceKey.js        # validates X-Service-Key for bot calls
-│   │   ├── validate.js                 # zod schema validation wrapper
-│   │   └── errorHandler.js             # central JSON error formatter
+│   │   ├── auth.ts                     # requireAuth / optionalAuth (JWT verify + session check)
+│   │   ├── requireAdmin.ts             # checks users.is_admin = 1
+│   │   ├── requireServiceKey.ts        # validates X-Service-Key for bot calls
+│   │   ├── validate.ts                 # zod schema validation wrapper
+│   │   └── errorHandler.ts             # central JSON error formatter
 │   ├── routes/
-│   │   ├── index.js                    # mounts all routers under /api
-│   │   ├── health.js
-│   │   ├── auth.js
-│   │   ├── tournaments.js
-│   │   ├── votes.js
-│   │   ├── brackets.js
-│   │   ├── users.js
-│   │   └── admin.js
+│   │   ├── index.ts                    # mounts all routers under /api
+│   │   ├── health.ts
+│   │   ├── auth.ts
+│   │   ├── tournaments.ts
+│   │   ├── votes.ts
+│   │   ├── brackets.ts
+│   │   ├── users.ts
+│   │   └── admin.ts
 │   ├── services/
-│   │   ├── authService.js              # JWT sign/verify, session management
-│   │   ├── magicLinkService.js         # generate token, send email, verify
-│   │   ├── discordOAuthService.js      # OAuth2 code exchange, user upsert
-│   │   ├── voteService.js              # cast vote, dedup, tally, CSV import
-│   │   ├── bracketService.js           # picks validation, scoring
-│   │   └── tournamentService.js        # query JSON data, active-bout logic
+│   │   ├── authService.ts              # JWT sign/verify, session management
+│   │   ├── magicLinkService.ts         # generate token, send email, verify
+│   │   ├── discordOAuthService.ts      # OAuth2 code exchange, user upsert
+│   │   ├── voteService.ts              # cast vote, dedup, tally, CSV import
+│   │   ├── bracketService.ts           # picks validation, scoring
+│   │   ├── scheduleService.ts          # schedule import, overrides, effective status
+│   │   └── tournamentService.ts        # query JSON data, active-bout logic
 │   └── utils/
-│       ├── crypto.js                   # timingSafeEqual, randomBytes helpers
-│       └── csvParser.js                # vote import CSV row parser
-└── discord-bot/
-    ├── package.json
-    ├── .env.example
-    ├── index.js                        # register commands, start gateway
-    ├── config.js
-    ├── commands/
-    │   ├── round.js                    # /round
-    │   ├── bout.js                     # /bout <boutId>
-    │   ├── vote.js                     # /vote <boutId> <distillery>
-    │   ├── bracket.js                  # /bracket [user]
-    │   ├── standings.js                # /standings <year>
-    │   └── help.js
-    ├── api/
-    │   └── client.js                   # thin fetch() wrapper to server API
-    └── deploy-commands.js              # one-shot slash command registration
+│       ├── crypto.ts                   # timingSafeEqual, randomBytes helpers
+│       └── csvParser.ts                # vote import CSV row parser
+└── discord-bot/                        # Rust service is acceptable here only
+    ├── Cargo.toml
+    └── src/
+        ├── main.rs                     # register commands, start gateway
+        ├── commands/                   # /round, /bout, /vote, /bracket, /standings, /help
+        └── api.rs                      # thin HTTP client to server API
 ```
 
 **Key decisions:**
-- `server/` and `discord-bot/` each have their own `package.json` — no monorepo tooling
+- Frontend is React + TypeScript + Vite, replacing the single-file prototype as the product UI
+- Deployment should assume Vercel unless a later decision changes it
+- Backend should be the easiest thing to deploy and maintain on Vercel: Node/TypeScript API routes or a Vercel-compatible lightweight server, not Rust/axum
+- Rust is reserved for the Discord bot, where a long-running service outside Vercel is reasonable
+- `frontend/`, `server/`, and `discord-bot/` should remain independently understandable; avoid monorepo tooling until it clearly pays for itself
 - Bot calls the API over HTTP only — no shared code, only shared API contract and `SERVICE_KEY`
-- `app.js` vs `index.js` split keeps Express app unit-testable
+- If Express remains the local API implementation, keep an `app` factory split from deployment entrypoints so tests and Vercel handlers can reuse it
 
 ---
 
-## Database Schema (SQLite, better-sqlite3)
+## Frontend Platform and UX
+
+The production frontend should be a React + TypeScript + Vite application. It should remain data-driven: public tournament pages read normalized tournament JSON/API responses, while authenticated views add user-specific voting and bracket state.
+
+**Public read-only site:**
+- Anyone can browse tournament years, distilleries, bouts, vote totals, winners, and bracket state without logging in
+- Public pages never expose write controls; unauthenticated users should see clear sign-in entry points only when a voting action would otherwise be available
+- The bracket and bout detail views should work from API responses alone so the site can later support historical years and multiple organizers
+
+**Authenticated voting UX:**
+- Website voting requires login; no anonymous website votes
+- Logged-in users should see a focused "active bouts" surface that lists only bouts currently available for them to vote on
+- Active bout eligibility is computed by joining the current user's id against the `votes` table, using `(tournament_year, bout_id, user_id, source = 'website')`
+- Bouts the user has already voted on should disappear from the primary active-voting list, while still being viewable in read-only result/detail screens
+- Vote submissions should be idempotent from the user's perspective: duplicate website votes return a clear already-voted state instead of creating another row
+
+**Non-technical admin UX:**
+- Admin screens should optimize for organizers who are comfortable with spreadsheets and forms, not code
+- Prefer guided forms, previews, validation summaries, and dry-run import feedback before committing changes
+- Use familiar labels such as "Open voting", "Close voting", "Reopen voting", "Scheduled open", and "Scheduled close"; avoid exposing internal status names as the primary UI
+- CSV/JSON upload remains a fallback and power-user path, not the only admin workflow
+- Admin actions should show what will change, what will remain scheduled, and whether the public site or active-voting list is affected
+
+---
+
+## Database Schema (conceptual SQL)
 
 File: `server/db/migrations/001_initial_schema.sql`
 
@@ -158,6 +184,20 @@ CREATE INDEX idx_votes_user       ON votes(user_id) WHERE user_id IS NOT NULL;
 CREATE INDEX idx_votes_discord_id ON votes(discord_id) WHERE discord_id IS NOT NULL;
 CREATE INDEX idx_votes_source     ON votes(tournament_year, source);
 
+CREATE TABLE bout_admin_overrides (
+  id                INTEGER PRIMARY KEY,
+  tournament_year   INTEGER NOT NULL,
+  bout_id           TEXT NOT NULL,
+  status_override   TEXT CHECK (status_override IN ('pending','voting_open','voting_closed','complete')),
+  scheduled_opens   TEXT,
+  scheduled_closes  TEXT,
+  note              TEXT,
+  changed_by        INTEGER REFERENCES users(id) ON DELETE SET NULL,
+  changed_at        TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
+  UNIQUE (tournament_year, bout_id)
+);
+CREATE INDEX idx_bout_overrides_bout ON bout_admin_overrides(tournament_year, bout_id);
+
 CREATE TABLE bracket_predictions (
   id              INTEGER PRIMARY KEY,
   user_id         INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -184,7 +224,8 @@ CREATE TABLE _migrations (
 - All datetimes are ISO-8601 UTC strings — sort/compare correctly, serialize to JSON natively
 - `sessions` table enables real logout (JWT carries `session_id`; middleware checks it on each request)
 - `users.email` and `users.discord_id` are both nullable — at least one must be set (enforced at app layer)
-- `vote_counts` on the JSON file preserves organizer-tallied counts for pre-DB / historical data; `tournamentService.js` merges JSON counts with DB `SUM(count)` at query time using `bout_id` as the join key
+- `vote_counts` on the JSON file preserves organizer-tallied counts for pre-DB / historical data; `tournamentService.ts` merges JSON counts with DB `SUM(count)` at query time using `bout_id` as the join key
+- `bout_admin_overrides` lets admins manually open, close, or reopen a bout without destroying schedule metadata. Runtime status is computed from manual override first, then scheduled dates, then JSON status.
 
 ---
 
@@ -207,6 +248,8 @@ CREATE TABLE _migrations (
         {
           "bout_id": "R1B1",
           "status": "complete",
+          "scheduled_voting_opens": "2026-03-01T00:00:00Z",
+          "scheduled_voting_closes": "2026-03-15T23:59:59Z",
           "contestants": ["open-road", "bradys", "old-house", "3-crosses"],
           "winner": "open-road",
           "vote_counts": { "open-road": 142, "bradys": 98, "old-house": 67, "3-crosses": 44 },
@@ -227,6 +270,7 @@ CREATE TABLE _migrations (
 - `vote_counts` in JSON = organizer-maintained external/historical tally; merged with live DB votes at query time
 - `advancement_rules` is a flat map keyed by bout_id — easier to traverse than a nested tree
 - `status` values: `pending` | `voting_open` | `voting_closed` | `complete`
+- `scheduled_voting_opens` and `scheduled_voting_closes` preserve planned dates even when an admin manually opens, closes, or reopens the bout
 - Organizers set `winner` and update `vote_counts` by editing this file directly
 
 ### `data/distilleries.json`
@@ -254,7 +298,7 @@ CREATE TABLE _migrations (
 
 - `id` is a human-assigned slug, lowercase with hyphens — used as foreign key everywhere; never auto-generated
 - `active: null` means unknown (as with Sleepy Fox); server can warn if a bracket references an `active: null` distillery
-- `version` field at root lets `loader.js` fail fast with a clear error on format mismatch
+- `version` field at root lets `loader.ts` fail fast with a clear error on format mismatch
 
 ---
 
@@ -290,6 +334,7 @@ All routes under `/api`. All responses `Content-Type: application/json`.
 | POST | `/api/tournaments/:year/bouts/:boutId/vote` | JWT or service key | Cast vote. Website requires JWT; bot sends `X-Service-Key` + `discord_id` in body |
 | GET | `/api/tournaments/:year/bouts/:boutId/votes` | none | Vote counts by distillery + source breakdown |
 | GET | `/api/tournaments/:year/votes` | none | Full vote results for year, grouped by bout |
+| GET | `/api/users/me/tournaments/:year/active-bouts` | JWT | Open bouts the logged-in user has not already voted on |
 
 ### Bracket Predictions
 | Method | Path | Auth | Description |
@@ -307,9 +352,16 @@ All require `requireAdmin` middleware (users.is_admin = 1).
 | Method | Path | Description |
 |--------|------|-------------|
 | POST | `/api/admin/votes/import` | Bulk import votes from CSV upload |
+| POST | `/api/admin/tournaments/:year/schedule/import` | Upload CSV/JSON schedule data; validate and preview before apply |
+| PUT | `/api/admin/tournaments/:year/bouts/:boutId/schedule` | Update scheduled open/close dates for one bout |
+| POST | `/api/admin/tournaments/:year/bouts/:boutId/open` | Manually open voting, preserving scheduled dates |
+| POST | `/api/admin/tournaments/:year/bouts/:boutId/close` | Manually close voting, preserving scheduled dates |
+| POST | `/api/admin/tournaments/:year/bouts/:boutId/reopen` | Reopen a closed bout, preserving scheduled dates |
 | POST | `/api/admin/bouts/:boutId/result` | Set official bout winner |
 | POST | `/api/admin/data/reload` | Force in-memory JSON data reload |
 | GET | `/api/admin/votes` | List all votes with filters for audit |
+
+Admin scheduling APIs must be admin-gated and should return both `effective_status` and schedule metadata. Manual status changes affect runtime availability immediately but do not overwrite `scheduled_voting_opens` or `scheduled_voting_closes`.
 
 ---
 
@@ -359,7 +411,11 @@ Same; step 4 finds existing user, updates `discord_username`.
 
 | Concern | Choice | Rationale |
 |---------|--------|-----------|
-| SQLite driver | `better-sqlite3` | Synchronous API fits Express's sync request handling; no async ceremony; actively maintained |
+| Frontend | React + TypeScript + Vite | Main product UI, strong typing for API data, fast local development, easy static deployment |
+| Frontend hosting | Vercel | Likely deployment target; simple previews, static asset hosting, and API co-location if needed |
+| Backend runtime | Node/TypeScript on Vercel-compatible APIs | Optimize for lowest deployment and maintenance friction on Vercel |
+| Backend non-goal | Rust/axum | Do not choose Rust/axum for the web backend unless a later explicit decision changes the deployment target |
+| Local SQL driver | `better-sqlite3` | Good local/prototype option while the API contract is validated; revisit for Vercel production persistence |
 | JWT | `jose` | `jsonwebtoken` is unmaintained (2022); `jose` uses native Web Crypto, no OpenSSL binding issues |
 | Validation | `zod` | Smaller than Joi, great error messages, TypeScript-native |
 | CORS | `cors` (npm) | Standard; configure `CORS_ORIGIN` from env |
@@ -367,8 +423,11 @@ Same; step 4 finds existing user, updates `discord_username`.
 | Rate limiting | `express-rate-limit` (in-memory) | No Redis needed for single-process server |
 | Email | `resend` (prod), Nodemailer+Ethereal (dev) | Resend: generous free tier, simple API; Ethereal: zero-config local capture |
 | Discord OAuth | Raw `fetch()` calls | Only 3 HTTP calls; Passport.js fights stateless JWT flow; ~60 lines of transparent code |
-| Config | `dotenv` + `zod` in `config.js` | Fails fast at startup if env vars missing; all modules import from `config.js` not `process.env` |
+| Config | `dotenv` + `zod` in `config.ts` | Fails fast at startup if env vars missing; all modules import from `config.ts` not `process.env` |
 | File watching | `fs.watch` (built-in) | Sufficient for a flat directory of JSON files; no need for `chokidar` |
+| Discord bot | Rust service calling HTTP API | Rust is acceptable for the bot only; keep it isolated from frontend/backend deployment choices |
+
+If Vercel production hosting makes persistent SQLite operationally awkward, revisit the storage adapter before implementation and choose the simplest Vercel-native managed data store. The API contract and schema concepts should remain stable even if the physical database changes.
 
 ---
 
@@ -431,14 +490,15 @@ tournament_year, bout_id, distillery_id, source, source_ref, vote_count, voted_a
 ## Critical Implementation Files
 
 1. `server/db/migrations/001_initial_schema.sql` — full schema above
-2. `server/services/voteService.js` — dedup logic, cast vote, CSV import, tally query
-3. `server/data/loader.js` — JSON data cache + fs.watch reload + `forceReload()`
-4. `server/services/magicLinkService.js` — token generation, email send, verify
-5. `server/services/discordOAuthService.js` — OAuth2 flow, user upsert, account linking
-6. `server/middleware/auth.js` — JWT verify + session row lookup
-7. `server/middleware/requireServiceKey.js` — timingSafeEqual check for bot calls
-8. `data/bracket-2026.json` — organizer-maintained tournament file
-9. `data/distilleries.json` — distillery registry with slugs and metadata
+2. `server/services/voteService.ts` — dedup logic, cast vote, CSV import, tally query
+3. `server/data/loader.ts` — JSON data cache + fs.watch reload + `forceReload()`
+4. `server/services/magicLinkService.ts` — token generation, email send, verify
+5. `server/services/discordOAuthService.ts` — OAuth2 flow, user upsert, account linking
+6. `server/middleware/auth.ts` — JWT verify + session row lookup
+7. `server/middleware/requireServiceKey.ts` — timingSafeEqual check for bot calls
+8. `server/services/scheduleService.ts` — schedule import, admin overrides, effective status
+9. `data/bracket-2026.json` — organizer-maintained tournament file
+10. `data/distilleries.json` — distillery registry with slugs and metadata
 
 ---
 

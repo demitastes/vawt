@@ -14,6 +14,18 @@ Sequential task list with completion tracking and parallel development guidance.
 
 ## PHASE 1: Foundation (Data + Static Site)
 
+### Phase 1.0: Planning & Infrastructure Direction
+*Latest planning docs update moved from in progress to complete. Frontend implementation stays blocked until this planning commit lands.*
+
+- [x] ✅ Task 0: Update TODO planning/status for accepted React + TypeScript + Vite + Vercel direction
+- [x] ✅ Task 0.1: Classify Vercel link/install as infrastructure setup, not frontend feature work
+- [x] ✅ Task 0.2: Commit planning docs update before starting frontend implementation
+- [x] ✅ Task 0.3: Rewrite backend architecture plan away from Rust/axum toward a Vercel-maintainable backend
+
+**Dependencies**: Task 0.2 unblocks frontend implementation. Task 0.3 unblocks backend API implementation planning.
+
+---
+
 ### Phase 1.1: Data Transformation & Tournament Data
 *Blocker for all other work. Data pipelines working, distillery metadata in progress.*
 
@@ -30,25 +42,25 @@ Sequential task list with completion tracking and parallel development guidance.
 ---
 
 ### Phase 1.2: Static Website
-*Can start after Phase 1.1 data available. HTML skeleton exists, not yet consuming JSON.*
+*Frontend implementation not started yet. React + TypeScript + Vite + Vercel planning is accepted, and the planning commit has landed.*
 
-- [ ] 🚀 Task 8: Refactor `bracket.html` to load `/data/bracket-2026.json` dynamically
-- [ ] 🚫 Task 9: Render bracket structure (rounds → bouts) with distillery names and images
-- [ ] 🚫 Task 10: Add distillery profile modals (name, veteran-owned, founding date, awards, website link)
-- [ ] 🚫 Task 11: Add bout detail view (click bout → show participants, voting dates, vote counts)
-- [ ] 🚫 Task 12: Add search/filter by distillery name, round, or status
-- [ ] 🚫 Task 13: Add year/tournament selector (load different `/data/bracket-*.json` files)
+- [ ] 🚀 Task 8: Scaffold React + TypeScript + Vite frontend and migrate current static bracket entry point
+- [ ] 🚀 Task 9: Render bracket structure (rounds → bouts) with distillery names and images
+- [ ] 🚀 Task 10: Add distillery profile modals (name, veteran-owned, founding date, awards, website link)
+- [ ] 🚀 Task 11: Add bout detail view (click bout → show participants, voting dates, vote counts)
+- [ ] 🚀 Task 12: Add search/filter by distillery name, round, or status
+- [ ] 🚀 Task 13: Add year/tournament selector (load different `/data/bracket-*.json` files)
 - [ ] 🚫 Task 14: Add "View Results" link in bout details (show active voting if round is live)
 
-**Dependencies**: Task 4 (data) must be complete. Task 14 depends on Task 16 (voting system).
-**Parallel work**: Tasks 8-14 can run in parallel once Task 4 done.
+**Dependencies**: Task 4 (data) must be complete. Task 14 depends on Task 16 (read-only tournament API).
+**Parallel work**: Tasks 8-13 can run in parallel now; Task 14 waits for the read-only tournament API.
 
 ---
 
 ## PHASE 2: Backend API + Voting System
 
 ### Phase 2.1: API Infrastructure
-*Blocker for 2.2, 2.3, 2.4. Basic API structure in place, needs endpoints.*
+*Blocker for 2.2, 2.3, 2.4. Backend architecture direction has been clarified as Vercel-maintainable rather than Rust/axum.*
 
 - [x] ✅ Task 15: Set up Rust/axum API server (`api/` Cargo project) with middleware (CORS, JSON, error handling)
 - [x] ✅ Task 16: Implement read-only tournament endpoints (GET /tournaments/:year/bracket, /bouts, /rounds)
@@ -57,7 +69,7 @@ Sequential task list with completion tracking and parallel development guidance.
 - [ ] 🚫 Task 19: Add bracket validation (enforce voting windows, validate bout/pick IDs)
 - [ ] 🚫 Task 20: Add bracket scoring logic (calculate score, GET /brackets/:bracketId/score)
 
-**Dependencies**: Task 15 unblocks 16-20. Task 17 can start immediately.
+**Dependencies**: Task 15 unblocks 16-20. Public read-only pages do not require auth; voting and bracket ownership do.
 **Parallel work**: Tasks 16, 18-20 can parallelize once Task 15 done.
 
 ---
@@ -65,8 +77,8 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 2.2: Voting System
 *Depends on Phase 2.1. Feeds Phase 1.2 & 3.*
 
-- [x] ✅ Task 21: Design vote data schema (boutId, participantId, source, voter_id, timestamp, source_id)
-- [ ] 🚫 Task 22: Implement vote endpoints (POST /vote, GET /votes, GET /active-bout, GET /votes/results)
+- [x] ✅ Task 21: Design authenticated vote data schema (boutId, participantId, source, voter_id, timestamp, source_id)
+- [ ] 🚫 Task 22: Implement vote endpoints (authenticated POST /vote; public GET /votes, /active-bout, /votes/results)
 - [ ] 🚫 Task 23: Add vote storage (SQLite or in-memory JSON cache)
 - [ ] 🚫 Task 24: Implement vote aggregation by source (website, discord, twitter, instagram, mastodon, bluesky, threads)
 - [ ] 🚫 Task 25: Add historical vote import (admin endpoint to bulk import past voting data from CSV)
@@ -97,8 +109,8 @@ Sequential task list with completion tracking and parallel development guidance.
 *Depends on Phase 2.1.*
 
 - [ ] 🚀 Task 32: Add login/register UI to website (forms, JWT token storage in localStorage)
-- [ ] 🚫 Task 33: Build voting landing page (show active bout, participants, voting buttons)
-- [ ] 🚫 Task 34: Display vote count + source breakdown on landing page (website, discord, twitter, etc.)
+- [ ] 🚫 Task 33: Build voting landing page (public active bout view, authenticated voting buttons)
+- [ ] 🚫 Task 34: Display public vote count + source breakdown on landing page (website, discord, twitter, etc.)
 - [ ] 🚫 Task 35: Add "Create Bracket" button (authenticated users only, links to Task 40)
 
 **Dependencies**: Task 32 depends on Task 17 (auth endpoints). Tasks 33-35 depend on Task 22 (voting endpoints).
@@ -142,9 +154,13 @@ Sequential task list with completion tracking and parallel development guidance.
 - [ ] Task 48: Build admin dashboard (web UI for managing bracket data, votes, results)
 - [ ] Task 49: Implement real-time updates via WebSocket or SSE
 - [ ] Task 50: Add bout result submission (admin endpoint to set winners, notify users)
+- [ ] Task 51: Build admin scheduling UI for rounds, bouts, voting windows, and publish status
+- [ ] Task 52: Implement admin scheduling API for creating/updating voting windows and round status
+- [ ] Task 53: Add admin import workflow for bracket/vote CSV uploads with validation preview
+- [ ] Task 54: Add manual override tools for winners, vote totals, bout status, and schedule corrections
 
-**Dependencies**: 46-47 independent. Task 48 depends on 46-47. Task 49 depends on Task 22 (voting). Task 50 on Task 16.
-**Parallel work**: Voting admin (46-47) independent from UI (48); real-time (49) depends on vote system.
+**Dependencies**: 46-47 independent. Task 48 depends on 46-47. Task 49 depends on Task 22 (voting). Task 50 on Task 16. Tasks 51-54 depend on Task 15 and admin auth.
+**Parallel work**: Voting admin (46-47) independent from UI (48); scheduling/import/override planning can proceed once backend architecture is defined.
 
 ---
 
@@ -152,8 +168,12 @@ Sequential task list with completion tracking and parallel development guidance.
 
 **Task 4** ✅ (bracket data): Unblocks Tasks 8-14 (static site), 16, 23, 42-44
 
-**Task 15** 🔄 (API server): Unblocks Tasks 16-20 (endpoints), 22-25 (voting), 27-31 (Discord)
-- **HIGHEST PRIORITY** — this is the blocking issue
+**Task 0.2** ✅ (planning commit): Unblocks frontend implementation Tasks 8-14
+
+**Task 0.3** ✅ (backend architecture rewrite): Unblocks Task 15
+
+**Task 15** 🚫 (Vercel-maintainable API architecture): Unblocks Tasks 16-20 (endpoints), 22-25 (voting), 27-31 (Discord)
+- **HIGHEST PRIORITY** — this is the backend blocking issue
 
 **Task 17** 🚀 (user auth): Unblocks Tasks 32, 35, 40-41
 
@@ -163,41 +183,29 @@ Sequential task list with completion tracking and parallel development guidance.
 
 ---
 
-## Next Priorities (In Order)
-
-1. ✅ Task 15: Complete API server setup (done)
-2. ✅ Task 16: Implement tournament endpoints (done)
-3. ✅ Task 17: Implement user auth (done)
-4. 🚀 Task 18: Implement bracket CRUD (ready to start, depends on Task 17 ✅)
-5. ✅ Task 21: Design vote schema (done)
-6. 🚀 Task 22: Implement voting endpoints (ready to start, depends on Task 15 ✅)
-7. 🚀 Task 8: Refactor static site to use JSON (ready to start, Task 4 done)
-
----
-
 ## Suggested Parallel Work Allocation
 
 **Backend Team (2 people)**
-- Person A: Finish Task 15 + Task 17 (API setup + auth)
-- Person B: Task 16-20 (endpoints), then Task 21-25 (voting), then Task 26-31 (Discord)
+- Person A: Task 0.3 + Task 15 (Vercel-maintainable backend architecture)
+- Person B: Task 16-20 (public read endpoints, auth, bracket endpoints), then Task 21-25 (authenticated voting), then Task 26-31 (Discord)
 
 **Frontend Team (1-2 people)**
-- Person A: Task 8-14 (static site) — start now, Task 4 done
+- Person A: Task 8-13 (React + TypeScript + Vite bracket UI) — ready after this planning commit
 - Person B: Task 32-41 (login, voting UI) — blocked by Task 22
 
 ---
 
 ## Success Criteria by Phase
 
-**Phase 1 Complete**: Non-coders can edit `/data/bracket-2026.json`, website displays tournament bracket with distillery profiles.
+**Phase 1 Complete**: Planning commit is landed, non-coders can edit `/data/bracket-2026.json`, React + TypeScript + Vite frontend displays tournament bracket with distillery profiles on Vercel.
 
-**Phase 2 Complete**: Website and Discord bot query live data via REST API. Voting system operational. Vote results show source breakdown.
+**Phase 2 Complete**: Website and Discord bot query live data via Vercel-maintainable API. Read-only pages are public. Voting system requires auth. Vote results show source breakdown.
 
 **Phase 3 Complete**: Users create accounts, make bracket picks, track scores. Leaderboard displays all users' rankings.
 
 **Phase 4 Complete**: Users generate and share bracket images on social media.
 
-**Phase 5 Complete**: Organizers manage voting data, reconcile votes, post results. Real-time updates visible to users.
+**Phase 5 Complete**: Organizers manage schedules, import data, reconcile votes, manually override results/status when needed, and post results. Real-time updates visible to users.
 
 ---
 

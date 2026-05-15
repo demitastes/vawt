@@ -24,3 +24,4 @@ target/
 
 # Generated files
 data/bracket-*.json
+.vercel
