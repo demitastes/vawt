@@ -12,7 +12,6 @@ target/
 # Frontend
 node_modules/
 dist/
-public/data/*.json
 
 # Environment
 .env
