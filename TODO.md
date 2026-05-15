@@ -53,24 +53,29 @@ Avoid global "ready", "blocked", or "unblocked" labels in task lines. Agents sho
 ## PHASE 2: Backend API + Voting System
 
 ### Phase 2.1: API Infrastructure
-*Website backend direction is Vercel-maintainable. Rust is reserved for the Discord bot.*
+*Website backend is Node/Express + SQLite for Vercel compatibility. Rust/axum (`/api`) is parked; use as reference only. Discord bot stays in Rust.*
 
-- [x] Task 2.1.1: Set up Rust/axum API server (`api/` Cargo project) with middleware (CORS, JSON, error handling)
-- [x] Task 2.1.2: Implement read-only tournament endpoints (GET /tournaments/:year/bracket, /bouts, /rounds)
-- [x] Task 2.1.3: Implement user auth endpoints (POST /users/register, /login with JWT)
-- [ ] Task 2.1.4: Replace or rework the website backend plan to match the Vercel-maintainable architecture
-- [ ] Task 2.1.5: Implement bracket CRUD endpoints (POST/GET/PUT/DELETE /brackets/:bracketId)
-- [ ] Task 2.1.6: Add bracket validation (enforce voting windows, validate bout/pick IDs)
-- [ ] Task 2.1.7: Add bracket scoring logic (calculate score, GET /brackets/:bracketId/score)
+- [x] Task 2.1.1: Set up Rust/axum API server (`api/` Cargo project) — PARKED, use as reference for contract
+- [x] Task 2.1.2: Implement read-only tournament endpoints — PARKED, migrating to Node
+- [x] Task 2.1.3: Implement user auth endpoints — PARKED, migrating to Node
+- [x] Task 2.1.4: Finalize Vercel-maintainable architecture (Node/Express + SQLite, schema, env vars) — DONE by ARCHITECTURE.md
+- [ ] Task 2.1.5: Create Node/Express + SQLite backend (`/server` directory) with package.json, config, db setup
+- [ ] Task 2.1.6: Implement database client, migrations system, and initial schema (001_initial_schema.sql)
+- [ ] Task 2.1.7: Implement middleware (auth, validation, errorHandler, CORS, helmet, rate limiting)
+- [ ] Task 2.1.8: Implement health and tournament read-only endpoints (GET /api/tournaments/*, /api/distilleries/*)
+- [ ] Task 2.1.9: Implement auth endpoints (magic link, Discord OAuth, JWT, session management)
+- [ ] Task 2.1.10: Implement bracket CRUD endpoints (POST/GET/PUT/DELETE /api/brackets/:bracketId)
+- [ ] Task 2.1.11: Add bracket validation (enforce voting windows, validate bout/pick IDs)
+- [ ] Task 2.1.12: Add bracket scoring logic (calculate score, GET /api/brackets/:bracketId/score)
 
 ### Phase 2.2: Voting System
-*Authenticated voting and public result reads.*
+*Authenticated voting and public result reads, implemented in Node/Express.*
 
 - [x] Task 2.2.1: Design authenticated vote data schema (boutId, participantId, source, voter_id, timestamp, source_id)
-- [ ] Task 2.2.2: Implement vote endpoints (authenticated POST /vote; public GET /votes, /active-bout, /votes/results)
-- [ ] Task 2.2.3: Add vote storage (SQLite or Vercel-friendly persistent store)
-- [ ] Task 2.2.4: Implement vote aggregation by source (website, discord, twitter, instagram, mastodon, bluesky, threads)
-- [ ] Task 2.2.5: Add historical vote import (admin endpoint to bulk import past voting data from CSV)
+- [ ] Task 2.2.2: Implement vote endpoints in Node (POST /api/tournaments/:year/bouts/:boutId/vote; GET /api/tournaments/:year/votes, /active, /results)
+- [ ] Task 2.2.3: Add vote storage to SQLite schema (votes table with dedup logic, indexes)
+- [ ] Task 2.2.4: Implement voteService in Node (cast vote, dedup, aggregation by source)
+- [ ] Task 2.2.5: Add vote import service (admin endpoint to bulk import votes from CSV with validation)
 
 ### Phase 2.3: Discord Bot
 *Rust/poise bot consumes the shared API.*
@@ -156,6 +161,7 @@ Avoid global "ready", "blocked", or "unblocked" labels in task lines. Agents sho
 Append low-conflict progress notes here when a change should be recorded but editing the main task list would create avoidable merge conflicts. Periodically reconcile these notes into the relevant phase sections.
 
 - 2026-05-15: TODO numbering changed from global task numbers to phase-local `Task X.Y.Z` identifiers. Volatile ready/blocked status markers were removed.
+- 2026-05-15: Architectural decision made to park Rust/Axum backend and implement Node/Express + SQLite backend for Vercel compatibility. Phase 2.1 tasks renumbered to reflect Node implementation path. Rust `/api` directory now marked as reference/deprecated; new `/server` directory is the implementation target.
 
 ---
 

@@ -309,6 +309,32 @@ Record of key architectural and organizational decisions for the VAWT project.
 
 ---
 
+## Decision 13: Park Rust Backend, Implement Node/Express + SQLite
+
+**Date**: May 15, 2026
+**Status**: Accepted
+**Rationale**: Decision 5 (Technology Stack) specified a Vercel-maintainable backend using Node/TypeScript. A Rust/Axum implementation was created but does not align with Vercel deployment constraints. This decision clarifies and enforces the original architectural intent.
+
+**Action**:
+- The Rust API backend (`/api` directory with Cargo.toml, handlers, etc.) is **parked**. No further development on this codebase.
+- A new `/server` directory will be created with Node/TypeScript implementation matching ARCHITECTURE.md.
+- Existing Rust API endpoints are being migrated to Node/Express with the same REST contract.
+- Discord bot (`/discord-bot`) remains in Rust — Rust is appropriate for a long-running service outside Vercel.
+- The Rust `/api` directory will be deprecated and removed once the Node implementation is feature-complete.
+
+**Endpoint Parity**:
+- All endpoints specified in ARCHITECTURE.md lines 305-365 must be re-implemented in Node.
+- Database schema from ARCHITECTURE.md lines 126-216 is the source of truth (SQLite, not in-memory JSON).
+- Auth, validation, and error handling behaviors must match the spec exactly.
+
+**Rationale for delay**:
+- Vercel primarily supports Node/Python/Go, not Rust. Deploying Rust on Vercel requires workarounds.
+- Node/Express is more familiar to the team and easier to maintain.
+- SQLite + Node is well-supported and can run on Vercel or locally.
+- This decision aligns with the original architecture and reduces future migration effort.
+
+---
+
 ## Related Documents
 
 - **AGENTS.md**: Development guidance and architecture overview
