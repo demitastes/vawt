@@ -66,7 +66,7 @@
       display: grid;
       grid-template-columns: repeat(4, 148px) 180px repeat(4, 148px);
       gap: 24px;
-      min-height: 1260px;
+      min-height: 1px;
       padding: 10px 0;
       z-index: 1;
     }
@@ -91,7 +91,7 @@
 
     .round-column {
       position: relative;
-      min-height: 1200px;
+      min-height: 1px;
     }
 
     .round-column[data-side="left"] {
@@ -171,20 +171,17 @@
 
     .championship {
       position: relative;
-      display: flex;
-      min-height: 1200px;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-      gap: 18px;
+      min-height: 1px;
       text-align: center;
     }
 
     .championship .bout {
-      position: static;
+      position: absolute;
     }
 
     .champion {
+      position: absolute;
+      width: 100%;
       border: 2px solid #7c551d;
       border-radius: 8px;
       background: linear-gradient(180deg, #ffe9a8, #ffd769);
@@ -262,17 +259,6 @@
       return side === "left" ? round : 10 - round;
     }
 
-    function topPercent(round, bout) {
-      if (round === 5) return 50;
-      const sideBouts = rounds[round - 1].bouts / 2;
-      const sideIndex = Math.ceil(bout / 2);
-      return ((sideIndex - 0.5) / sideBouts) * 100;
-    }
-
-    function spacingNudge(round, bout) {
-      return round === 1 && bout === 16 ? 34 : 0;
-    }
-
     function boutSequence(round, bout) {
       return rounds.slice(0, round - 1).reduce((total, item) => total + item.bouts, 0) + bout;
     }
@@ -346,11 +332,6 @@
       boutEl.dataset.bout = bout;
       boutEl.dataset.side = round === 5 ? "center" : sideForBout(bout);
 
-      if (round !== 5) {
-        boutEl.style.top = `calc(${topPercent(round, bout)}% + ${spacingNudge(round, bout)}px)`;
-        boutEl.style.transform = "translateY(-50%)";
-      }
-
       const label = document.createElement("div");
       label.className = "bout-label";
       label.textContent = `Round ${round} Bout ${bout}`;
@@ -410,6 +391,63 @@
       return center;
     }
 
+    function boutElement(round, bout) {
+      return document.querySelector(`.bout[data-round="${round}"][data-bout="${bout}"]`);
+    }
+
+    function layoutBracket() {
+      const firstRoundGap = 46;
+      const edgePadding = 10;
+      const positions = new Map();
+
+      ["left", "right"].forEach((side) => {
+        let cursor = edgePadding;
+
+        for (let bout = 1; bout <= rounds[0].bouts; bout += 1) {
+          if (sideForBout(bout) !== side) continue;
+
+          const el = boutElement(1, bout);
+          positions.set(key(1, bout), cursor);
+          el.style.top = `${cursor}px`;
+          el.style.transform = "none";
+          cursor += el.offsetHeight + firstRoundGap;
+        }
+      });
+
+      for (let round = 2; round <= 5; round += 1) {
+        for (let bout = 1; bout <= rounds[round - 1].bouts; bout += 1) {
+          const el = boutElement(round, bout);
+          const feeders = feedersFor(round, bout);
+          const feederCenters = feeders.map((feeder) => {
+            const feederEl = boutElement(feeder.round, feeder.bout);
+            return positions.get(key(feeder.round, feeder.bout)) + (feederEl.offsetHeight / 2);
+          });
+          const center = feederCenters.reduce((total, item) => total + item, 0) / feederCenters.length;
+          const top = center - (el.offsetHeight / 2);
+
+          positions.set(key(round, bout), top);
+          el.style.top = `${top}px`;
+          el.style.transform = "none";
+        }
+      }
+
+      const finalBout = boutElement(5, 1);
+      const champion = document.querySelector(".champion");
+      const championTop = positions.get(key(5, 1)) + finalBout.offsetHeight + 18;
+      champion.style.top = `${championTop}px`;
+
+      const maxBottom = Math.max(
+        ...Array.from(document.querySelectorAll(".bout")).map((el) => el.offsetTop + el.offsetHeight),
+        championTop + champion.offsetHeight
+      ) + edgePadding;
+
+      bracket.style.height = `${maxBottom}px`;
+      document.querySelectorAll(".round-column, .championship").forEach((column) => {
+        column.style.height = `${maxBottom}px`;
+      });
+      connectors.style.height = `${maxBottom}px`;
+    }
+
     function drawConnectors() {
       connectors.innerHTML = "";
       const svgRect = connectors.getBoundingClientRect();
@@ -456,10 +494,16 @@
         bracket.appendChild(createColumn(round, "right"));
       }
 
-      requestAnimationFrame(drawConnectors);
+      requestAnimationFrame(() => {
+        layoutBracket();
+        drawConnectors();
+      });
     }
 
-    window.addEventListener("resize", drawConnectors);
+    window.addEventListener("resize", () => {
+      layoutBracket();
+      drawConnectors();
+    });
     render();
   </script>
 </body>
