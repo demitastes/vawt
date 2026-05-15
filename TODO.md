@@ -26,6 +26,12 @@ Both the website UI and Discord bot will consume a single REST API that serves t
 - `DELETE /api/brackets/:bracketId` - Delete user's bracket
 - `GET /api/users/:userId/brackets` - List all brackets for a user
 
+**Tournament Voting (Public)**
+- `GET /api/tournaments/:year/bouts/:boutId/votes` - Get aggregate vote counts and sources (discord, twitter, instagram, website, etc.)
+- `GET /api/tournaments/:year/active-bout` - Get the currently active bout for voting
+- `POST /api/tournaments/:year/bouts/:boutId/vote` - Submit a vote for a bout (requires authentication, or anonymous depending on config)
+- `GET /api/tournaments/:year/votes/results` - Get full voting results for all bouts with source breakdown
+
 **Admin Operations (Future)**
 - `POST /api/tournaments/:year/bouts/:boutId/result` - Set winner for a bout (admin only)
 - `PUT /api/tournaments/:year/rounds/:roundId` - Update round metadata (admin only)
@@ -161,15 +167,37 @@ Can start once Task 1.1.1 (JSON schema) is done. Uses generated JSON from Phase 
   - `GET /api/brackets/:bracketId/score` endpoint
   - Assignee: Backend developer
 
-### Phase 2.3: Discord Bot Integration (Depends on 2.1)
+### Phase 2.4: Voting System (Depends on 2.1)
 
-- [ ] **Task 2.3.1** - Create Discord bot project structure
+- [ ] **Task 2.4.1** - Design vote data schema
+  - Vote storage: boutId, participantId, source (website, discord, twitter, instagram, mastodon, bluesky, threads), source_id (tweet ID, discord msg ID, etc.), voter_id (optional, null for anonymous), timestamp
+  - Support flexible vote sources (new sources can be added without schema changes)
+  - Historical votes: import bulk voting data from past years
+  - Schema should track vote aggregates by source for transparency
+  - Assignee: Backend developer
+
+- [ ] **Task 2.4.2** - Implement vote endpoints
+  - `POST /api/tournaments/:year/bouts/:boutId/vote` - Submit vote (website users, Discord bot, or anonymous)
+  - `GET /api/tournaments/:year/bouts/:boutId/votes` - Get vote counts + breakdown by source
+  - `GET /api/tournaments/:year/active-bout` - Get current active bout (for landing page and Discord bot)
+  - `GET /api/tournaments/:year/votes/results` - Full results with source transparency
+  - Assignee: Backend developer
+
+- [ ] **Task 2.4.3** - Add vote storage
+  - Store votes in SQLite or JSON (depending on scale)
+  - Index by bout, source, timestamp for efficient queries
+  - Support vote aggregation (count votes per participant per bout, break down by source)
+  - Assignee: Backend developer
+
+### Phase 2.5: Discord Bot Integration (Depends on 2.1)
+
+- [ ] **Task 2.5.1** - Create Discord bot project structure
   - Separate `discord-bot/` directory (or monorepo)
   - Node.js with discord.js library
   - Configuration: Discord token, API base URL
   - Assignee: Discord bot developer
 
-- [ ] **Task 2.3.2** - Implement Discord commands
+- [ ] **Task 2.5.2** - Implement Discord commands
   - `/round` - Get current round and voting dates
   - `/bout <boutId>` - Get details on a specific bout
   - `/standings <bracketId>` - Get user's bracket score/progress
@@ -177,7 +205,12 @@ Can start once Task 1.1.1 (JSON schema) is done. Uses generated JSON from Phase 
   - `/help` - List all commands
   - Assignee: Discord bot developer
 
-- [ ] **Task 2.3.3** - Add real-time updates to Discord bot (Optional)
+- [ ] **Task 2.5.3** - Add Discord voting
+  - `/vote <boutId> <participant>` - Cast a vote for a bout from Discord
+  - Integration with vote endpoints (Task 2.4.2)
+  - Assignee: Discord bot developer
+
+- [ ] **Task 2.5.4** - Add real-time updates to Discord bot (Optional)
   - Polling or webhook: when a bout result is posted, announce in Discord channel
   - Assignee: Discord bot developer
 
@@ -201,22 +234,40 @@ Can start once Task 1.1.1 (JSON schema) is done. Uses generated JSON from Phase 
   - Show "Logout" + "My Brackets" when authenticated
   - Assignee: Frontend developer
 
-### Phase 3.2: Bracket Creation & Voting UI (Depends on 3.1.1)
+### Phase 3.2: Landing Page & Voting UI (Depends on 2.4)
 
-- [ ] **Task 3.2.1** - Add "Create Bracket" flow
+- [ ] **Task 3.2.1** - Build voting landing page
+  - Show current/active bout prominently
+  - Display both participants with voting buttons
+  - Show vote counts + source breakdown (website votes, Discord votes, Twitter votes, etc.)
+  - Works on desktop and mobile
+  - Anonymous voting allowed (no login required)
+  - Redirect logged-in users to their bracket after voting
+  - Assignee: Frontend developer
+
+- [ ] **Task 3.2.2** - Add voting results view
+  - Page/modal to see voting results for all bouts
+  - Breakdown by source (Discord, Twitter, Instagram, Mastodon, Bluesky, Threads, Website)
+  - Filter by round, sort by vote count
+  - Show historical voting data if available
+  - Assignee: Frontend developer
+
+### Phase 3.3: Bracket Creation & Prediction UI (Depends on 3.1.1)
+
+- [ ] **Task 3.3.1** - Add "Create Bracket" flow
   - Button to start new bracket for selected tournament/year
   - Call `POST /api/brackets`
   - Redirect to bracket-picking view
   - Assignee: Frontend developer
 
-- [ ] **Task 3.2.2** - Build interactive bracket picker
+- [ ] **Task 3.3.2** - Build interactive bracket picker
   - Display bracket rounds
   - User can click bouts to make picks (only within voting window)
   - Visual feedback for picks made vs. unpicked bouts
   - Call `PUT /api/brackets/:bracketId` to save picks
   - Assignee: Frontend developer
 
-- [ ] **Task 3.2.3** - Add bracket leaderboard view
+- [ ] **Task 3.3.3** - Add bracket leaderboard view
   - Show all users' scores for a tournament
   - Highlight logged-in user
   - Sortable by score, name, date created
@@ -247,17 +298,38 @@ Can start once Task 1.1.1 (JSON schema) is done. Uses generated JSON from Phase 
 
 ---
 
-## Phase 5: Admin Interface & Real-Time Updates (Future)
+## Phase 5: Admin Interface, Vote Import, & Real-Time Updates (Future)
 
-- [ ] **Task 5.1** - Implement real-time updates
-  - WebSocket or Server-Sent Events (SSE) for live bout results
-  - Notify users when results are posted
-  - Update leaderboards in real-time
+- [ ] **Task 5.1** - Build vote import infrastructure
+  - Admin endpoint: `POST /api/admin/votes/import` - bulk import votes from external sources
+  - Support CSV format: boutId, participantId, source, count, timestamp
+  - Flexible source field (discord, twitter, instagram, mastodon, bluesky, threads, etc.)
+  - Idempotent: importing the same data twice doesn't create duplicates
   - Assignee: Backend developer
 
-- [ ] **Task 5.2** - Build admin dashboard for tournament organizers (Optional)
+- [ ] **Task 5.2** - Implement historical voting data import
+  - Load past years' voting data (if available)
+  - Merge with current year's votes
+  - Backfill `/data/votes-*.json` or database with historical data
+  - Assignee: Backend developer
+
+- [ ] **Task 5.3** - Build vote source tracking & reconciliation
+  - Admin panel: view votes by source with timestamps
+  - Manual vote adjustment if needed (e.g., remove spam, correct double-counted votes)
+  - Export voting data for analysis
+  - Assignee: Backend developer
+
+- [ ] **Task 5.4** - Implement real-time updates
+  - WebSocket or Server-Sent Events (SSE) for live bout results and vote counts
+  - Notify users when new votes arrive
+  - Update leaderboards and vote displays in real-time
+  - Assignee: Backend developer
+
+- [ ] **Task 5.5** - Build admin dashboard for tournament organizers (Optional)
   - Web UI for editing `/data/bracket-*.json` (bout winners, dates, participant swaps)
-  - Currently: organizers edit JSON files directly
+  - Vote import interface
+  - Vote reconciliation/adjustment tools
+  - Currently: organizers edit JSON files directly and submit votes via admin endpoint
   - This UI can be added later if workflow becomes cumbersome
   - Assignee: Frontend developer + Backend developer
 
@@ -273,18 +345,20 @@ Can start once Task 1.1.1 (JSON schema) is done. Uses generated JSON from Phase 
 - Admin UI can be added in Phase 5 if editing JSON becomes cumbersome
 
 ### Parallel Development Strategy
-- **Data team** (1 person): Handles Phase 1.1 data transformation
-- **Frontend team** (1-2 people): Handles Phase 1.2 static site, then Phase 3 website UI
-- **Backend team** (1-2 people): Handles Phase 2 API, Discord bot
-- These workstreams can overlap significantly
+- **Data team** (1 person): Handles Phase 1.1 data transformation (distilleries, bracket schema)
+- **Frontend team** (1-2 people): Handles Phase 1.2 static site, then Phase 3 voting/landing page and bracket UI
+- **Backend team** (1-2 people): Handles Phase 2 API infrastructure, voting system (Phase 2.4), Discord bot (Phase 2.5), vote import (Phase 5)
+- **Voting and API can proceed in parallel** with bracket infrastructure (Phase 2.1-2.3 unlocks voting)
 
 ### Technology Choices (Recommended)
 - **Frontend**: Vanilla JS or lightweight framework (Vue/Svelte) if needed
 - **Backend**: Node.js + Express (lightweight, team-familiar for JS devs)
-- **Data storage**: JSON files initially (easy for non-coders), migrate to SQLite if complexity grows
+- **Data storage**: JSON files for tournament data (easy for non-coders), SQLite for user/vote data (scales better than JSON)
+- **Vote storage**: SQLite (or JSON initially, migrate to SQLite when vote volume grows)
 - **Auth**: JWT tokens (stateless, simple)
 - **Discord Bot**: discord.js library
 - **Image generation**: Puppeteer (headless browser) or Sharp + Canvas
+- **Real-time**: Server-Sent Events (SSE) for simplicity, or WebSocket if needed
 
 ### Testing Requirements
 Once Phase 1.1 is complete:
@@ -302,12 +376,12 @@ Once Phase 1.1 is complete:
 
 ## Success Criteria by Phase
 
-**Phase 1**: Non-technical users can edit BRACKET.md or CSV, and the website automatically updates to show the latest bracket structure.
+**Phase 1**: Non-technical users can edit BRACKET.md or CSV, and the website automatically updates to show the latest bracket structure. Distillery profiles visible to viewers.
 
-**Phase 2**: Website and Discord bot can both query live tournament data via the API. Data is single-source-of-truth.
+**Phase 2**: Website and Discord bot can both query live tournament data via the API. Voting system operational: votes can be cast from website, Discord, and imported from external sources. Vote results show source transparency.
 
-**Phase 3**: Users can create accounts, make bracket predictions, and compete on leaderboards.
+**Phase 3**: Users can see active bouts and vote on the website (anonymous or logged-in). Voting results visible with source breakdown. Users can create accounts, make bracket predictions, and compete on leaderboards.
 
 **Phase 4**: Users can generate and share bracket images on social media.
 
-**Phase 5**: Tournament organizers can manage everything from an admin panel without editing code.
+**Phase 5**: Voting data can be imported from multiple sources in bulk. Organizers can manage voting data and make adjustments. Real-time vote updates visible to users.
