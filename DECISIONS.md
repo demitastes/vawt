@@ -251,7 +251,15 @@ Record of key architectural and organizational decisions for the VAWT project.
 
 ## Review & Adjustment Log
 
-- **2026-05-15**: Initial decisions documented. All major phases and architectural choices captured.
+- **2026-05-15 (Initial)**: Initial decisions documented. All major phases and architectural choices captured.
+- **2026-05-15 (Progress)**: 
+  - Decision 1 (Shared REST API): ✅ Confirmed. Axum/Rust API implemented with tournament endpoints.
+  - Decision 5 (Technology Stack): ✅ Validated. Rust + axum for API, JWT for auth working well.
+  - Decision 7 (No Database Initially): ✅ In progress. Using JSON for vote storage; in-memory user store for now.
+  - Task 15-16 Complete: Read-only tournament API fully operational.
+  - Task 17 Complete: User auth with JWT tokens, bcrypt password hashing implemented.
+  - Task 21 Complete: Vote schema designed with hybrid real-time + cached aggregation approach.
+  - Ready for Tasks 18 (Bracket CRUD) and 22 (Vote endpoints) in parallel.
 
 ---
 
