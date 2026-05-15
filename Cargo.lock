@@ -2379,6 +2379,7 @@ dependencies = [
  "chrono",
  "dotenvy",
  "poise",
+ "reqwest",
  "serde",
  "serde_json",
  "tokio",

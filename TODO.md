@@ -80,11 +80,11 @@ Avoid global "ready", "blocked", or "unblocked" labels in task lines. Agents sho
 ### Phase 2.3: Discord Bot
 *Rust/poise bot consumes the shared API.*
 
-- [ ] Task 2.3.1: Set up Rust/poise Discord bot (`discord-bot/` Cargo project) with configuration
-- [ ] Task 2.3.2: Implement `/round` command (show current round + voting dates)
-- [ ] Task 2.3.3: Implement `/bout <boutId>` command (show participants + vote counts)
-- [ ] Task 2.3.4: Implement `/vote <boutId> <participant>` command
-- [ ] Task 2.3.5: Implement `/standings` and `/stats` commands
+- [x] Task 2.3.1: Set up Rust/poise Discord bot (`discord-bot/` Cargo project) with configuration
+- [x] Task 2.3.2: Implement `/round` command (show current round + voting dates)
+- [x] Task 2.3.3: Implement `/bout <boutId>` command (show participants + vote counts)
+- [x] Task 2.3.4: Implement `/vote <boutId> <participant>` command
+- [x] Task 2.3.5: Implement `/standings` and `/stats` commands
 - [ ] Task 2.3.6: Add real-time vote updates (polling or webhook to display live vote counts)
 
 ---
