@@ -15,6 +15,7 @@ async fn main() {
         .expect("failed to load tournament data");
     let state = state::AppState {
         tournaments: Arc::new(tournaments),
+        user_store: Arc::new(tokio::sync::RwLock::new(std::collections::HashMap::new())),
     };
 
     let app = router::build_router(state);

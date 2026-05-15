@@ -50,8 +50,8 @@ Sequential task list with completion tracking and parallel development guidance.
 ### Phase 2.1: API Infrastructure
 *Blocker for 2.2, 2.3, 2.4. Basic API structure in place, needs endpoints.*
 
-- [ ] 🔄 Task 15: Set up Rust/axum API server (`api/` Cargo project) with middleware (CORS, JSON, error handling)
-- [ ] 🚫 Task 16: Implement read-only tournament endpoints (GET /tournaments/:year/bracket, /bouts, /rounds)
+- [x] ✅ Task 15: Set up Rust/axum API server (`api/` Cargo project) with middleware (CORS, JSON, error handling)
+- [x] ✅ Task 16: Implement read-only tournament endpoints (GET /tournaments/:year/bracket, /bouts, /rounds)
 - [ ] 🚀 Task 17: Implement user auth endpoints (POST /users/register, /login with JWT)
 - [ ] 🚫 Task 18: Implement bracket CRUD endpoints (POST/GET/PUT/DELETE /brackets/:bracketId)
 - [ ] 🚫 Task 19: Add bracket validation (enforce voting windows, validate bout/pick IDs)

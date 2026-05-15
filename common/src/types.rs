@@ -57,3 +57,38 @@ pub struct TournamentMeta {
     pub start_date: NaiveDate,
     pub bout_count: usize,
 }
+
+// User authentication types
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct RegisterRequest {
+    pub email: String,
+    pub password: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct LoginRequest {
+    pub email: String,
+    pub password: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AuthResponse {
+    #[serde(rename = "userId")]
+    pub user_id: String,
+    pub email: String,
+    pub token: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct UserRecord {
+    pub id: String,
+    pub email: String,
+    pub password_hash: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct JwtClaims {
+    pub sub: String,           // user_id
+    pub email: String,
+    pub exp: u64,              // expiration timestamp
+}

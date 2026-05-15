@@ -13,4 +13,22 @@ pub enum VawtError {
 
     #[error("JSON parse error: {0}")]
     Json(#[from] serde_json::Error),
+
+    #[error("email {0} already registered")]
+    DuplicateEmail(String),
+
+    #[error("invalid email or password")]
+    InvalidCredentials,
+
+    #[error("invalid email format")]
+    InvalidEmail,
+
+    #[error("password must be at least 8 characters")]
+    InvalidPassword,
+
+    #[error("JWT error: {0}")]
+    JwtError(String),
+
+    #[error("password hashing error")]
+    PasswordHashError,
 }
