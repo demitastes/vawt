@@ -40,13 +40,13 @@ Avoid global "ready", "blocked", or "unblocked" labels in task lines. Agents sho
 ### Phase 1.2: React Frontend
 *React + TypeScript + Vite frontend implementation.*
 
-- [ ] Task 1.2.1: Scaffold React + TypeScript + Vite frontend and migrate current static bracket entry point
-- [ ] Task 1.2.2: Render bracket structure (rounds to bouts) with distillery names and images
-- [ ] Task 1.2.3: Add distillery profile modals (name, veteran-owned, founding date, awards, website link)
-- [ ] Task 1.2.4: Add bout detail view (click bout to show participants, voting dates, vote counts)
-- [ ] Task 1.2.5: Add search/filter by distillery name, round, or status
-- [ ] Task 1.2.6: Add year/tournament selector (load different `/data/bracket-*.json` files)
-- [ ] Task 1.2.7: Add "View Results" link in bout details (show active voting if round is live)
+- [x] Task 1.2.1: Scaffold React + TypeScript + Vite frontend and migrate current static bracket entry point
+- [x] Task 1.2.2: Render bracket structure (rounds to bouts) with distillery names and images
+- [x] Task 1.2.3: Add distillery profile modals (name, veteran-owned, founding date, awards, website link)
+- [x] Task 1.2.4: Add bout detail view (click bout to show participants, voting dates, vote counts)
+- [x] Task 1.2.5: Add search/filter by distillery name, round, or status
+- [x] Task 1.2.6: Add year/tournament selector (load different `/data/bracket-*.json` files)
+- [x] Task 1.2.7: Add "View Results" link in bout details (show active voting if round is live)
 
 ---
 

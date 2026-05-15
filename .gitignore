@@ -9,6 +9,11 @@ target/
 *.dylib
 *.dll
 
+# Frontend
+node_modules/
+dist/
+public/data/*.json
+
 # Environment
 .env
 .env.local

@@ -37,13 +37,17 @@ Start here to understand the project:
 
 ```
 vawt-website/
-├── bracket.html                 # Static website entry point
+├── index.html                   # Vite frontend entry point
+├── src/                         # React + TypeScript frontend source
+├── public/
+│   └── data/                    # Frontend-served copies of tournament JSON
 ├── data/
 │   ├── BRACKET.md              # Tournament bracket (source of truth for organizers)
 │   ├── TOURNAMENT_NOTES.md      # Tournament metadata and annotations
 │   ├── distilleries.json        # Distillery profiles (veteran-owned, etc.)
 │   └── bracket-2026.json        # Compiled normalized tournament data (auto-generated)
 ├── scripts/
+│   ├── sync-public-data.mjs     # Copy local tournament JSON into public/data for Vite
 │   ├── markdown-to-csv.js       # Convert BRACKET.md → CSV
 │   ├── csv-to-json.js           # Convert CSV → JSON
 │   └── build-data.sh            # Orchestrates data transformation pipeline
@@ -59,17 +63,26 @@ vawt-website/
 
 ## Quick Start
 
-### View the static website locally
+### Run the frontend locally
 ```bash
-open bracket.html
-# or serve via HTTP server if needed:
-python3 -m http.server 8000  # then open http://localhost:8000/bracket.html
+npm install
+npm run dev
 ```
+
+The Vite dev server prints a local URL, usually `http://localhost:5173`. The `predev` script automatically copies `data/bracket.json` into `public/data/bracket-2026.json` so the frontend can fetch tournament data without a backend.
+
+### Build and preview the frontend
+```bash
+npm run build
+npm run preview
+```
+
+`npm run build` runs TypeScript checking with `tsc --noEmit`, syncs local data into `public/data`, and creates the production bundle in `dist/`.
 
 ### Understand the data structure
 1. Read `data/BRACKET.md` — the raw bracket structure
-2. Run data transformation: `scripts/build-data.sh` (generates `data/bracket-2026.json`)
-3. View the normalized JSON output
+2. Inspect `data/bracket.json` — the current normalized JSON consumed by the frontend
+3. Run `npm run sync:data` after changing local JSON if you need to update `public/data` without starting Vite
 
 ## Key Architectural Decisions
 
@@ -93,7 +106,7 @@ Five phases with clear dependencies allow multiple teams to work simultaneously:
 - **Phases 3-5**: User features, social sharing, admin interface
 
 ### 4. **Technology Stack**
-- **Frontend**: Vanilla JavaScript or lightweight framework (Vue/Svelte)
+- **Frontend**: React + TypeScript + Vite
 - **Backend**: Node.js + Express
 - **Database**: SQLite (better-sqlite3)
 - **Authentication**: JWT tokens + optional magic links / Discord OAuth
@@ -104,15 +117,28 @@ See [DECISIONS.md](DECISIONS.md) and [ARCHITECTURE.md](ARCHITECTURE.md) for full
 
 ## Development Workflow
 
-### Running Tests
+### Frontend Checks
 ```bash
-npm test  # (once test infrastructure is in place)
+npm run build
 ```
+
+There is not a dedicated frontend test runner yet. For now, `npm run build` is the required frontend check because it verifies TypeScript and production bundling.
+
+For a local smoke test:
+1. Run `npm run dev`
+2. Open the Vite local URL
+3. Confirm the bracket loads, search/filter controls work, bout details open, and distillery profiles open
 
 ### Building Data
 ```bash
 ./scripts/build-data.sh
 # This converts: BRACKET.md → CSV → JSON
+```
+
+The frontend currently reads from `public/data/bracket-2026.json`, which is generated from `data/bracket.json` by:
+
+```bash
+npm run sync:data
 ```
 
 ### Backend Development
