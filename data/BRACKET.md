@@ -160,4 +160,3 @@ R1 B16:
 ## Bracket Notes
 
 - Veteran-owned status encoded in CSV/JSON (not in names)
-- *** = might need to remove J.H. Bards from B14 and move to B16, replacing Sleepy Fox. But for now use the brackets as written above.

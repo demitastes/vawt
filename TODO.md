@@ -247,29 +247,30 @@ Can start once Task 1.1.1 (JSON schema) is done. Uses generated JSON from Phase 
 
 ---
 
-## Phase 5: Admin Interface & Advanced Features (Future)
+## Phase 5: Admin Interface & Real-Time Updates (Future)
 
-- [ ] **Task 5.1** - Build admin dashboard for tournament organizers
-  - Upload/edit bracket data (or UI for it)
-  - Post bout winners
-  - Manage voting dates
-  - View all user brackets and scores
-  - Assignee: Frontend developer + Backend developer
-
-- [ ] **Task 5.2** - Implement real-time updates
+- [ ] **Task 5.1** - Implement real-time updates
   - WebSocket or Server-Sent Events (SSE) for live bout results
   - Notify users when results are posted
   - Update leaderboards in real-time
   - Assignee: Backend developer
 
+- [ ] **Task 5.2** - Build admin dashboard for tournament organizers (Optional)
+  - Web UI for editing `/data/bracket-*.json` (bout winners, dates, participant swaps)
+  - Currently: organizers edit JSON files directly
+  - This UI can be added later if workflow becomes cumbersome
+  - Assignee: Frontend developer + Backend developer
+
 ---
 
 ## Implementation Notes
 
-### Data Ownership
-- `/data/` directory is the source of truth for tournament structure
+### Data Ownership & Organizer Workflow
+- `/data/` directory is the source of truth for tournament structure and results
+- Organizers edit JSON data files directly (fastest path: no UI needed initially)
 - Users' bracket data stored separately (JSON file or database)
 - Keep these concerns separate: tournament structure ≠ user predictions
+- Admin UI can be added in Phase 5 if editing JSON becomes cumbersome
 
 ### Parallel Development Strategy
 - **Data team** (1 person): Handles Phase 1.1 data transformation
