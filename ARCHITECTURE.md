@@ -4,6 +4,17 @@
 
 Settling all backend/data/API architectural decisions before implementation begins. Frontend is deferred to a separate agent. The goal is a concrete, opinionated spec that any developer or agent can implement against without further architectural questions.
 
+### Extensibility Note
+
+This architecture uses "distillery" terminology but is intentionally generic and refactorable for future multi-organizer/multi-domain support. The bracket structure (rounds, bouts, contestants, voting) is completely domain-agnostic. To support a platform where Virginia Whiskey Tournament is one of many tournament organizers (e.g., NCAA brackets, Oscar predictions, sports tournaments), future refactoring would:
+- Rename `distillery_id` → `contestant_id` / `participant_id` in database and APIs
+- Rename `distilleries.json` → `participants.json` or `competitors.json`
+- Move distillery-specific metadata (veteran-owned, primary_products) into flexible `metadata` JSON fields
+- Add `tournament_organizer` or `organizer_id` field to support multiple independent tournaments
+- Namespace data files by organizer: `/data/organizers/vawt-2026/bracket.json` instead of `/data/bracket-2026.json`
+
+None of these refactorings require architectural changes — they're rename + schema refactoring. The core logic is already generic.
+
 ---
 
 ## Repo Structure
@@ -428,3 +439,80 @@ tournament_year, bout_id, distillery_id, source, source_ref, vote_count, voted_a
 7. `server/middleware/requireServiceKey.js` — timingSafeEqual check for bot calls
 8. `data/bracket-2026.json` — organizer-maintained tournament file
 9. `data/distilleries.json` — distillery registry with slugs and metadata
+
+---
+
+## Multi-Organizer Refactoring Path
+
+When expanding to support multiple tournament organizers on the same platform, these are the refactoring points (no architectural changes needed):
+
+### Database Schema Changes
+- Rename column: `votes.distillery_id` → `votes.contestant_id`
+- Rename column: `bracket_predictions.picks` JSON keys from `"distillery-slug"` → `"contestant-id"`
+- Add column: `votes.tournament_id` (foreign key to a new `tournaments` table)
+- Add column: `bracket_predictions.tournament_id`
+- Add table: `tournaments` with `(id, organizer_id, year, name, status, ...)`
+- Add table: `tournament_organizers` with `(id, slug, name, admin_user_id, ...)`
+
+### API Endpoint Changes
+- `/api/distilleries` → `/api/tournaments/:tournamentId/contestants`
+- `/api/tournaments/:year/bouts` → `/api/organizers/:organizerId/tournaments/:year/bouts`
+- Voting endpoint becomes: `POST /api/organizers/:organizerId/tournaments/:year/bouts/:boutId/vote`
+
+### Data File Organization
+Current (single organizer):
+```
+/data/bracket-2026.json
+/data/distilleries.json
+```
+
+Future (multi-organizer):
+```
+/data/organizers/vawt/2026/bracket.json
+/data/organizers/vawt/contestants.json
+/data/organizers/ncaa/2026/bracket.json
+/data/organizers/ncaa/contestants.json
+```
+
+### Participant Metadata Flexibility
+Current (hardcoded distillery fields):
+```json
+{
+  "id": "ko-distilling",
+  "name": "KO Distilling",
+  "veteran_owned": true,
+  "founding_year": 2015,
+  "primary_products": ["bourbon", "rye"],
+  "awards": []
+}
+```
+
+Future (flexible metadata):
+```json
+{
+  "id": "ko-distilling",
+  "name": "KO Distilling",
+  "metadata": {
+    "veteran_owned": true,
+    "founding_year": 2015,
+    "primary_products": ["bourbon", "rye"],
+    "awards": []
+  }
+}
+```
+
+Or organizer-specific schemas:
+```json
+{
+  "id": "alabama",
+  "name": "University of Alabama",
+  "metadata": {
+    "conference": "SEC",
+    "founded": 1831,
+    "mascot": "Crimson Tide"
+  }
+}
+```
+
+### Key Point
+The core bracket logic (rounds, bouts, advancement, voting, scoring) is **completely generic and requires zero changes**. Only naming and data organization change. The `contestants` array in the bracket JSON (line 199 of ARCHITECTURE.md) is already agnostic — it's just a list of IDs that map to contestant records.
