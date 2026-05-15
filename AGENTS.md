@@ -65,6 +65,19 @@ open bracket.html  # or serve via local HTTP server if needed for CORS
 3. **Parallel development**: Website, backend, and Discord bot can be developed independently as long as they all read from the same `/data` source (or a shared data API).
 4. **Phases**: Static site → Accounts & user bracket creation → Social sharing & image generation → Discord bot. Don't over-engineer early phases.
 
+## TODO.md Update Policy
+
+`TODO.md` is shared by multiple agents and should be edited with minimal churn.
+
+- Only update task lines that directly reflect work you completed, started, or newly discovered.
+- Do not rewrite dependency summaries, priority lists, or status analysis just to reflect your current local interpretation.
+- Do not add redundant progress notes if the task checkbox or a short appended note already captures the change.
+- Do not renumber unrelated tasks or reflow sections unless the user explicitly asks for a TODO structure cleanup.
+- When a change needs documentation but would touch lines other agents may also edit, append a short dated note to the end of `TODO.md` instead.
+- Periodically, a maintainer or coordinating agent will reconcile appended notes back into the main task list.
+- Avoid global "ready", "blocked", or "unblocked" status markers in task lines. Each agent should inspect the current code and docs to decide what is actually unblocked.
+- New tasks should use the local task namespace for their phase, such as `Task 1.2.3`, and should be inserted in implementation order inside the relevant phase.
+
 ## File Structure (Planned Growth)
 
 ```
