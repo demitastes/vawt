@@ -45,27 +45,37 @@ Both the website UI and Discord bot will consume a single REST API that serves t
 ### Phase 1.1: Data Transformation (Parallel)
 These tasks can start immediately and are blockers for all other phases.
 
-- [ ] **Task 1.1.1** - Design normalized JSON schema for bracket data
-  - Schema should support: tournaments, rounds, bouts, participants (distilleries), voting dates, results
-  - Support extensible metadata (notes, images, URLs)
-  - Create `data/schema.json` documenting the format
+- [ ] **Task 1.1.1** - Design normalized JSON schemas for bracket and distillery data
+  - **Bracket schema**: tournaments, rounds, bouts, participant IDs (by distillery ID), voting dates, results
+  - **Distillery schema**: id, name, veteran-owned (boolean), founding-date, location, products, awards, website, image-url
+  - Both should support extensible metadata
+  - Create `data/schema.json` documenting both formats
   - Assignee: Data-focused developer
 
-- [ ] **Task 1.1.2** - Write `scripts/markdown-to-csv.js`
+- [ ] **Task 1.1.2** - Create distilleries metadata file
+  - Create `/data/distilleries.csv` with columns: ID, Name, VeteranOwned (bool), FoundingDate, Location, Products, Awards, Website, ImageURL
+  - Populate with all distilleries from BRACKET.md (KO Distilling, Ironclad, etc.)
+  - Mark KO Distilling and Mean Spirits Distilling as veteran-owned
+  - This file is the source for distillery profile information
+  - Assignee: Data-focused developer
+
+- [ ] **Task 1.1.3** - Write `scripts/markdown-to-csv.js`
   - Parse `/data/BRACKET.md` and convert to CSV format
   - Output to `/data/bracket-2026.csv` (for spreadsheet editing)
-  - CSV columns: Round, Bout, Participant1, Participant2, Winner, VotingDateStart, VotingDateEnd
+  - CSV columns: Round, Bout, DistilleryID1, DistilleryID2, Winner, VotingDateStart, VotingDateEnd
+  - Use distillery IDs (from Task 1.1.2) instead of full names
   - Include notes/metadata columns
   - Assignee: Data-focused developer
 
-- [ ] **Task 1.1.3** - Write `scripts/csv-to-json.js`
-  - Parse CSV and convert to normalized JSON schema from Task 1.1.1
-  - Output to `/data/bracket-2026.json`
+- [ ] **Task 1.1.4** - Write `scripts/csv-to-json.js`
+  - Parse bracket CSV and distilleries CSV, merge with schema, output JSON
+  - Output to `/data/bracket-2026.json` (normalized bracket with bout IDs, round dates)
+  - Output to `/data/distilleries-2026.json` (enriched with profile data)
   - Make it idempotent (can re-run without issues)
   - Assignee: Data-focused developer
 
-- [ ] **Task 1.1.4** - Create `scripts/build-data.sh`
-  - Orchestrates: markdown → CSV → JSON pipeline
+- [ ] **Task 1.1.5** - Create `scripts/build-data.sh`
+  - Orchestrates: markdown + distilleries → CSV → JSON pipeline
   - One command to rebuild all data from source
   - Add to `package.json` as `npm run build:data`
 
@@ -84,14 +94,21 @@ Can start once Task 1.1.1 (JSON schema) is done. Uses generated JSON from Phase 
   - Display: participant names, bout numbers, winners (if available)
   - Assignee: Frontend developer
 
-- [ ] **Task 1.2.3** - Add bracket interactivity to static site
+- [ ] **Task 1.2.3** - Add distillery profile pages
+  - Click a distillery name in any bout → open modal/page showing profile
+  - Display: name, veteran-owned status, founding date, location, products, awards, website link
+  - Load profile data from `/data/distilleries-2026.json`
+  - Link back to bracket from profile (show all bouts featuring this distillery)
+  - Assignee: Frontend developer
+
+- [ ] **Task 1.2.4** - Add bracket interactivity to static site
   - Click a bout to see details (participants, voting dates, etc.)
   - Filter/search by distillery name
   - Show bout status (voting open/closed, results available)
   - Timeline view showing past/current/upcoming rounds
   - Assignee: Frontend developer
 
-- [ ] **Task 1.2.4** - Add tournament year selection UI
+- [ ] **Task 1.2.5** - Add tournament year selection UI
   - Dropdown or tab to switch between years (read from `/data/bracket-*.json` files)
   - Load and display data for selected year
   - Assignee: Frontend developer

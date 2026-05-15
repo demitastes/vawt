@@ -83,14 +83,14 @@ Round 1 Bout 2 Bracket:
 - Springfield Distillery
 
 R1 B3:
-- KO Distilling*
-- Mean Spirits Distilling*
+- KO Distilling
+- Mean Spirits Distilling
 - Reservoir Distillery
 
 R1 B4:
 - Deep Creek
 - Five Mile Mountain
-- Ironclad*
+- Ironclad
 
 R1 B5:
 - River Hill
@@ -159,5 +159,5 @@ R1 B16:
 
 ## Bracket Notes
 
-- \* = Veteran-owned
-- \*\*\* = might need to remove J.H. Bards from B14 and move to B16, replacing Sleepy Fox. But for now use the brackets as written above.
+- Veteran-owned status encoded in CSV/JSON (not in names)
+- *** = might need to remove J.H. Bards from B14 and move to B16, replacing Sleepy Fox. But for now use the brackets as written above.
