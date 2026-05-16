@@ -298,6 +298,7 @@ Record of key architectural and organizational decisions for the VAWT project.
 - **2026-05-15**: Initial decisions documented. All major phases and architectural choices captured.
 - **2026-05-15**: Accepted React + TypeScript + Vite on Vercel, Vercel-maintainable backend direction, Rust only for Discord bot, authenticated-only voting, public read-only tournament data, earlier admin scheduling/import/manual override capability, and homepage active-bout personalization by authenticated vote status.
 - **2026-05-15**: Implemented the React + TypeScript + Vite frontend at the repository root. The app currently reads local bracket JSON from `public/data`, supports bracket browsing, search/filter controls, bout detail views, distillery profile fallbacks, local winner selection, and a year selector seeded with 2026.
+- **2026-05-15**: Added Phase 3 frontend scaffolding without backend dependencies: mock localStorage auth, public active-bout voting UI, seeded vote/source breakdowns, tracked `public/data/distilleries.json`, and localStorage-backed authenticated draft bracket picks. API-backed vote persistence, bracket saves, scoring, saved bracket lists, and leaderboards remain open backend/frontend integration work.
 - **2026-05-15 (Progress)**:
   - Decision 1 (Shared REST API): ✅ Confirmed. Axum/Rust API implemented with tournament endpoints.
   - Decision 5 (Technology Stack): ✅ Validated. Rust + axum for API, JWT for auth working well.

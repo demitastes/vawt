@@ -79,6 +79,16 @@ npm run dev
 - Avoid global "ready", "blocked", or "unblocked" status markers in task lines. Each agent should inspect the current code and docs to decide what is actually unblocked.
 - New tasks should use the local task namespace for their phase, such as `Task 1.2.3`, and should be inserted in implementation order inside the relevant phase.
 
+## Progress & Decision Documentation Policy
+
+When work changes project progress, architecture, or accepted direction, update `TODO.md`, `ARCHITECTURE.md`, and `DECISIONS.md` as part of the same handoff.
+
+- Keep updates proportional to the change: task checkboxes, a short progress note, or a narrow architecture/decision note is usually enough.
+- Do not rewrite broad plans, dependency summaries, or old rationale just to match current wording preferences.
+- Do not reflow unrelated sections, renumber unrelated tasks, or make cosmetic edits in these shared docs.
+- If a code change only implements an already-documented task with no architectural impact, prefer updating the relevant checkbox or adding one concise dated note.
+- If a change introduces a new pattern, source of truth, runtime dependency, deployment assumption, or cross-system contract, document that in `ARCHITECTURE.md` or `DECISIONS.md`.
+
 ## File Structure (Planned Growth)
 
 ```

@@ -162,6 +162,7 @@ Append low-conflict progress notes here when a change should be recorded but edi
 
 - 2026-05-15: TODO numbering changed from global task numbers to phase-local `Task X.Y.Z` identifiers. Volatile ready/blocked status markers were removed.
 - 2026-05-15: Architectural decision made to park Rust/Axum backend and implement Node/Express + SQLite backend for Vercel compatibility. Phase 2.1 tasks renumbered to reflect Node implementation path. Rust `/api` directory now marked as reference/deprecated; new `/server` directory is the implementation target.
+- 2026-05-15: Phase 3.1 frontend scaffolding completed with local mock auth, public active-bout voting UI, seeded vote/source breakdowns, and authenticated Create Bracket CTA. Phase 3.2.1-3.2.2 completed with localStorage-backed draft picks and bracket state styling; API persistence/scoring/list/leaderboard tasks remain open.
 
 ---
 

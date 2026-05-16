@@ -97,6 +97,8 @@ vawt-website/
 
 The production frontend should be a React + TypeScript + Vite application. It should remain data-driven: public tournament pages read normalized tournament JSON/API responses, while authenticated views add user-specific voting and bracket state.
 
+The current frontend implementation is intentionally local-first until the Vercel backend is rebuilt: mock auth sessions, local website vote selections, and draft bracket picks are stored in `localStorage`. Public bracket and distillery data are served from `public/data`, including tracked bootstrap copies of `bracket.json`, `bracket-2026.json`, and `distilleries.json`.
+
 **Public read-only site:**
 - Anyone can browse tournament years, distilleries, bouts, vote totals, winners, and bracket state without logging in
 - Public pages never expose write controls; unauthenticated users should see clear sign-in entry points only when a voting action would otherwise be available
@@ -105,9 +107,16 @@ The production frontend should be a React + TypeScript + Vite application. It sh
 **Authenticated voting UX:**
 - Website voting requires login; no anonymous website votes
 - Logged-in users should see a focused "active bouts" surface that lists only bouts currently available for them to vote on
+- Until API endpoints exist, the frontend may use seeded local vote totals and localStorage-backed user vote state as a UI scaffold
 - Active bout eligibility is computed by joining the current user's id against the `votes` table, using `(tournament_year, bout_id, user_id, source = 'website')`
 - Bouts the user has already voted on should disappear from the primary active-voting list, while still being viewable in read-only result/detail screens
 - Vote submissions should be idempotent from the user's perspective: duplicate website votes return a clear already-voted state instead of creating another row
+
+**Interactive bracket picker UX:**
+- Bracket picks require a signed-in session in the frontend
+- Draft picks may persist locally until bracket CRUD endpoints exist
+- Picked, unpicked, blocked, live, upcoming, and closed bout states should be visually distinct
+- API persistence, scoring, saved bracket lists, and leaderboards remain backend-dependent follow-up work
 
 **Non-technical admin UX:**
 - Admin screens should optimize for organizers who are comfortable with spreadsheets and forms, not code
