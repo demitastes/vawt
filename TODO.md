@@ -94,16 +94,16 @@ Avoid global "ready", "blocked", or "unblocked" labels in task lines. Agents sho
 ### Phase 3.1: Website Login/Voting Landing Page
 *Public read-only information with authenticated voting controls.*
 
-- [ ] Task 3.1.1: Add login/register UI to website (forms, JWT token storage in localStorage)
-- [ ] Task 3.1.2: Build voting landing page (public active bout view, authenticated voting buttons)
-- [ ] Task 3.1.3: Display public vote count + source breakdown on landing page (website, discord, twitter, etc.)
-- [ ] Task 3.1.4: Add "Create Bracket" button (authenticated users only, links to Task 3.2.5)
+- [x] Task 3.1.1: Add login/register UI to website (forms, JWT token storage in localStorage)
+- [x] Task 3.1.2: Build voting landing page (public active bout view, authenticated voting buttons)
+- [x] Task 3.1.3: Display public vote count + source breakdown on landing page (website, discord, twitter, etc.)
+- [x] Task 3.1.4: Add "Create Bracket" button (authenticated users only, links to Task 3.2.5)
 
 ### Phase 3.2: Interactive Bracket Picker
 *Authenticated user bracket creation, editing, scoring, and ranking.*
 
-- [ ] Task 3.2.1: Build interactive bracket picker UI (show all rounds, click to pick winners)
-- [ ] Task 3.2.2: Add visual feedback (highlight picked/unpicked bouts, show voting window status)
+- [x] Task 3.2.1: Build interactive bracket picker UI (show all rounds, click to pick winners)
+- [x] Task 3.2.2: Add visual feedback (highlight picked/unpicked bouts, show voting window status)
 - [ ] Task 3.2.3: Save picks to API (PUT /brackets/:bracketId on each pick change)
 - [ ] Task 3.2.4: Show user's current bracket score on page
 - [ ] Task 3.2.5: Add "Your Brackets" page (list user's brackets, allow delete/view)

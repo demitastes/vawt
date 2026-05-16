@@ -2,12 +2,17 @@ import { useEffect, useMemo, useState } from "react";
 import {
   boutKey,
   buildBouts,
-  clearDownstream,
   columnFor,
   entrantId,
   initialsFor,
 } from "./bracket";
+import { AuthPanel } from "./AuthPanel";
+import { loadSession } from "./authSession";
+import { useDraftBracketPicks } from "./pickerState";
+import { VotingLanding } from "./VotingLanding";
+import type { AuthSession } from "./authSession";
 import type { Bout, BracketData, DistilleryProfile } from "./types";
+import { getVotingWindowStatus, type VotingWindowStatus } from "./votingWindows";
 
 const TOURNAMENTS = [
   { year: "2026", label: "2026", dataUrl: "/data/bracket-2026.json" },
@@ -114,18 +119,20 @@ export function App() {
   const [selectedTournament, setSelectedTournament] = useState(TOURNAMENTS[0]);
   const [data, setData] = useState<BracketData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [winners, setWinners] = useState(() => new Map<string, string>());
+  const { picks, selectPick, resetPicks } = useDraftBracketPicks(selectedTournament.year);
   const [profiles, setProfiles] = useState(() => new Map<string, DistilleryProfile>());
   const [query, setQuery] = useState("");
   const [roundFilter, setRoundFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [detail, setDetail] = useState<DetailState>(null);
+  const [session, setSession] = useState<AuthSession | null>(() => loadSession());
+  const [selectedVotes, setSelectedVotes] = useState(() => new Map<string, string>());
+  const [bracketCtaMessage, setBracketCtaMessage] = useState<string | null>(null);
 
   useEffect(() => {
     let ignore = false;
     setData(null);
     setLoadError(null);
-    setWinners(new Map());
     setProfiles(new Map());
 
     fetch(selectedTournament.dataUrl)
@@ -150,8 +157,15 @@ export function App() {
     };
   }, [selectedTournament]);
 
-  const bouts = useMemo(() => (data ? buildBouts(data, winners) : []), [data, winners]);
+  const bouts = useMemo(() => (data ? buildBouts(data, picks) : []), [data, picks]);
   const normalizedQuery = query.trim().toLowerCase();
+  const pickStats = useMemo(() => {
+    const pickableBouts = bouts.filter((bout) => !bout.entrants.some(isPlaceholder));
+    return {
+      made: pickableBouts.filter((bout) => Boolean(bout.winner)).length,
+      total: pickableBouts.length,
+    };
+  }, [bouts]);
 
   const visibleBoutIds = useMemo(() => {
     return new Set(
@@ -169,19 +183,20 @@ export function App() {
     );
   }, [bouts, normalizedQuery, roundFilter, statusFilter]);
 
-  const champion = winners.get(boutKey(5, 1));
-
-  function selectWinner(round: number, bout: number, winner: string) {
-    setWinners((current) => {
-      const next = clearDownstream(current, round, bout);
-      next.set(boutKey(round, bout), winner);
-      return next;
-    });
-  }
+  const champion = picks.get(boutKey(5, 1));
+  const picksEnabled = Boolean(session);
 
   function openDistillery(name: string, sourceBout: Bout) {
     const profile = profiles.get(name);
     if (profile) setDetail({ type: "distillery", profile, sourceBout });
+  }
+
+  function saveLocalVote(boutId: string, entrant: string) {
+    setSelectedVotes((current) => new Map(current).set(boutId, entrant));
+  }
+
+  function handleCreateBracket() {
+    setBracketCtaMessage("Your bracket picker is ready below. Pick winners in the bracket and your draft saves in this browser.");
   }
 
   if (loadError) {
@@ -207,11 +222,38 @@ export function App() {
           <p className="eyebrow">Virginia Whiskey Tournament</p>
           <h1>{data.title}</h1>
         </div>
-        <div className="champion-panel">
-          <span>Champion</span>
-          <strong>{champion || "To be decided"}</strong>
+        <div className="masthead-actions">
+          <AuthPanel session={session} onSessionChange={setSession} />
+          <div className="champion-panel">
+            <span>Champion</span>
+            <strong>{champion || "To be decided"}</strong>
+          </div>
         </div>
       </header>
+
+      <VotingLanding
+        data={data}
+        bouts={bouts}
+        profiles={profiles}
+        session={session}
+        selectedVotes={selectedVotes}
+        onVote={saveLocalVote}
+        onCreateBracket={handleCreateBracket}
+      />
+
+      {bracketCtaMessage ? <p className="inline-status">{bracketCtaMessage}</p> : null}
+
+      <section className="draft-summary" aria-label="Draft bracket progress">
+        <div>
+          <span>Draft picks</span>
+          <strong>
+            {picksEnabled ? `${pickStats.made} of ${pickStats.total} ready bouts picked` : "Sign in to start a draft bracket"}
+          </strong>
+        </div>
+        <button type="button" onClick={resetPicks} disabled={!picksEnabled || picks.size === 0}>
+          Reset picks
+        </button>
+      </section>
 
       <section className="controls" aria-label="Bracket filters">
         <label>
@@ -271,7 +313,9 @@ export function App() {
               bouts={bouts}
               visibleBoutIds={visibleBoutIds}
               profiles={profiles}
-              onSelectWinner={selectWinner}
+              bracketData={data}
+              picksEnabled={picksEnabled}
+              onSelectWinner={selectPick}
               onOpenBout={(bout) => setDetail({ type: "bout", bout })}
               onOpenDistillery={openDistillery}
             />
@@ -286,7 +330,9 @@ export function App() {
                   bout={bout}
                   isDimmed={!visibleBoutIds.has(bout.id)}
                   profiles={profiles}
-                  onSelectWinner={selectWinner}
+                  bracketData={data}
+                  picksEnabled={picksEnabled}
+                  onSelectWinner={selectPick}
                   onOpenBout={() => setDetail({ type: "bout", bout })}
                   onOpenDistillery={openDistillery}
                 />
@@ -301,7 +347,9 @@ export function App() {
               bouts={bouts}
               visibleBoutIds={visibleBoutIds}
               profiles={profiles}
-              onSelectWinner={selectWinner}
+              bracketData={data}
+              picksEnabled={picksEnabled}
+              onSelectWinner={selectPick}
               onOpenBout={(bout) => setDetail({ type: "bout", bout })}
               onOpenDistillery={openDistillery}
             />
@@ -309,7 +357,7 @@ export function App() {
         </div>
       </section>
 
-      {detail ? <DetailDialog detail={detail} onClose={() => setDetail(null)} /> : null}
+      {detail ? <DetailDialog detail={detail} bracketData={data} onClose={() => setDetail(null)} /> : null}
     </main>
   );
 }
@@ -320,6 +368,8 @@ function RoundColumn({
   bouts,
   visibleBoutIds,
   profiles,
+  bracketData,
+  picksEnabled,
   onSelectWinner,
   onOpenBout,
   onOpenDistillery,
@@ -329,6 +379,8 @@ function RoundColumn({
   bouts: Bout[];
   visibleBoutIds: Set<string>;
   profiles: Map<string, DistilleryProfile>;
+  bracketData: BracketData;
+  picksEnabled: boolean;
   onSelectWinner: (round: number, bout: number, winner: string) => void;
   onOpenBout: (bout: Bout) => void;
   onOpenDistillery: (name: string, sourceBout: Bout) => void;
@@ -345,6 +397,8 @@ function RoundColumn({
             bout={bout}
             isDimmed={!visibleBoutIds.has(bout.id)}
             profiles={profiles}
+            bracketData={bracketData}
+            picksEnabled={picksEnabled}
             onSelectWinner={onSelectWinner}
             onOpenBout={() => onOpenBout(bout)}
             onOpenDistillery={onOpenDistillery}
@@ -364,6 +418,8 @@ function BoutCard({
   bout,
   isDimmed,
   profiles,
+  bracketData,
+  picksEnabled,
   onSelectWinner,
   onOpenBout,
   onOpenDistillery,
@@ -371,15 +427,22 @@ function BoutCard({
   bout: Bout;
   isDimmed: boolean;
   profiles: Map<string, DistilleryProfile>;
+  bracketData: BracketData;
+  picksEnabled: boolean;
   onSelectWinner: (round: number, bout: number, winner: string) => void;
   onOpenBout: () => void;
   onOpenDistillery: (name: string, sourceBout: Bout) => void;
 }) {
+  const hasPlaceholder = bout.entrants.some(isPlaceholder);
+  const windowStatus = getVotingWindowStatus(bracketData, bout);
+  const stateClass = bout.winner ? "is-picked" : hasPlaceholder ? "is-blocked" : "is-unpicked";
+
   return (
-    <article className={`bout-card${isDimmed ? " is-dimmed" : ""}`}>
+    <article className={`bout-card ${stateClass} is-window-${windowStatus.key}${isDimmed ? " is-dimmed" : ""}`}>
       <button type="button" className="bout-summary" onClick={onOpenBout}>
         <span>{bout.label}</span>
         <strong>{bout.date}</strong>
+        <StatusPill status={windowStatus} />
       </button>
       <div className="competitor-list">
         {bout.entrants.map((entrant) => {
@@ -390,8 +453,9 @@ function BoutCard({
               <button
                 type="button"
                 className="competitor-pick"
-                disabled={placeholder}
+                disabled={placeholder || !picksEnabled}
                 onClick={() => onSelectWinner(bout.round, bout.bout, entrant)}
+                aria-pressed={bout.winner === entrant}
               >
                 <span className="avatar" aria-hidden="true">
                   {profile?.imageUrl ? <img src={profile.imageUrl} alt="" loading="lazy" /> : profile?.initials || "?"}
@@ -416,7 +480,23 @@ function BoutCard({
   );
 }
 
-function DetailDialog({ detail, onClose }: { detail: DetailState; onClose: () => void }) {
+function StatusPill({ status }: { status: VotingWindowStatus }) {
+  return (
+    <span className={`status-pill status-pill--${status.key}`} title={status.description}>
+      {status.label}
+    </span>
+  );
+}
+
+function DetailDialog({
+  detail,
+  bracketData,
+  onClose,
+}: {
+  detail: DetailState;
+  bracketData: BracketData;
+  onClose: () => void;
+}) {
   if (!detail) return null;
 
   const title = detail.type === "bout" ? detail.bout.label : detail.profile.name;
@@ -436,14 +516,15 @@ function DetailDialog({ detail, onClose }: { detail: DetailState; onClose: () =>
             Close
           </button>
         </div>
-        {detail.type === "bout" ? <BoutDetails bout={detail.bout} /> : <DistilleryDetails {...detail} />}
+        {detail.type === "bout" ? <BoutDetails bout={detail.bout} bracketData={bracketData} /> : <DistilleryDetails {...detail} />}
       </section>
     </div>
   );
 }
 
-function BoutDetails({ bout }: { bout: Bout }) {
+function BoutDetails({ bout, bracketData }: { bout: Bout; bracketData: BracketData }) {
   const totalVotes = Object.values(bout.voteCounts ?? {}).reduce((total, count) => total + count, 0);
+  const windowStatus = getVotingWindowStatus(bracketData, bout);
 
   return (
     <div className="detail-content">
@@ -455,6 +536,10 @@ function BoutDetails({ bout }: { bout: Bout }) {
         <div>
           <dt>Status</dt>
           <dd>{statusFor(bout)}</dd>
+        </div>
+        <div>
+          <dt>Voting window</dt>
+          <dd>{windowStatus.description}</dd>
         </div>
         <div>
           <dt>Vote counts</dt>

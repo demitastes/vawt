@@ -43,14 +43,18 @@ export function parseLocalDate(value: string) {
 }
 
 export function formatBoutDate(data: BracketData, round: number, bout: number) {
-  const start = parseLocalDate(data.startDate);
-  const date = new Date(start);
-  date.setDate(start.getDate() + (boutSequence(data, round, bout) - 1) * 7);
-  return date.toLocaleDateString("en-US", {
+  return parseBoutDate(data, round, bout).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
+}
+
+export function parseBoutDate(data: BracketData, round: number, bout: number) {
+  const start = parseLocalDate(data.startDate);
+  const date = new Date(start);
+  date.setDate(start.getDate() + (boutSequence(data, round, bout) - 1) * 7);
+  return date;
 }
 
 export function feedersFor(round: number, bout: number): BoutRef[] {
