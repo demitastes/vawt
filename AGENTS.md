@@ -110,13 +110,25 @@ vawt-website/
 
 ## Testing
 
-Currently minimal testing is needed for the frontend. As the project grows:
-- Build checks for the React frontend (`npm run build`)
+### Frontend Build & Responsiveness
+
+Always run before committing changes:
+```bash
+npm run build
+npm run dev
+```
+
+**Critical: Test responsive layout** on changes to layout, CSS, or component structure:
+- Desktop view (1024px+): All components visible, grid/flex layouts working
+- Mobile view (375px): Vertical stacking, readable, all interactive elements accessible
+- Tablet view (768px): Intermediate breakpoint handling
+- Resize browser during testing: Ensure smooth transitions between breakpoints
+
+Test scripts for responsive verification (when developing on static/baseline HTML):
+- `node test_responsive.js` — Static checks for responsive CSS/JS
+- `node test_responsive_visual.js` — Playwright visual verification (requires `npm install -g @playwright/test`)
+
+**Future automated testing** as the project grows:
 - Unit tests for data transformation scripts (JS/Node)
 - Integration tests for backend API endpoints
 - E2E tests for the website (bracket exploration) and Discord bot commands
-
-Run frontend checks:
-```bash
-npm run build
-```

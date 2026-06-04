@@ -825,6 +825,99 @@ h1 {
   }
 }
 
+@media (max-width: 719px) {
+  .bracket-shell {
+    overflow-x: visible;
+    padding: 16px;
+  }
+
+  .bracket-grid {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: unset;
+    gap: 40px;
+    width: 100%;
+    min-width: auto;
+  }
+
+  .round-column {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .round-column h2 {
+    position: static;
+    font-size: 12px;
+    padding: 4px 0;
+  }
+
+  .round-column[data-side="left"],
+  .round-column[data-side="right"] {
+    text-align: center;
+  }
+
+  .bout-stack {
+    padding-top: 0 !important;
+    gap: 12px !important;
+  }
+
+  .bout-card {
+    border-radius: 6px;
+    box-shadow: 0 8px 18px rgba(34, 38, 38, 0.08);
+  }
+
+  .bout-summary {
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+
+  .bout-summary span {
+    font-size: 10px;
+  }
+
+  .bout-summary strong {
+    font-size: 11px;
+  }
+
+  .competitor-list {
+    gap: 0;
+  }
+
+  .competitor-row {
+    min-height: 36px;
+  }
+
+  .competitor-pick {
+    min-height: 36px;
+    padding: 5px 6px;
+    font-size: 11px;
+  }
+
+  .competitor-pick span:last-child {
+    font-size: 11px;
+  }
+
+  .avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .championship {
+    padding-top: 40px;
+    margin-top: 20px;
+  }
+
+  .champion-badge {
+    margin-top: 12px;
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 560px) {
   .masthead,
   .voting-landing,
@@ -854,5 +947,9 @@ h1 {
 
   .bracket-shell {
     padding-inline: 14px;
+  }
+
+  h1 {
+    font-size: clamp(24px, 5vw, 70px);
   }
 }
