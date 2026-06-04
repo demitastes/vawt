@@ -83,12 +83,44 @@ vawt-website/
 
 ## Testing
 
-Currently minimal testing needed (static HTML). As the project grows:
+### Responsive Layout Tests (Critical - Run Before Merging Changes)
+
+**DO NOT create ad-hoc test commands.** Use the formal test suites instead:
+
+#### Static checks (no browser needed):
+```bash
+node test_responsive.js
+```
+Verifies that all CSS media queries, JavaScript mobile detection, and positioning overrides are in place. Run this first.
+
+#### Visual verification (requires Playwright):
+```bash
+npm install -g @playwright/test  # One-time setup
+node test_responsive_visual.js
+```
+Tests actual rendering at desktop (1024px) and mobile (375px) viewport sizes. Captures screenshots and checks for overlapping elements. Run this before merging responsive changes.
+
+**What these tests verify:**
+1. **Desktop layout (1024px)**: Horizontal grid with SVG connectors visible
+2. **Mobile layout (375px)**: Vertical stacking with no connectors, no overlapping elements
+3. **Interactivity**: Clicking competitor buttons works and cascades correctly at both sizes
+4. **Responsive transition**: Layout switches cleanly at 720px breakpoint
+5. **CSS rules**: All mobile media query rules are in place
+6. **JavaScript**: Mobile detection function and layout-skipping logic work correctly
+
+**When to run (Critical):**
+- After ANY changes to `index.html` layout, CSS, or JavaScript
+- Before committing responsive layout or design changes
+- **Future agents: ALWAYS run these formal tests instead of creating manual verification commands**
+
+### Future Tests
+
+As the project grows:
 - Unit tests for data transformation scripts (JS/Node)
 - Integration tests for backend API endpoints
 - E2E tests for the website (bracket exploration) and Discord bot commands
 
-Run tests (once defined):
+Run all tests (once defined):
 ```bash
 npm test
 ```
