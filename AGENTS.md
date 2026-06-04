@@ -85,7 +85,13 @@ vawt-website/
 
 ### Responsive Layout Tests (Critical - Run Before Merging Changes)
 
-**DO NOT create ad-hoc test commands.** Use the formal test suites instead:
+**⚠️ IMPORTANT: Write test files to the repo and run them from there. DO NOT create ad-hoc test commands.**
+
+When you need to verify changes:
+- Check if a test file already exists for the task (e.g., `test_responsive_visual.js`, `test_responsive.js`)
+- If it exists, use it via `node <filename>`
+- If you need a new test, create a permanent test file in the repo that future agents can reuse
+- Never write one-off test commands in bash or temporary files
 
 #### Static checks (no browser needed):
 ```bash
@@ -95,14 +101,13 @@ Verifies that all CSS media queries, JavaScript mobile detection, and positionin
 
 #### Visual verification (requires Playwright):
 ```bash
-npm install -g @playwright/test  # One-time setup
 node test_responsive_visual.js
 ```
 Tests actual rendering at desktop (1024px) and mobile (375px) viewport sizes. Captures screenshots and checks for overlapping elements. Run this before merging responsive changes.
 
 **What these tests verify:**
 1. **Desktop layout (1024px)**: Horizontal grid with SVG connectors visible
-2. **Mobile layout (375px)**: Vertical stacking with no connectors, no overlapping elements
+2. **Mobile layout (375px)**: Two-column grid layout with no connectors
 3. **Interactivity**: Clicking competitor buttons works and cascades correctly at both sizes
 4. **Responsive transition**: Layout switches cleanly at 720px breakpoint
 5. **CSS rules**: All mobile media query rules are in place
@@ -111,7 +116,7 @@ Tests actual rendering at desktop (1024px) and mobile (375px) viewport sizes. Ca
 **When to run (Critical):**
 - After ANY changes to `index.html` layout, CSS, or JavaScript
 - Before committing responsive layout or design changes
-- **Future agents: ALWAYS run these formal tests instead of creating manual verification commands**
+- **Future agents: ALWAYS use the formal test files instead of creating ad-hoc verification commands**
 
 ### Future Tests
 

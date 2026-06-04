@@ -246,22 +246,30 @@
       }
 
       .bracket {
-        display: flex;
-        flex-direction: column;
-        grid-template-columns: unset;
-        gap: 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 8px;
         width: 100%;
         min-height: auto;
         padding: 0;
       }
 
       .round-column {
-        display: contents;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
       }
 
       .round-column[data-side="left"],
       .round-column[data-side="right"] {
         text-align: center;
+      }
+
+      .round-column:nth-child(1),
+      .round-column:nth-child(2),
+      .round-column:nth-child(3),
+      .round-column:nth-child(4) {
+        grid-column: auto;
       }
 
       .bout {
@@ -270,6 +278,13 @@
         margin: 0;
         top: auto !important;
         transform: none !important;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+      }
+
+      .bout[data-round="1"] {
+        padding-top: 0;
+        border-top: none;
       }
 
       .bout-label {
@@ -293,16 +308,22 @@
       }
 
       .championship {
-        grid-column: unset;
+        grid-column: 1 / -1;
         text-align: center;
         width: 100%;
-        margin: 40px 0 20px 0;
+        margin: 20px 0 0 0;
+        padding-top: 20px;
+        border-top: 2px solid var(--border);
       }
 
       .championship .bout {
         position: static;
         width: 100%;
         margin: 0 auto 16px;
+      }
+
+      .championship .bout::before {
+        display: none;
       }
 
       .champion {
