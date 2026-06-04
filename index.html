@@ -122,6 +122,11 @@
       font-size: 11px;
       font-weight: 700;
       line-height: 1.2;
+      transition: color 0.3s ease;
+    }
+
+    .bout.is-active .bout-date {
+      color: #22863a;
     }
 
     .matchup {
@@ -130,6 +135,12 @@
       border-radius: 8px;
       background: var(--panel);
       box-shadow: var(--shadow);
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .matchup.is-active {
+      border: 2px solid #2d8e2d;
+      background: #f0fdf4;
     }
 
     .competitor {
@@ -146,6 +157,11 @@
       line-height: 1.2;
       text-align: inherit;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .bout.is-active .competitor {
+      border-bottom-color: #c1e9c1;
     }
 
     .competitor:last-child {
@@ -158,10 +174,30 @@
       background: var(--accent-soft);
     }
 
+    .bout.is-active .competitor:hover:not(:disabled),
+    .bout.is-active .competitor:focus-visible:not(:disabled) {
+      background: #d4f1d4;
+    }
+
     .competitor.is-winner {
       background: var(--accent);
       color: #fffdf9;
       font-weight: 700;
+    }
+
+    .competitor.is-winner:hover:not(:disabled),
+    .competitor.is-winner:focus-visible:not(:disabled) {
+      background: #a8531f;
+    }
+
+    .bout.is-active .competitor.is-winner {
+      background: #2d8e2d;
+      color: #fff;
+    }
+
+    .bout.is-active .competitor.is-winner:hover:not(:disabled),
+    .bout.is-active .competitor.is-winner:focus-visible:not(:disabled) {
+      background: #3da53d;
     }
 
     .competitor:disabled {
@@ -241,10 +277,43 @@
       { round: 5, bouts: 1 }
     ];
 
+    const boutDates = {
+      r1b1:  { start: "2026-05-30", end: "2026-06-05" },
+      r1b2:  { start: "2026-05-30", end: "2026-06-05" },
+      r1b3:  { start: "2026-06-06", end: "2026-06-12" },
+      r1b4:  { start: "2026-06-06", end: "2026-06-12" },
+      r1b5:  { start: "2026-06-13", end: "2026-06-19" },
+      r1b6:  { start: "2026-06-13", end: "2026-06-19" },
+      r1b7:  { start: "2026-06-20", end: "2026-06-26" },
+      r1b8:  { start: "2026-06-20", end: "2026-06-26" },
+      r1b9:  { start: "2026-06-27", end: "2026-07-03" },
+      r1b10: { start: "2026-06-27", end: "2026-07-03" },
+      r1b11: { start: "2026-07-04", end: "2026-07-10" },
+      r1b12: { start: "2026-07-04", end: "2026-07-10" },
+      r1b13: { start: "2026-07-11", end: "2026-07-17" },
+      r1b14: { start: "2026-07-11", end: "2026-07-17" },
+      r1b15: { start: "2026-07-18", end: "2026-07-24" },
+      r1b16: { start: "2026-07-18", end: "2026-07-24" },
+      r2b1:  { start: "2026-07-25", end: "2026-07-31" },
+      r2b2:  { start: "2026-08-01", end: "2026-08-07" },
+      r2b3:  { start: "2026-08-08", end: "2026-08-14" },
+      r2b4:  { start: "2026-08-15", end: "2026-08-21" },
+      r2b5:  { start: "2026-08-22", end: "2026-08-28" },
+      r2b6:  { start: "2026-08-29", end: "2026-09-04" },
+      r2b7:  { start: "2026-09-05", end: "2026-09-11" },
+      r2b8:  { start: "2026-09-12", end: "2026-09-18" },
+      r3b1:  { start: "2026-09-19", end: "2026-09-25" },
+      r3b2:  { start: "2026-09-26", end: "2026-10-02" },
+      r3b3:  { start: "2026-10-03", end: "2026-10-09" },
+      r3b4:  { start: "2026-10-10", end: "2026-10-16" },
+      r4b1:  { start: "2026-10-17", end: "2026-10-23" },
+      r4b2:  { start: "2026-10-24", end: "2026-10-30" },
+      r5b1:  { start: "2026-10-31", end: "2026-11-06" },
+    };
+
     const bracket = document.querySelector("#bracket");
     const connectors = document.querySelector(".connectors");
     const winners = new Map();
-    const tournamentStartMonday = new Date(2026, 4, 18);
 
     function key(round, bout) {
       return `r${round}b${bout}`;
@@ -259,18 +328,22 @@
       return side === "left" ? round : 10 - round;
     }
 
-    function boutSequence(round, bout) {
-      return rounds.slice(0, round - 1).reduce((total, item) => total + item.bouts, 0) + bout;
+    function boutDate(round, bout) {
+      const entry = boutDates[`r${round}b${bout}`];
+      if (!entry) return "";
+      const fmt = { month: "short", day: "numeric", timeZone: "UTC" };
+      const start = new Date(entry.start).toLocaleDateString("en-US", fmt);
+      const end   = new Date(entry.end).toLocaleDateString("en-US", fmt);
+      return `${start} – ${end}, Noon EDT`;
     }
 
-    function boutDate(round, bout) {
-      const date = new Date(tournamentStartMonday);
-      date.setDate(tournamentStartMonday.getDate() + ((boutSequence(round, bout) - 1) * 7));
-      return date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric"
-      });
+    function isActiveBout(round, bout) {
+      const entry = boutDates[`r${round}b${bout}`];
+      if (!entry) return false;
+      const now = new Date();
+      const startDate = new Date(entry.start + "T12:00:00-04:00");
+      const endDate = new Date(entry.end + "T12:00:00-04:00");
+      return now >= startDate && now <= endDate;
     }
 
     function feedersFor(round, bout) {
@@ -328,6 +401,9 @@
     function createBout(round, bout) {
       const boutEl = document.createElement("article");
       boutEl.className = "bout";
+      if (isActiveBout(round, bout)) {
+        boutEl.classList.add("is-active");
+      }
       boutEl.dataset.round = round;
       boutEl.dataset.bout = bout;
       boutEl.dataset.side = round === 5 ? "center" : sideForBout(bout);
@@ -342,6 +418,9 @@
 
       const matchup = document.createElement("div");
       matchup.className = "matchup";
+      if (isActiveBout(round, bout)) {
+        matchup.classList.add("is-active");
+      }
 
       entrantsFor(round, bout).forEach((name) => {
         const competitor = document.createElement("button");
