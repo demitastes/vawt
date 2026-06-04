@@ -229,10 +229,110 @@
       min-height: 46px;
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 719px) {
       h1 {
-        font-size: 26px;
+        font-size: 24px;
         line-height: 1.15;
+      }
+
+      .bracket-shell {
+        padding: 16px;
+        overflow-x: visible;
+      }
+
+      .bracket-stage {
+        width: auto;
+        margin: 0;
+      }
+
+      .bracket {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+        min-height: auto;
+        padding: 0;
+      }
+
+      .round-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .round-column[data-side="left"],
+      .round-column[data-side="right"] {
+        text-align: center;
+      }
+
+      .bout {
+        position: static !important;
+        width: 100%;
+        margin: 0;
+        top: auto !important;
+        transform: none !important;
+      }
+
+      .round-column::before {
+        content: attr(data-round);
+        grid-column: 1 / -1;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 4px;
+      }
+
+      .bout-label {
+        font-size: 10px;
+        margin-bottom: 4px;
+      }
+
+      .bout-date {
+        font-size: 10px;
+        margin: 2px 0 4px;
+      }
+
+      .matchup {
+        border-radius: 6px;
+      }
+
+      .competitor {
+        font-size: 11px;
+        padding: 6px 8px;
+        min-height: 28px;
+      }
+
+      .championship {
+        grid-column: 1 / -1;
+        text-align: center;
+        width: 100%;
+        margin: 20px 0 0 0;
+        padding-top: 20px;
+        border-top: 2px solid var(--border);
+      }
+
+      .championship .bout {
+        position: static;
+        width: 100%;
+        margin: 0 auto 16px;
+      }
+
+      .championship .bout::before {
+        display: none;
+      }
+
+      .champion {
+        width: 100%;
+        font-size: 12px;
+        padding: 12px 8px;
+        min-height: 44px;
+        position: static;
+      }
+
+      .connectors {
+        display: none;
       }
     }
   </style>
@@ -560,6 +660,10 @@
       }
     }
 
+    function isMobile() {
+      return window.innerWidth < 720;
+    }
+
     function render() {
       bracket.innerHTML = "";
 
@@ -573,15 +677,19 @@
         bracket.appendChild(createColumn(round, "right"));
       }
 
-      requestAnimationFrame(() => {
-        layoutBracket();
-        drawConnectors();
-      });
+      if (!isMobile()) {
+        requestAnimationFrame(() => {
+          layoutBracket();
+          drawConnectors();
+        });
+      }
     }
 
     window.addEventListener("resize", () => {
-      layoutBracket();
-      drawConnectors();
+      if (!isMobile()) {
+        layoutBracket();
+        drawConnectors();
+      }
     });
     render();
   </script>
