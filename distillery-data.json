@@ -1,24 +1,28 @@
 [
   {
-    "distillery": "Open Road Distilling Co.",
+    "name": "Open Road",
+    "officialName": "Open Road Distilling Co.",
     "website": "https://openroaddistillingco.com/",
     "instagram": "https://www.instagram.com/openroaddistillingco/",
     "facebook": "https://www.facebook.com/OpenRoadDistillingCo/"
   },
   {
-    "distillery": "Brady's Distillery",
+    "name": "Brady's",
+    "officialName": "Brady's Distillery",
     "website": "https://www.bradysdistillery.com/",
     "instagram": "https://www.instagram.com/bradysdistillery/",
     "facebook": "https://www.facebook.com/bradysdistillery/"
   },
   {
-    "distillery": "Old House Vineyards",
+    "name": "Old House",
+    "officialName": "Old House Vineyards",
     "website": "https://oldhousetoday.com/distillery/",
     "instagram": "https://www.instagram.com/oldhousevineyards/",
     "facebook": "https://www.facebook.com/oldhousevineyards/"
   },
   {
-    "distillery": "Three Crosses Distilling",
+    "name": "Three Crosses",
+    "officialName": "Three Crosses Distilling",
     "website": "https://www.threecrossesdistilling.com/",
     "instagram": "https://www.instagram.com/threecrossesdistilling/",
     "facebook": "https://www.facebook.com/Threecrossesdistilling/"
