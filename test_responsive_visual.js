@@ -76,6 +76,29 @@ async function runVisualTests() {
       return overlaps;
     }
 
+    async function clickVisibleCompetitorWithoutScrollJump(page) {
+      await page.evaluate(() => window.scrollTo(0, 650));
+      await page.waitForTimeout(100);
+
+      const targetIndex = await page.locator('.competitor:not(:disabled)').evaluateAll((buttons) => {
+        return buttons.findIndex((button) => {
+          const rect = button.getBoundingClientRect();
+          return rect.top >= 100 && rect.bottom <= window.innerHeight - 40;
+        });
+      });
+
+      if (targetIndex < 0) {
+        throw new Error('Could not find a visible enabled competitor for scroll stability test');
+      }
+
+      const beforeScrollY = await page.evaluate(() => window.scrollY);
+      await page.locator('.competitor:not(:disabled)').nth(targetIndex).click();
+      await page.waitForTimeout(300);
+      const afterScrollY = await page.evaluate(() => window.scrollY);
+
+      return { beforeScrollY, afterScrollY, delta: Math.abs(afterScrollY - beforeScrollY) };
+    }
+
     // Test 1: Desktop Layout
     console.log('Test 1: Desktop Layout (1024px width)');
     let page = await browser.newPage({ viewport: { width: 1024, height: 800 } });
@@ -138,8 +161,32 @@ async function runVisualTests() {
     console.log(`  ✅ Screenshot saved to /tmp/bracket_test_interactive.png`);
     await page.close();
 
-    // Test 4: Responsive Transition
-    console.log('\nTest 4: Responsive Transition at 720px Breakpoint');
+    // Test 4: Scroll Stability
+    console.log('\nTest 4: Winner Click Scroll Stability');
+    page = await browser.newPage({ viewport: { width: 1024, height: 500 } });
+    await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
+
+    const desktopScroll = await clickVisibleCompetitorWithoutScrollJump(page);
+    console.log(`  ✅ Desktop scroll delta after winner click: ${desktopScroll.delta}px`);
+    if (desktopScroll.delta > 2) {
+      throw new Error(`Desktop winner click changed scroll from ${desktopScroll.beforeScrollY} to ${desktopScroll.afterScrollY}`);
+    }
+
+    await page.close();
+
+    page = await browser.newPage({ viewport: { width: 375, height: 500 } });
+    await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
+
+    const mobileScroll = await clickVisibleCompetitorWithoutScrollJump(page);
+    console.log(`  ✅ Mobile scroll delta after winner click: ${mobileScroll.delta}px`);
+    if (mobileScroll.delta > 2) {
+      throw new Error(`Mobile winner click changed scroll from ${mobileScroll.beforeScrollY} to ${mobileScroll.afterScrollY}`);
+    }
+
+    await page.close();
+
+    // Test 5: Responsive Transition
+    console.log('\nTest 5: Responsive Transition at 720px Breakpoint');
     page = await browser.newPage({ viewport: { width: 720, height: 800 } });
     await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
 

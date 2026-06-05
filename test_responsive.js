@@ -55,7 +55,7 @@ function testResponsiveLayout() {
   // Test 3: Check JavaScript mobile detection
   console.log('\nTest 3: JavaScript Mobile Detection');
   const hasMobileFunc = html.includes('function isMobile()');
-  const checksMobileInRender = html.includes('if (isMobile())');
+  const checksMobileInRender = html.includes('if (isMobile())') || html.includes('const mobileLayout = isMobile()');
   check(hasMobileFunc, 'isMobile() function exists', 'isMobile() function missing');
   check(checksMobileInRender, 'render() checks isMobile()', 'render() does not check isMobile()');
 
