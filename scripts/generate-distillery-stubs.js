@@ -913,7 +913,7 @@ function renderIndex() {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
-      overflow-wrap: anywhere;
+      table-layout: auto;
     }
 
     th,
@@ -929,6 +929,37 @@ function renderIndex() {
       color: var(--muted);
       font-size: 12px;
       text-transform: uppercase;
+    }
+
+    th:nth-child(1),
+    td:nth-child(1) {
+      width: 40px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+      width: 0;
+      min-width: 150px;
+    }
+
+    th:nth-child(3),
+    td:nth-child(3) {
+      width: 60px;
+      white-space: nowrap;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4) {
+      width: 140px;
+      white-space: nowrap;
+    }
+
+    th:nth-child(5),
+    td:nth-child(5) {
+      width: 0;
+      min-width: 200px;
     }
 
     @media (max-width: 760px) {
