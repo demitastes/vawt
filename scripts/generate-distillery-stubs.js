@@ -41,6 +41,30 @@ const OFFICIAL_NAME_PAGE_TITLES = new Set([
   "Axe Handle"
 ]);
 
+// Spirit types configuration: all types, display order, and labels
+const SPIRIT_TYPES = {
+  ALL: ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur", "other"],
+  KNOWN: ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur"],
+  LABELS: {
+    "bourbon": "Bourbon",
+    "rye": "Rye",
+    "asmw": "American Single Malt Whiskey",
+    "other whiskey": "Other Whiskey",
+    "flavored whiskey": "Flavored Whiskey",
+    "moonshine": "Moonshine",
+    "vodka": "Vodka",
+    "gin": "Gin",
+    "rum": "Rum",
+    "brandy": "Brandy",
+    "agave": "Agave",
+    "liqueur": "Liqueur",
+    "other": "Other"
+  },
+  LABELS_SHORT: {
+    "asmw": "ASMW"
+  }
+};
+
 function loadJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
@@ -651,25 +675,9 @@ function renderProductPortfolio(products) {
         </section>`;
   }
 
-  const spiritTypes = ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur", "other"];
-  const spiritTypeLabels = {
-    "bourbon": "Bourbon",
-    "rye": "Rye",
-    "asmw": "American Single Malt Whiskey",
-    "other whiskey": "Other Whiskey",
-    "flavored whiskey": "Flavored Whiskey",
-    "moonshine": "Moonshine",
-    "vodka": "Vodka",
-    "gin": "Gin",
-    "rum": "Rum",
-    "brandy": "Brandy",
-    "agave": "Agave",
-    "liqueur": "Liqueur",
-    "other": "Other"
-  };
   const productsByType = {};
 
-  spiritTypes.forEach(type => {
+  SPIRIT_TYPES.ALL.forEach(type => {
     productsByType[type] = [];
   });
 
@@ -681,7 +689,7 @@ function renderProductPortfolio(products) {
     productsByType[type].push(product);
   });
 
-  const productSections = spiritTypes
+  const productSections = SPIRIT_TYPES.ALL
     .filter(type => productsByType[type].length > 0)
     .map(type => {
       const items = productsByType[type].map(product => {
@@ -699,7 +707,7 @@ function renderProductPortfolio(products) {
         return `<li>${itemHtml}</li>`;
       }).join("\n");
 
-      const label = spiritTypeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1);
+      const label = SPIRIT_TYPES.LABELS[type] || type.charAt(0).toUpperCase() + type.slice(1);
       return `<h3>${escapeHtml(label)}</h3>\n          <ul>\n${items}\n          </ul>`;
     })
     .join("\n\n          ");
@@ -711,57 +719,23 @@ function renderProductPortfolio(products) {
 }
 
 function getSpiritTypeSummary(products) {
-  const spiritTypes = ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur", "other"];
-  const spiritTypeLabels = {
-    "bourbon": "Bourbon",
-    "rye": "Rye",
-    "asmw": "ASMW",
-    "other whiskey": "Other Whiskey",
-    "flavored whiskey": "Flavored Whiskey",
-    "moonshine": "Moonshine",
-    "vodka": "Vodka",
-    "gin": "Gin",
-    "rum": "Rum",
-    "brandy": "Brandy",
-    "agave": "Agave",
-    "liqueur": "Liqueur",
-    "other": "Other"
-  };
   const producedTypes = new Set((products || []).map(p => p.type?.toLowerCase()));
-  const knownTypes = ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur"];
 
-  return spiritTypes.map(type => {
+  return SPIRIT_TYPES.ALL.map(type => {
     const hasType = type === "other"
-      ? Array.from(producedTypes).some(t => !knownTypes.includes(t))
+      ? Array.from(producedTypes).some(t => !SPIRIT_TYPES.KNOWN.includes(t))
       : producedTypes.has(type);
 
     const color = hasType ? "#059669" : "#dc2626";
     const label = hasType ? "yes" : "no";
     const badgeStyle = `display: inline-block; padding: 4px 8px; border: 1.5px solid ${color}; border-radius: 4px; color: ${color}; font-weight: 700; font-size: 12px;`;
-    const displayLabel = spiritTypeLabels[type] || type;
+    const displayLabel = SPIRIT_TYPES.LABELS_SHORT[type] || SPIRIT_TYPES.LABELS[type] || type;
 
     return `<dt>${escapeHtml(displayLabel)}</dt>\n          <dd><span style="${badgeStyle}">${label}</span></dd>`;
   }).join("\n          ");
 }
 
 function getProductTypesForIndex(products) {
-  const knownTypes = ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur"];
-  const spiritTypeLabels = {
-    "bourbon": "Bourbon",
-    "rye": "Rye",
-    "asmw": "ASMW",
-    "other whiskey": "Other Whiskey",
-    "flavored whiskey": "Flavored Whiskey",
-    "moonshine": "Moonshine",
-    "vodka": "Vodka",
-    "gin": "Gin",
-    "rum": "Rum",
-    "brandy": "Brandy",
-    "agave": "Agave",
-    "liqueur": "Liqueur",
-    "other": "Other"
-  };
-
   if (!products || products.length === 0) {
     return "Research pending";
   }
@@ -769,10 +743,10 @@ function getProductTypesForIndex(products) {
   const producedTypes = new Set(products.map(p => p.type?.toLowerCase()));
   const displayTypes = Array.from(producedTypes)
     .filter(type => type && type !== "other")
-    .map(type => spiritTypeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1))
+    .map(type => SPIRIT_TYPES.LABELS[type] || type.charAt(0).toUpperCase() + type.slice(1))
     .sort();
 
-  if (producedTypes.has("other") || Array.from(producedTypes).some(t => !knownTypes.includes(t))) {
+  if (producedTypes.has("other") || Array.from(producedTypes).some(t => !SPIRIT_TYPES.KNOWN.includes(t))) {
     displayTypes.push("Other");
   }
 
