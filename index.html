@@ -479,7 +479,7 @@
 <body>
   <header>
     <h1>Virginia Whiskey Tournament 2026</h1>
-    <p style="color: var(--muted); font-size: 12px; margin: 8px 0 0 0; font-weight: 500;">All voting closes at noon EDT on the end date.</p>
+    <p style="color: var(--muted); font-size: 12px; margin: 8px 0 0 0; font-weight: 500;">All voting closes at the end of the day on Friday.</p>
   </header>
 
   <main class="bracket-shell">
@@ -598,7 +598,7 @@
       if (!entry) return false;
       const now = new Date();
       const startDate = new Date(entry.start + "T12:00:00-04:00");
-      const endDate = new Date(entry.end + "T12:00:00-04:00");
+      const endDate = new Date(entry.end + "T23:59:59-04:00");
       return now >= startDate && now <= endDate;
     }
 
