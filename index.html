@@ -658,55 +658,43 @@
       { round: 5, bouts: 1 }
     ];
 
-    const boutDates = {
-      r1b1:  { start: "2026-05-30", end: "2026-06-05" },
-      r1b2:  { start: "2026-05-30", end: "2026-06-05" },
-      r1b3:  { start: "2026-06-06", end: "2026-06-12" },
-      r1b4:  { start: "2026-06-06", end: "2026-06-12" },
-      r1b5:  { start: "2026-06-13", end: "2026-06-19" },
-      r1b6:  { start: "2026-06-13", end: "2026-06-19" },
-      r1b7:  { start: "2026-06-20", end: "2026-06-26" },
-      r1b8:  { start: "2026-06-20", end: "2026-06-26" },
-      r1b9:  { start: "2026-06-27", end: "2026-07-03" },
-      r1b10: { start: "2026-06-27", end: "2026-07-03" },
-      r1b11: { start: "2026-07-04", end: "2026-07-10" },
-      r1b12: { start: "2026-07-04", end: "2026-07-10" },
-      r1b13: { start: "2026-07-11", end: "2026-07-17" },
-      r1b14: { start: "2026-07-11", end: "2026-07-17" },
-      r1b15: { start: "2026-07-18", end: "2026-07-24" },
-      r1b16: { start: "2026-07-18", end: "2026-07-24" },
-      r2b1:  { start: "2026-07-25", end: "2026-07-31" },
-      r2b2:  { start: "2026-08-01", end: "2026-08-07" },
-      r2b3:  { start: "2026-08-08", end: "2026-08-14" },
-      r2b4:  { start: "2026-08-15", end: "2026-08-21" },
-      r2b5:  { start: "2026-08-22", end: "2026-08-28" },
-      r2b6:  { start: "2026-08-29", end: "2026-09-04" },
-      r2b7:  { start: "2026-09-05", end: "2026-09-11" },
-      r2b8:  { start: "2026-09-12", end: "2026-09-18" },
-      r3b1:  { start: "2026-09-19", end: "2026-09-25" },
-      r3b2:  { start: "2026-09-26", end: "2026-10-02" },
-      r3b3:  { start: "2026-10-03", end: "2026-10-09" },
-      r3b4:  { start: "2026-10-10", end: "2026-10-16" },
-      r4b1:  { start: "2026-10-17", end: "2026-10-23" },
-      r4b2:  { start: "2026-10-24", end: "2026-10-30" },
-      r5b1:  { start: "2026-10-31", end: "2026-11-06" },
-    };
+    let boutData = [
+      {"round":1,"bout":1,"dateRange":{"start":"2026-05-30","end":"2026-06-05"},"links":{"instagram":"https://www.instagram.com/p/DZDF_ikASrH/","youtube":"https://www.youtube.com/post/UgkxUmjksF2IY9cTtGlu9wRG0uFsW-KZ0O22"}},
+      {"round":1,"bout":2,"dateRange":{"start":"2026-05-30","end":"2026-06-05"},"links":{"instagram":"https://www.instagram.com/p/DZDGxpYgkms/","youtube":"https://www.youtube.com/post/Ugkxb0oL3X_mBtAPzHmf5X9Y8oiwGaqwgfVW"}},
+      {"round":1,"bout":3,"dateRange":{"start":"2026-06-06","end":"2026-06-12"},"links":{}},
+      {"round":1,"bout":4,"dateRange":{"start":"2026-06-06","end":"2026-06-12"},"links":{}},
+      {"round":1,"bout":5,"dateRange":{"start":"2026-06-13","end":"2026-06-19"},"links":{}},
+      {"round":1,"bout":6,"dateRange":{"start":"2026-06-13","end":"2026-06-19"},"links":{}},
+      {"round":1,"bout":7,"dateRange":{"start":"2026-06-20","end":"2026-06-26"},"links":{}},
+      {"round":1,"bout":8,"dateRange":{"start":"2026-06-20","end":"2026-06-26"},"links":{}},
+      {"round":1,"bout":9,"dateRange":{"start":"2026-06-27","end":"2026-07-03"},"links":{}},
+      {"round":1,"bout":10,"dateRange":{"start":"2026-06-27","end":"2026-07-03"},"links":{}},
+      {"round":1,"bout":11,"dateRange":{"start":"2026-07-04","end":"2026-07-10"},"links":{}},
+      {"round":1,"bout":12,"dateRange":{"start":"2026-07-04","end":"2026-07-10"},"links":{}},
+      {"round":1,"bout":13,"dateRange":{"start":"2026-07-11","end":"2026-07-17"},"links":{}},
+      {"round":1,"bout":14,"dateRange":{"start":"2026-07-11","end":"2026-07-17"},"links":{}},
+      {"round":1,"bout":15,"dateRange":{"start":"2026-07-18","end":"2026-07-24"},"links":{}},
+      {"round":1,"bout":16,"dateRange":{"start":"2026-07-18","end":"2026-07-24"},"links":{}},
+      {"round":2,"bout":1,"dateRange":{"start":"2026-07-25","end":"2026-07-31"},"links":{}},
+      {"round":2,"bout":2,"dateRange":{"start":"2026-08-01","end":"2026-08-07"},"links":{}},
+      {"round":2,"bout":3,"dateRange":{"start":"2026-08-08","end":"2026-08-14"},"links":{}},
+      {"round":2,"bout":4,"dateRange":{"start":"2026-08-15","end":"2026-08-21"},"links":{}},
+      {"round":2,"bout":5,"dateRange":{"start":"2026-08-22","end":"2026-08-28"},"links":{}},
+      {"round":2,"bout":6,"dateRange":{"start":"2026-08-29","end":"2026-09-04"},"links":{}},
+      {"round":2,"bout":7,"dateRange":{"start":"2026-09-05","end":"2026-09-11"},"links":{}},
+      {"round":2,"bout":8,"dateRange":{"start":"2026-09-12","end":"2026-09-18"},"links":{}},
+      {"round":3,"bout":1,"dateRange":{"start":"2026-09-19","end":"2026-09-25"},"links":{}},
+      {"round":3,"bout":2,"dateRange":{"start":"2026-09-26","end":"2026-10-02"},"links":{}},
+      {"round":3,"bout":3,"dateRange":{"start":"2026-10-03","end":"2026-10-09"},"links":{}},
+      {"round":3,"bout":4,"dateRange":{"start":"2026-10-10","end":"2026-10-16"},"links":{}},
+      {"round":4,"bout":1,"dateRange":{"start":"2026-10-17","end":"2026-10-23"},"links":{}},
+      {"round":4,"bout":2,"dateRange":{"start":"2026-10-24","end":"2026-10-30"},"links":{}},
+      {"round":5,"bout":1,"dateRange":{"start":"2026-10-31","end":"2026-11-06"},"links":{}}
+    ];
 
-    const boutLinks = {
-      // Add bout links here as polls go live
-
-      // Example:
-      // r1b1: { instagram: "https://instagram.com/...", twitter: "https://x.com/...", youtube: "https://youtube.com/...", discord: "https://discord.gg/..." },
-
-      r1b1: {
-        instagram: "https://www.instagram.com/p/DZDF_ikASrH/",
-        youtube: "https://www.youtube.com/post/UgkxUmjksF2IY9cTtGlu9wRG0uFsW-KZ0O22",
-      },
-      r1b2: {
-        instagram: "https://www.instagram.com/p/DZDGxpYgkms/",
-        youtube: "https://www.youtube.com/post/Ugkxb0oL3X_mBtAPzHmf5X9Y8oiwGaqwgfVW",
-      },
-    };
+    function getBoutInfo(round, bout) {
+      return boutData.find(b => b.round === round && b.bout === bout);
+    }
 
     const bracket = document.querySelector("#bracket");
     const connectors = document.querySelector(".connectors");
@@ -726,20 +714,20 @@
     }
 
     function boutDate(round, bout) {
-      const entry = boutDates[`r${round}b${bout}`];
-      if (!entry) return "";
+      const info = getBoutInfo(round, bout);
+      if (!info || !info.dateRange) return "";
       const fmt = { month: "short", day: "numeric", timeZone: "UTC" };
-      const start = new Date(entry.start).toLocaleDateString("en-US", fmt);
-      const end   = new Date(entry.end).toLocaleDateString("en-US", fmt);
+      const start = new Date(info.dateRange.start).toLocaleDateString("en-US", fmt);
+      const end   = new Date(info.dateRange.end).toLocaleDateString("en-US", fmt);
       return `${start} – ${end}`;
     }
 
     function isActiveBout(round, bout) {
-      const entry = boutDates[`r${round}b${bout}`];
-      if (!entry) return false;
+      const info = getBoutInfo(round, bout);
+      if (!info || !info.dateRange) return false;
       const now = new Date();
-      const startDate = new Date(entry.start + "T12:00:00-04:00");
-      const endDate = new Date(entry.end + "T23:59:59-04:00");
+      const startDate = new Date(info.dateRange.start + "T12:00:00-04:00");
+      const endDate = new Date(info.dateRange.end + "T23:59:59-04:00");
       return now >= startDate && now <= endDate;
     }
 
@@ -884,8 +872,8 @@
 
       const bodyElements = [label, dateContainer, matchup];
 
-      const boutId = key(round, bout);
-      const links = boutLinks[boutId];
+      const info = getBoutInfo(round, bout);
+      const links = info && info.links;
       if (links && (links.instagram || links.twitter || links.youtube || links.discord)) {
         const linksContainer = document.createElement("div");
         linksContainer.className = "bout-links";
@@ -1114,6 +1102,7 @@
         });
       }
     });
+
     render();
   </script>
 </body>

@@ -209,6 +209,113 @@
       font-weight: 800;
     }
 
+    .bouts-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    .bout-row {
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.2s ease;
+      height: 40px;
+    }
+
+    .bout-row:hover {
+      background-color: var(--panel-strong);
+    }
+
+    .bout-row.is-active {
+      background-color: #f0fdf4;
+    }
+
+    .bout-row.is-active:hover {
+      background-color: #e8fbea;
+    }
+
+    .bouts-table td {
+      padding: 0 12px;
+      font-size: 14px;
+      vertical-align: middle;
+      height: 40px;
+    }
+
+    .bout-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      color: var(--accent);
+      width: 80px;
+      height: 40px;
+    }
+
+    .bout-label-spacer {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+    }
+
+    .bout-row.is-active .bout-label {
+      color: #2d8e2d;
+    }
+
+    .bout-dates {
+      color: var(--muted);
+      width: 140px;
+      font-size: 13px;
+    }
+
+    .bout-row.is-active .bout-dates {
+      color: #3da53d;
+      font-weight: 600;
+    }
+
+    .bout-links {
+      font-size: 12px;
+      min-height: 16px;
+    }
+
+    .bout-links-placeholder {
+      display: inline-block;
+      min-width: 1px;
+    }
+
+    .bout-active-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2d8e2d;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+    }
+
+    .voting-link {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .voting-link:hover {
+      background-color: var(--accent);
+      color: #fffdf9;
+    }
+
+    .bout-row.is-active .voting-link {
+      background-color: #c1e9c1;
+      color: #2d8e2d;
+    }
+
+    .bout-row.is-active .voting-link:hover {
+      background-color: #2d8e2d;
+      color: #fff;
+    }
+
     @media (max-width: 760px) {
       .page {
         width: min(100% - 24px, 1080px);
@@ -232,6 +339,52 @@
       .map-frame {
         height: 220px;
       }
+
+      .bouts-table,
+      .bouts-table tbody,
+      .bouts-table tr,
+      .bouts-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .bout-row {
+        padding: 12px 0;
+        border: 0;
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        gap: 4px;
+      }
+
+      .bouts-table td {
+        padding: 2px 0;
+        display: block;
+        width: 100%;
+        font-size: 13px;
+      }
+
+      .bout-label {
+        width: 100%;
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+
+      .bout-dates {
+        width: 100%;
+      }
+
+      .bout-links {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 4px;
+      }
+
+      .voting-link {
+        font-size: 11px;
+        padding: 3px 6px;
+      }
     }
   </style>
 </head>
@@ -243,8 +396,8 @@
       <h1>Highlands Distilling Co</h1>
       <p class="subtitle">VAWT 2026 entrant #7 - R1B2 - May 30-Jun 5, 2026</p>
       <nav class="top-links" aria-label="Official links">
-        <span class="link-button is-placeholder">Official website: TODO</span>
-        <span class="link-button is-placeholder">Instagram: TODO</span>
+        <a class="link-button" href="https://www.highlandsdistillingco.com/" target="_blank" rel="noopener noreferrer">Official website</a>
+        <a class="link-button" href="https://www.instagram.com/highlandsdistillingcompany/" target="_blank" rel="noopener noreferrer">Instagram</a>
       </nav>
     </header>
 
@@ -253,6 +406,20 @@
         <section>
           <h2>Summary</h2>
           <p class="todo">TODO: Add a source-backed, Wikipedia-style summary of Highlands Distilling Co covering its story, production philosophy, and product portfolio construction.</p>
+        </section>
+
+
+        <section>
+          <h2>Tournament Bouts</h2>
+          <table class="bouts-table">
+            <tbody>
+          <tr class="bout-row is-active">
+            <td class="bout-label"><span class="bout-active-indicator" aria-label="This bout is currently active"></span>R1B2</td>
+            <td class="bout-dates">May 30 – Jun 5</td>
+            <td class="bout-links">Voting links: <a class="voting-link" href="https://www.instagram.com/p/DZDGxpYgkms/" target="_blank" rel="noopener noreferrer" title="Vote on Instagram">Instagram</a> • <a class="voting-link" href="https://www.youtube.com/post/Ugkxb0oL3X_mBtAPzHmf5X9Y8oiwGaqwgfVW" target="_blank" rel="noopener noreferrer" title="Vote on YouTube">YouTube</a></td>
+          </tr>
+            </tbody>
+          </table>
         </section>
 
         <section>
@@ -273,8 +440,9 @@
         <section>
           <h2>Sources</h2>
           <ul class="source-list">
-            <li>TODO: Official website source URL.</li>
-            <li>TODO: Official Instagram source URL.</li>
+            <li>Official website: <a href="https://www.highlandsdistillingco.com/" target="_blank" rel="noopener noreferrer">https://www.highlandsdistillingco.com/</a></li>
+            <li>Instagram: <a href="https://www.instagram.com/highlandsdistillingcompany/" target="_blank" rel="noopener noreferrer">https://www.instagram.com/highlandsdistillingcompany/</a></li>
+            
             <li>TODO: Product page source URLs.</li>
             <li>Location/address references: <a href="https://virginiaspirits.org/distilleries/" target="_blank" rel="noopener noreferrer">Virginia Spirits distillery directory</a>, plus official or local tourism pages where the directory did not list the entrant.</li>
           </ul>
