@@ -748,7 +748,7 @@
 
       const champion = document.createElement("div");
       champion.className = "champion";
-      champion.textContent = winners.get(key(5, 1)) || "Champion";
+      champion.textContent = '🏆 ' + ( winners.get(key(5, 1)) || "Champion" ) + ' 🏆';
       center.appendChild(champion);
       return center;
     }
