@@ -4,384 +4,551 @@
     "officialName": "Open Road Distilling Co.",
     "website": "https://openroaddistillingco.com/",
     "instagram": "https://www.instagram.com/openroaddistillingco/",
-    "facebook": "https://www.facebook.com/OpenRoadDistillingCo/"
+    "facebook": "https://www.facebook.com/OpenRoadDistillingCo/",
+    "locations": [
+      "1871 Fountain Dr., Ste. 100, Reston, VA 20190"
+    ]
   },
   {
     "name": "Brady's",
     "officialName": "Brady's Distillery",
     "website": "https://www.bradysdistillery.com/",
     "instagram": "https://www.instagram.com/bradysdistillery/",
-    "facebook": "https://www.facebook.com/bradysdistillery/"
+    "facebook": "https://www.facebook.com/bradysdistillery/",
+    "locations": [
+      "711 Pocahontas Ave. NE, Roanoke, VA 24012"
+    ]
   },
   {
     "name": "Old House",
     "officialName": "Old House Vineyards",
     "website": "https://oldhousetoday.com/distillery/",
     "instagram": "https://www.instagram.com/oldhousevineyards/",
-    "facebook": "https://www.facebook.com/oldhousevineyards/"
+    "facebook": "https://www.facebook.com/oldhousevineyards/",
+    "locations": [
+      "18351 Corkys Ln., Culpeper, VA 22791"
+    ]
   },
   {
     "name": "Three Crosses",
     "officialName": "Three Crosses Distilling",
     "website": "https://www.threecrossesdistilling.com/",
     "instagram": "https://www.instagram.com/threecrossesdistilling/",
-    "facebook": "https://www.facebook.com/Threecrossesdistilling/"
+    "facebook": "https://www.facebook.com/Threecrossesdistilling/",
+    "locations": [
+      "3835 Old Buckingham Rd., Powhatan, VA 23139"
+    ]
   },
   {
     "name": "New Realm",
     "officialName": "New Realm Brewing & Distilling",
     "website": "https://newrealmbrewing.com/spirits/",
     "instagram": "https://www.instagram.com/newrealm_suffolk/",
-    "facebook": "https://www.facebook.com/newrealmsuffolk/"
+    "facebook": "https://www.facebook.com/newrealmsuffolk/",
+    "locations": [
+      "5941 Harbour View Blvd., Suffolk, VA 23435",
+      "1209 Craft Ln., Virginia Beach, VA 23454"
+    ]
   },
   {
     "name": "Lost Whiskey",
     "officialName": "Lost Whiskey Distillery",
     "website": "https://www.lostwhiskey.com/",
     "instagram": "https://www.instagram.com/lostwhiskeydistillery",
-    "facebook": "https://www.facebook.com/p/lostwhiskeydistillery-100040815612204/"
+    "facebook": "https://www.facebook.com/p/lostwhiskeydistillery-100040815612204/",
+    "locations": [
+      "2811 Merrilee Dr., Ste. D, Fairfax, VA 22031"
+    ]
   },
   {
     "name": "Highlands Distilling",
     "officialName": "Highlands Distilling Co",
     "website": "https://www.highlandsdistillingco.com/",
     "instagram": "https://www.instagram.com/highlandsdistillingcompany/",
-    "facebook": null
+    "facebook": null,
+    "locations": [
+      "1200 VA-16, Marion, VA 24354"
+    ]
   },
   {
     "name": "Springfield Distillery",
     "officialName": "Springfield Distillery",
     "website": "https://springfielddistillery.com/",
     "instagram": "https://www.instagram.com/springfielddistillery/",
-    "facebook": "https://www.facebook.com/SpringfieldDistillery"
+    "facebook": "https://www.facebook.com/SpringfieldDistillery",
+    "locations": [
+      "9040 River Rd., Halifax, VA 24558"
+    ]
   },
   {
     "name": "KO Distilling",
     "officialName": "KO Distilling",
     "website": "https://kodistilling.com/",
     "instagram": "https://www.instagram.com/kodistilling/",
-    "facebook": null
+    "facebook": null,
+    "locations": [
+      "10381 Central Park Dr., Ste. 105, Manassas, VA 20110"
+    ]
   },
   {
     "name": "Mean Spirits",
     "officialName": "Mean Spirits Distilling",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "2401 Colonial Ave., Norfolk, VA 23517"
+    ]
   },
   {
     "name": "Reservoir",
     "officialName": "Reservoir Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "1800A Summit Ave., Richmond, VA 23230"
+    ]
   },
   {
     "name": "Deep Creek",
     "officialName": "Deep Creek Distilling",
     "website": "https://www.deepcreekdistilling.com",
     "instagram": "https://www.instagram.com/deepcreekdistilling/",
-    "facebook": "https://www.facebook.com/DeepCreekDistilling/"
+    "facebook": "https://www.facebook.com/DeepCreekDistilling/",
+    "locations": [
+      "801 Butler St., Ste. 12, Chesapeake, VA 23323"
+    ]
   },
   {
     "name": "Five Mile Mountain",
     "officialName": "Five Mile Mountain",
     "website": "https://www.5milemountain.com/",
     "instagram": "https://www.instagram.com/5milemt/",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "489 Floyd Hwy. S., Floyd, VA 24901"
+    ]
   },
   {
     "name": "Ironclad",
     "officialName": "Ironclad",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "124 23rd St., Newport News, VA 23607"
+    ]
   },
   {
     "name": "River Hill",
     "officialName": "River Hill",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "356 Ruffners Ferry Rd., Luray, VA 22835"
+    ]
   },
   {
     "name": "Cape Charles",
     "officialName": "Cape Charles",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "222 Mason Ave., Cape Charles, VA 23310"
+    ]
   },
   {
     "name": "Virginia Distillery Co",
     "officialName": "Virginia Distillery Co.",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "299 Eades Ln., Lovingston, VA 22949"
+    ]
   },
   {
     "name": "Silverback",
     "officialName": "Silverback",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "9374 Rockfish Valley Hwy., Afton, VA 22920"
+    ]
   },
   {
     "name": "River City",
     "officialName": "River City",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "305 W. Main St., Radford, VA 24141"
+    ]
   },
   {
     "name": "Spirit Lab",
     "officialName": "Spirit Lab Distilling",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "1503 6th St. SE, Charlottesville, VA 22902"
+    ]
   },
   {
     "name": "Reverend Spirits",
     "officialName": "Reverend Spirits",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "1120 W. Olney Rd., Norfolk, VA 23507"
+    ]
   },
   {
     "name": "Bon Durant Brothers",
     "officialName": "Bon Durant Brothers Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "9 E 3rd St., Chase City, VA 23924"
+    ]
   },
   {
     "name": "Twin Creeks",
     "officialName": "Twin Creeks Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "140 Franklin St., Rocky Mount, VA 24151"
+    ]
   },
   {
     "name": "GW's Grist Mill",
     "officialName": "George Washington's Grist Mill Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "5513 Mount Vernon Memorial Hwy., Alexandria, VA 22309"
+    ]
   },
   {
     "name": "Ragged Branch",
     "officialName": "Ragged Branch",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "1015 Taylors Gap Rd., Charlottesville, VA 22903"
+    ]
   },
   {
     "name": "Devil's Backbone",
     "officialName": "Devil's Backbone",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "200 Crandall Run, Roseland, VA 22967"
+    ]
   },
   {
     "name": "Tarnished Truth",
     "officialName": "Tarnished Truth",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "4200 Atlantic Ave., Virginia Beach, VA 23451"
+    ]
   },
   {
     "name": "Blue Sky",
     "officialName": "Blue Sky",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "17466 Benns Church Blvd., Smithfield, VA 23430"
+    ]
   },
   {
     "name": "Blue Shepherd",
     "officialName": "Blue Shepherd Spirits",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "622 W. Main St., Luray, VA 22835"
+    ]
   },
   {
     "name": "Caiseal",
     "officialName": "Caiseal (Vanguard)",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "504 N. King St., Hampton, VA 23669"
+    ]
   },
   {
     "name": "Bold Rock",
     "officialName": "Bold Rock Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "1020 Rockfish Valley Hwy., Ste. A, Nellysford, VA 22958"
+    ]
   },
   {
     "name": "Three Wives",
     "officialName": "Three Wives Distillery Winchester",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "933 Barley Ln., Winchester, VA 22602"
+    ]
   },
   {
     "name": "Davis Valley",
     "officialName": "Davis Valley Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "1167 Davis Valley Rd., Rural Retreat, VA 24368"
+    ]
   },
   {
     "name": "Climax",
     "officialName": "Climax",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "13490 Cedar Run Rd., Culpeper, VA 22701"
+    ]
   },
   {
     "name": "Filibuster",
     "officialName": "Filibuster Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "80 Maurertown Mill Rd., Maurertown, VA 22644"
+    ]
   },
   {
     "name": "A. Smith Bowman",
     "officialName": "A. Smith Bowman",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "1 Bowman Dr., Fredericksburg, VA 22408"
+    ]
   },
   {
     "name": "Mt Defiance",
     "officialName": "Mt Defiance Cidery & Distillery (Old Bolstead)",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "495 E. Washington St., Middleburg, VA 20117"
+    ]
   },
   {
     "name": "Catoctin Creek",
     "officialName": "Catoctin Creek Distilling Co.",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "120 W. Main St., Purcellville, VA 20132"
+    ]
   },
   {
     "name": "Virginia Foothills",
     "officialName": "Virginia Foothills Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "5361 Spotswood Tr., Barboursville, VA 22923"
+    ]
   },
   {
     "name": "Copper Fox",
     "officialName": "Copper Fox",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "9 River Ln., Sperryville, VA 22740",
+      "901 Capitol Landing Rd., Williamsburg, VA 23185"
+    ]
   },
   {
     "name": "Appalachian Heritage",
     "officialName": "Appalachian Heritage Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "110 W. Laurel Ave., Damascus, VA 24236"
+    ]
   },
   {
     "name": "Sandy River",
     "officialName": "Sandy River Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "147 Monroe Church Rd., Rice, VA 23966"
+    ]
   },
   {
     "name": "Belmont Farm",
     "officialName": "Belmont Farm Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "13490 Cedar Run Rd., Culpeper, VA 22701"
+    ]
   },
   {
     "name": "Creek Bottom",
     "officialName": "Creek Bottom",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "307 N. Meadow St., Galax, VA 24333"
+    ]
   },
   {
     "name": "Cool Springs",
     "officialName": "Cool Springs",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "37871 Nicewarner Ln., Lovettsville, VA 20180"
+    ]
   },
   {
     "name": "Trial & Error",
     "officialName": "Trial & Error",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "1606 W. Main St., Richmond, VA 23220"
+    ]
   },
   {
     "name": "J.H. Bards",
     "officialName": "J.H. Bards",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "213 Draper Rd. SW, Blacksburg, VA 24060"
+    ]
   },
   {
     "name": "Murlarkey",
     "officialName": "Murlarkey",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "9861 Discovery Blvd., Manassas, VA 20109"
+    ]
   },
   {
     "name": "Three Notches",
     "officialName": "Three Notches (Brewery & Distillery)",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "2461 Rockfish Valley Hwy., Nellysford, VA 22958"
+    ]
   },
   {
     "name": "Lincoln Ridge",
     "officialName": "Lincoln Ridge Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "2149 Reymet Rd., North Chesterfield, VA 23237"
+    ]
   },
   {
     "name": "Hilltop",
     "officialName": "Hilltop Distillery",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "2750 Maidens Loop, Maidens, VA 23102"
+    ]
   },
   {
     "name": "Sleepy Fox",
     "officialName": "Sleepy Fox",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "11670 Lakeridge Pkwy., Ashland, VA 23005"
+    ]
   },
   {
     "name": "Bell Isle",
     "officialName": "Bell Isle",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "615 Maury St., Richmond, VA 23224"
+    ]
   },
   {
     "name": "Franklin County",
     "officialName": "Franklin County Distillers",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "25156 Highway 220, Boones Mill, VA 24065"
+    ]
   },
   {
     "name": "Axe Handle",
     "officialName": "Axe Handle Distilling",
     "website": "",
     "instagram": "",
-    "facebook": ""
+    "facebook": "",
+    "locations": [
+      "42236 Wilderness Rd., Pennington Gap, VA 24277"
+    ]
   }
 ]
