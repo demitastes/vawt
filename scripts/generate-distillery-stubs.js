@@ -683,10 +683,18 @@ function renderProductPortfolio(products) {
     .filter(type => productsByType[type].length > 0)
     .map(type => {
       const items = productsByType[type].map(product => {
+        let itemHtml = "";
         if (product.link && product.link.trim()) {
-          return `<li><a href="${escapeHtml(product.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(product.name)}</a></li>`;
+          itemHtml = `<a href="${escapeHtml(product.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(product.name)}</a>`;
+        } else {
+          itemHtml = escapeHtml(product.name);
         }
-        return `<li>${escapeHtml(product.name)}</li>`;
+
+        if (product.price) {
+          itemHtml += ` — ${escapeHtml(product.price)}`;
+        }
+
+        return `<li>${itemHtml}</li>`;
       }).join("\n");
 
       const label = spiritTypeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1);
