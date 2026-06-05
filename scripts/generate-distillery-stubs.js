@@ -642,21 +642,64 @@ function renderBoutLinks(boutInfo) {
   return linkElements.length ? `Voting links: ${linkElements.join(" • ")}` : '<span class="bout-links-placeholder">&nbsp;</span>';
 }
 
+function renderProductPortfolio(products) {
+  if (!products || products.length === 0) {
+    return `<section>
+          <h2>Product Portfolio</h2>
+          <p class="todo">TODO: Add products from official sources.</p>
+        </section>`;
+  }
+
+  const spiritTypes = ["bourbon", "rye", "american single malt", "whiskey", "moonshine", "vodka", "gin", "other"];
+  const productsByType = {};
+
+  spiritTypes.forEach(type => {
+    productsByType[type] = [];
+  });
+
+  products.forEach(product => {
+    const type = product.type?.toLowerCase() || "other";
+    if (!productsByType[type]) {
+      productsByType[type] = [];
+    }
+    productsByType[type].push(product);
+  });
+
+  const productSections = spiritTypes
+    .filter(type => productsByType[type].length > 0)
+    .map(type => {
+      const items = productsByType[type].map(product => {
+        if (product.link && product.link.trim()) {
+          return `<li><a href="${escapeHtml(product.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(product.name)}</a></li>`;
+        }
+        return `<li>${escapeHtml(product.name)}</li>`;
+      }).join("\n");
+
+      return `<h3>${escapeHtml(type.charAt(0).toUpperCase() + type.slice(1))}</h3>\n          <ul>\n${items}\n          </ul>`;
+    })
+    .join("\n\n          ");
+
+  return `<section>
+          <h2>Product Portfolio</h2>
+          ${productSections}
+        </section>`;
+}
+
 function getSpiritTypeSummary(products) {
-  const spiritTypes = ["bourbon", "rye", "american single malt", "moonshine", "vodka", "gin", "other"];
+  const spiritTypes = ["bourbon", "rye", "american single malt", "whiskey", "moonshine", "vodka", "gin", "other"];
   const producedTypes = new Set((products || []).map(p => p.type?.toLowerCase()));
 
   return spiritTypes.map(type => {
-    const hasType = spiritTypes.slice(0, -1).includes(type)
-      ? producedTypes.has(type)
-      : Array.from(producedTypes).some(t => !["bourbon", "rye", "american single malt", "moonshine", "vodka", "gin"].includes(t));
+    const hasType = type === "other"
+      ? Array.from(producedTypes).some(t => !["bourbon", "rye", "american single malt", "whiskey", "moonshine", "vodka", "gin"].includes(t))
+      : producedTypes.has(type);
 
     const color = hasType ? "#059669" : "#dc2626";
     const label = hasType ? "yes" : "no";
-    const style = `color: ${color}; font-weight: 700;`;
+    const badgeStyle = `display: inline-block; padding: 4px 8px; border: 1.5px solid ${color}; border-radius: 4px; color: ${color}; font-weight: 700; font-size: 12px;`;
 
-    return `<li><strong>${escapeHtml(type)}:</strong> <span style="${style}">${label}</span></li>`;
-  }).join("\n");
+    return `<dt>${escapeHtml(type)}</dt>\n          <dd><span style="${badgeStyle}">${label}</span></dd>`;
+  }).join("\n          ");
 }
 
 function renderBoutList(item) {
@@ -736,22 +779,7 @@ function renderStubPage(item, index) {
 
 ${boutList}
 
-        <section>
-          <h2>Product Portfolio</h2>
-          <p class="todo">TODO: Verify all current products from official sources. Link each product to its official product page when one exists.</p>
-          <h3>Whiskey categories:</h3>
-          <ul>
-            <li>Bourbon: TODO</li>
-            <li>Rye: TODO</li>
-            <li>American single malt: TODO</li>
-            <li>Other whiskey: TODO</li>
-            <li>Moonshine: TODO</li>
-          </ul>
-          <h3>Other products:</h3>
-          <ul>
-            <li>Non-whiskey spirits: TODO</li>
-          </ul>
-        </section>
+${renderProductPortfolio(item.products)}
 
 ${locationEmbeds}
         <section>
@@ -780,10 +808,11 @@ ${locationEmbeds}
           <dt>Location</dt>
           <dd>${escapeHtml(locationLabel(item))}</dd>
         </dl>
-        <h3 style="margin: 16px 0 8px; font-size: 14px;">Spirit types</h3>
-        <ul style="list-style: none; padding: 0; font-size: 13px;">
+
+        <h3 style="margin: 20px 0 0; padding-top: 20px; border-top: 1px solid var(--border); font-size: 18px; line-height: 1.2; letter-spacing: 0;">Spirit types</h3>
+        <dl style="margin-top: 12px;">
           ${getSpiritTypeSummary(item.products)}
-        </ul>
+        </dl>
       </aside>
     </div>
   </main>
