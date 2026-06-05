@@ -40,14 +40,26 @@ const requiredSnippets = [
   "Instagram: TODO",
   "<h2>Summary</h2>",
   "<h2>Product Portfolio</h2>",
-  "<h2>Sources</h2>",
-  "../data/BRACKET.md"
+  "<h2>Sources</h2>"
+];
+
+const forbiddenPublicSnippets = [
+  "../data/",
+  "../docs/",
+  "../TODO.md",
+  "BRACKET.md",
+  "TODO.md",
+  "Profile page skill",
+  "Next-step plan"
 ];
 
 profileFiles.forEach((file) => {
   const html = fs.readFileSync(path.join(DISTILLERIES_DIR, file), "utf8");
   requiredSnippets.forEach((snippet) => {
     check(html.includes(snippet), `${file} includes ${snippet}`, `${file} missing ${snippet}`);
+  });
+  forbiddenPublicSnippets.forEach((snippet) => {
+    check(!html.includes(snippet), `${file} does not expose ${snippet}`, `${file} exposes internal reference ${snippet}`);
   });
 });
 
@@ -59,6 +71,10 @@ const bracketHtml = fileExists("index.html") ? fs.readFileSync(BRACKET_FILE, "ut
 profileFiles.forEach((file) => {
   check(indexHtml.includes(`./${file}`), `Index links to ${file}`, `Index missing link to ${file}`);
   check(bracketHtml.includes(`distilleries/${file}`), `Bracket links to ${file}`, `Bracket missing profile link to ${file}`);
+});
+
+forbiddenPublicSnippets.forEach((snippet) => {
+  check(!indexHtml.includes(snippet), `Profile index does not expose ${snippet}`, `Profile index exposes internal reference ${snippet}`);
 });
 
 const todo = fileExists("TODO.md") ? fs.readFileSync(TODO_FILE, "utf8") : "";

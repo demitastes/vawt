@@ -16,12 +16,12 @@ const distilleries = [
   { name: "Lost Whiskey Co", bout: "R1B2", dateRange: "May 30-Jun 5, 2026" },
   { name: "Highlands", fullName: "Highlands Distilling Co", bout: "R1B2", dateRange: "May 30-Jun 5, 2026" },
   { name: "Springfield", fullName: "Springfield Distillery", bout: "R1B2", dateRange: "May 30-Jun 5, 2026" },
-  { name: "KO Distilling", bout: "R1B3", dateRange: "Jun 6-Jun 12, 2026", notes: ["Veteran-owned according to BRACKET.md."] },
-  { name: "Mean Spirits", fullName: "Mean Spirits Distilling", bout: "R1B3", dateRange: "Jun 6-Jun 12, 2026", notes: ["Veteran-owned according to BRACKET.md."] },
+  { name: "KO Distilling", bout: "R1B3", dateRange: "Jun 6-Jun 12, 2026", notes: ["Tournament note: veteran-owned."] },
+  { name: "Mean Spirits", fullName: "Mean Spirits Distilling", bout: "R1B3", dateRange: "Jun 6-Jun 12, 2026", notes: ["Tournament note: veteran-owned."] },
   { name: "Reservoir", fullName: "Reservoir Distillery", bout: "R1B3", dateRange: "Jun 6-Jun 12, 2026" },
   { name: "Deep Creek", bout: "R1B4", dateRange: "Jun 6-Jun 12, 2026" },
   { name: "Five Mile Mountain", bout: "R1B4", dateRange: "Jun 6-Jun 12, 2026" },
-  { name: "Ironclad", bout: "R1B4", dateRange: "Jun 6-Jun 12, 2026", notes: ["Veteran-owned according to BRACKET.md."] },
+  { name: "Ironclad", bout: "R1B4", dateRange: "Jun 6-Jun 12, 2026", notes: ["Tournament note: veteran-owned."] },
   { name: "River Hill", bout: "R1B5", dateRange: "Jun 13-Jun 19, 2026" },
   { name: "Cape Charles", bout: "R1B5", dateRange: "Jun 13-Jun 19, 2026" },
   { name: "Virginia Distillery Co", fullName: "Virginia Distillery Co.", bout: "R1B5", dateRange: "Jun 13-Jun 19, 2026" },
@@ -41,7 +41,7 @@ const distilleries = [
   { name: "Bold Rock", fullName: "Bold Rock Distillery", bout: "R1B9", dateRange: "Jun 27-Jul 3, 2026" },
   { name: "Three Wives", fullName: "Three Wives Distillery Winchester", bout: "R1B10", dateRange: "Jun 27-Jul 3, 2026" },
   { name: "Davis Valley", fullName: "Davis Valley Distillery", bout: "R1B10", dateRange: "Jun 27-Jul 3, 2026" },
-  { name: "Climax", bout: "R1B10", dateRange: "Jun 27-Jul 3, 2026", notes: ["BRACKET.md notes previous production in association with Belmont Farm."] },
+  { name: "Climax", bout: "R1B10", dateRange: "Jun 27-Jul 3, 2026", notes: ["Tournament note: previous production in association with Belmont Farm."] },
   { name: "Filibuster", fullName: "Filibuster Distillery", bout: "R1B11", dateRange: "Jul 4-Jul 10, 2026" },
   { name: "A. Smith Bowman", bout: "R1B11", dateRange: "Jul 4-Jul 10, 2026" },
   { name: "Mt Defiance", fullName: "Mt Defiance Cidery & Distillery (Old Bolstead)", bout: "R1B11", dateRange: "Jul 4-Jul 10, 2026" },
@@ -49,19 +49,19 @@ const distilleries = [
   { name: "Virginia Foothills", fullName: "Virginia Foothills Distillery", bout: "R1B12", dateRange: "Jul 4-Jul 10, 2026" },
   { name: "Copper Fox", bout: "R1B12", dateRange: "Jul 4-Jul 10, 2026" },
   { name: "Appalachian Heritage", fullName: "Appalachian Heritage Distillery", bout: "R1B13", dateRange: "Jul 11-Jul 17, 2026", productHints: ["Moonshine"] },
-  { name: "Sandy River", fullName: "Sandy River Distillery", bout: "R1B13", dateRange: "Jul 11-Jul 17, 2026", productHints: ["Bourbon", "High Bridge rye"], notes: ["BRACKET.md notes impressively aged craft bourbon and High Bridge rye."] },
+  { name: "Sandy River", fullName: "Sandy River Distillery", bout: "R1B13", dateRange: "Jul 11-Jul 17, 2026", productHints: ["Bourbon", "High Bridge rye"], notes: ["Tournament note: aged craft bourbon and High Bridge rye."] },
   { name: "Belmont Farm", fullName: "Belmont Farm Distillery", bout: "R1B13", dateRange: "Jul 11-Jul 17, 2026" },
   { name: "Creek Bottom", bout: "R1B14", dateRange: "Jul 11-Jul 17, 2026" },
   { name: "Cool Springs", bout: "R1B14", dateRange: "Jul 11-Jul 17, 2026" },
   { name: "Trial & Error", bout: "R1B14", dateRange: "Jul 11-Jul 17, 2026" },
-  { name: "J.H. Bards", bout: "R1B14", dateRange: "Jul 11-Jul 17, 2026", notes: ["BRACKET.md says this entry may need to move to R1B16."] },
+  { name: "J.H. Bards", bout: "R1B14", dateRange: "Jul 11-Jul 17, 2026", notes: ["Tournament note: this entry may need to move to R1B16."] },
   { name: "Murlarkey", bout: "R1B15", dateRange: "Jul 18-Jul 24, 2026" },
   { name: "Three Notches", fullName: "Three Notches (Brewery & Distillery)", bout: "R1B15", dateRange: "Jul 18-Jul 24, 2026" },
   { name: "Lincoln Ridge", fullName: "Lincoln Ridge Distillery", bout: "R1B15", dateRange: "Jul 18-Jul 24, 2026" },
   { name: "Hilltop", fullName: "Hilltop Distillery", bout: "R1B15", dateRange: "Jul 18-Jul 24, 2026" },
-  { name: "Sleepy Fox", bout: "R1B16", dateRange: "Jul 18-Jul 24, 2026", notes: ["BRACKET.md says to double-check whether this distillery is still in production."] },
+  { name: "Sleepy Fox", bout: "R1B16", dateRange: "Jul 18-Jul 24, 2026", notes: ["Tournament note: double-check whether this distillery is still in production."] },
   { name: "Bell Isle", bout: "R1B16", dateRange: "Jul 18-Jul 24, 2026" },
-  { name: "Franklin County", fullName: "Franklin County Distillers", bout: "R1B16", dateRange: "Jul 18-Jul 24, 2026", notes: ["BRACKET.md notes Franklin County as the moonshine capital of the world."] },
+  { name: "Franklin County", fullName: "Franklin County Distillers", bout: "R1B16", dateRange: "Jul 18-Jul 24, 2026", notes: ["Tournament note: Franklin County is associated with moonshine heritage."] },
   { name: "Axe Handle", fullName: "Axe Handle Distilling", bout: "R1B16", dateRange: "Jul 18-Jul 24, 2026" }
 ];
 
@@ -292,10 +292,10 @@ function renderStubPage(item, index) {
   const slug = slugify(title);
   const hintItems = hints.length
     ? hints.map((hint) => `<li>${escapeHtml(hint)}</li>`).join("\n")
-    : "<li>TODO: Ask user or source research agent to confirm product categories.</li>";
+    : "<li>TODO: Confirm product categories.</li>";
   const noteItems = notes.length
     ? notes.map((note) => `<li>${escapeHtml(note)}</li>`).join("\n")
-    : "<li>No extra bracket notes recorded yet.</li>";
+    : "<li>No extra tournament notes recorded yet.</li>";
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -322,7 +322,7 @@ function renderStubPage(item, index) {
       <div>
         <section>
           <h2>Summary</h2>
-          <p class="todo">TODO: Ask user or a research agent to write a source-backed, Wikipedia-style summary of ${escapeHtml(title)} covering its story, production philosophy, and product portfolio construction.</p>
+          <p class="todo">TODO: Add a source-backed, Wikipedia-style summary of ${escapeHtml(title)} covering its story, production philosophy, and product portfolio construction.</p>
         </section>
 
         <section>
@@ -343,7 +343,6 @@ function renderStubPage(item, index) {
         <section>
           <h2>Sources</h2>
           <ul class="source-list">
-            <li><a href="../data/BRACKET.md">VAWT 2026 bracket source</a></li>
             <li>TODO: Official website source URL.</li>
             <li>TODO: Official Instagram source URL.</li>
             <li>TODO: Product page source URLs.</li>
@@ -358,7 +357,7 @@ function renderStubPage(item, index) {
           <dd>${escapeHtml(slug)}</dd>
           <dt>Display name</dt>
           <dd>${escapeHtml(item.name)}</dd>
-          <dt>Source name</dt>
+          <dt>Listed name</dt>
           <dd>${escapeHtml(sourceName(item))}</dd>
           <dt>Bout</dt>
           <dd>${escapeHtml(item.bout)}</dd>
@@ -370,7 +369,7 @@ function renderStubPage(item, index) {
           <dd>TODO: Verify from official source.</dd>
         </dl>
 
-        <h2 style="margin-top: 22px;">Bracket Notes</h2>
+        <h2 style="margin-top: 22px;">Tournament Notes</h2>
         <ul>${noteItems}</ul>
       </aside>
     </div>
@@ -454,10 +453,6 @@ function renderIndex() {
     <header class="hero">
       <h1>VAWT Distillery Profiles</h1>
       <p class="subtitle">Static profile stubs for the 2026 tournament, ordered by first appearance in the voting schedule.</p>
-      <nav class="top-links" aria-label="Profile workflow links">
-        <a class="link-button" href="../docs/distillery-profile-pages/SKILL.md">Profile page skill</a>
-        <a class="link-button" href="../TODO.md">Next-step plan</a>
-      </nav>
     </header>
 
     <section>
