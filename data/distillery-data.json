@@ -8,7 +8,7 @@
     "locations": [
       "1871 Fountain Dr., Ste. 100, Reston, VA 20190"
     ],
-    "description": "Over the past 15 years of opening and operating restaurants, including award-winning fine dining and speakeasy-influenced concepts, we established a meticulous process of tasting and revision that we use for recipe development.  In our endeavor to offer the finest hand-crafted cocktails, an idea took hold that we should develop a line of quality spirits that would elevate our beverage offerings and our guests experiences.  It was this idea that lead to the creation of Open Road Distilling Co.<br/><br/>Located in the heart of Reston Town Center, Open Road Distilling Co. features an operational distillery, tasting room, and bonded store.  Join us for daily tastings of our in-house distilled American Vodka, American Gin, and in-house blended Eagle Eye Rye and Independence Bourbon.  Enjoy these spirits in their true form or in one of our handcrafted cocktails.  If you prefer to enjoy our spirits at home, purchase a bottle of your favorite from our store. (https://openroaddistillingco.com/about/)",
+    "summary": "Over the past 15 years of opening and operating restaurants, including award-winning fine dining and speakeasy-influenced concepts, we established a meticulous process of tasting and revision that we use for recipe development.  In our endeavor to offer the finest hand-crafted cocktails, an idea took hold that we should develop a line of quality spirits that would elevate our beverage offerings and our guests experiences.  It was this idea that lead to the creation of Open Road Distilling Co.<br/><br/>Located in the heart of Reston Town Center, Open Road Distilling Co. features an operational distillery, tasting room, and bonded store.  Join us for daily tastings of our in-house distilled American Vodka, American Gin, and in-house blended Eagle Eye Rye and Independence Bourbon.  Enjoy these spirits in their true form or in one of our handcrafted cocktails.  If you prefer to enjoy our spirits at home, purchase a bottle of your favorite from our store. (https://openroaddistillingco.com/about/)",
     "products": [
       {
         "name": "Independence Bourbon (blend of straight bourbon whiskeys)",
@@ -56,7 +56,7 @@
     "locations": [
       "711 Pocahontas Ave. NE, Roanoke, VA 24012"
     ],
-    "description": "3 Roanoke natives, Tim, Brian and Andy decided a while back to bring something to their hometown that had not been done in over 100 years. Founded in 2020, Brady's Distillery offers carefully blended and aged craft spirts such as whiskey, bourbon, vodka and rum. Each spirit has been meticulously curated to satisfy anyone from the most sophisticated bourbon enthusiast to the up-and-coming novice. We simply can't wait to have you for a visit. (https://www.bradysdistillery.com/about-us)",
+    "summary": "3 Roanoke natives, Tim, Brian and Andy decided a while back to bring something to their hometown that had not been done in over 100 years. Founded in 2020, Brady's Distillery offers carefully blended and aged craft spirts such as whiskey, bourbon, vodka and rum. Each spirit has been meticulously curated to satisfy anyone from the most sophisticated bourbon enthusiast to the up-and-coming novice. We simply can't wait to have you for a visit. (https://www.bradysdistillery.com/about-us)",
     "products": [
       {
         "name": "Brady's Accomplice Bourbon",
@@ -105,7 +105,7 @@
     "locations": [
       "18351 Corkys Ln., Culpeper, VA 22791"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -117,7 +117,7 @@
     "locations": [
       "3835 Old Buckingham Rd., Powhatan, VA 23139"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -130,7 +130,7 @@
       "5941 Harbour View Blvd., Suffolk, VA 23435",
       "1209 Craft Ln., Virginia Beach, VA 23454"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -142,7 +142,7 @@
     "locations": [
       "2811 Merrilee Dr., Ste. D, Fairfax, VA 22031"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -154,7 +154,7 @@
     "locations": [
       "1200 VA-16, Marion, VA 24354"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -166,7 +166,7 @@
     "locations": [
       "9040 River Rd., Halifax, VA 24558"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -178,7 +178,7 @@
     "locations": [
       "10381 Central Park Dr., Ste. 105, Manassas, VA 20110"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -190,7 +190,7 @@
     "locations": [
       "2401 Colonial Ave., Norfolk, VA 23517"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -202,7 +202,7 @@
     "locations": [
       "1800A Summit Ave., Richmond, VA 23230"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -214,7 +214,7 @@
     "locations": [
       "801 Butler St., Ste. 12, Chesapeake, VA 23323"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -226,7 +226,7 @@
     "locations": [
       "489 Floyd Hwy. S., Floyd, VA 24901"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -238,7 +238,7 @@
     "locations": [
       "124 23rd St., Newport News, VA 23607"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -250,7 +250,7 @@
     "locations": [
       "356 Ruffners Ferry Rd., Luray, VA 22835"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -262,7 +262,7 @@
     "locations": [
       "222 Mason Ave., Cape Charles, VA 23310"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -274,7 +274,7 @@
     "locations": [
       "299 Eades Ln., Lovingston, VA 22949"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -286,7 +286,7 @@
     "locations": [
       "9374 Rockfish Valley Hwy., Afton, VA 22920"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -298,7 +298,7 @@
     "locations": [
       "305 W. Main St., Radford, VA 24141"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -310,7 +310,7 @@
     "locations": [
       "1503 6th St. SE, Charlottesville, VA 22902"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -322,7 +322,7 @@
     "locations": [
       "1120 W. Olney Rd., Norfolk, VA 23507"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -334,7 +334,7 @@
     "locations": [
       "9 E 3rd St., Chase City, VA 23924"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -346,7 +346,7 @@
     "locations": [
       "140 Franklin St., Rocky Mount, VA 24151"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -358,7 +358,7 @@
     "locations": [
       "5513 Mount Vernon Memorial Hwy., Alexandria, VA 22309"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -370,7 +370,7 @@
     "locations": [
       "1015 Taylors Gap Rd., Charlottesville, VA 22903"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -382,7 +382,7 @@
     "locations": [
       "200 Crandall Run, Roseland, VA 22967"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -394,7 +394,7 @@
     "locations": [
       "4200 Atlantic Ave., Virginia Beach, VA 23451"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -406,7 +406,7 @@
     "locations": [
       "17466 Benns Church Blvd., Smithfield, VA 23430"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -418,7 +418,7 @@
     "locations": [
       "622 W. Main St., Luray, VA 22835"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -430,7 +430,7 @@
     "locations": [
       "504 N. King St., Hampton, VA 23669"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -442,7 +442,7 @@
     "locations": [
       "1020 Rockfish Valley Hwy., Ste. A, Nellysford, VA 22958"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -454,7 +454,7 @@
     "locations": [
       "933 Barley Ln., Winchester, VA 22602"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -466,7 +466,7 @@
     "locations": [
       "1167 Davis Valley Rd., Rural Retreat, VA 24368"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -478,7 +478,7 @@
     "locations": [
       "13490 Cedar Run Rd., Culpeper, VA 22701"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -490,7 +490,7 @@
     "locations": [
       "80 Maurertown Mill Rd., Maurertown, VA 22644"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -502,7 +502,7 @@
     "locations": [
       "1 Bowman Dr., Fredericksburg, VA 22408"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -514,7 +514,7 @@
     "locations": [
       "495 E. Washington St., Middleburg, VA 20117"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -526,7 +526,7 @@
     "locations": [
       "120 W. Main St., Purcellville, VA 20132"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -538,7 +538,7 @@
     "locations": [
       "5361 Spotswood Tr., Barboursville, VA 22923"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -551,7 +551,7 @@
       "9 River Ln., Sperryville, VA 22740",
       "901 Capitol Landing Rd., Williamsburg, VA 23185"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -563,7 +563,7 @@
     "locations": [
       "110 W. Laurel Ave., Damascus, VA 24236"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -575,7 +575,7 @@
     "locations": [
       "147 Monroe Church Rd., Rice, VA 23966"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -587,7 +587,7 @@
     "locations": [
       "13490 Cedar Run Rd., Culpeper, VA 22701"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -599,7 +599,7 @@
     "locations": [
       "307 N. Meadow St., Galax, VA 24333"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -611,7 +611,7 @@
     "locations": [
       "37871 Nicewarner Ln., Lovettsville, VA 20180"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -623,7 +623,7 @@
     "locations": [
       "1606 W. Main St., Richmond, VA 23220"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -635,7 +635,7 @@
     "locations": [
       "213 Draper Rd. SW, Blacksburg, VA 24060"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -647,7 +647,7 @@
     "locations": [
       "9861 Discovery Blvd., Manassas, VA 20109"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -659,7 +659,7 @@
     "locations": [
       "2461 Rockfish Valley Hwy., Nellysford, VA 22958"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -671,7 +671,7 @@
     "locations": [
       "2149 Reymet Rd., North Chesterfield, VA 23237"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -683,7 +683,7 @@
     "locations": [
       "2750 Maidens Loop, Maidens, VA 23102"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -695,7 +695,7 @@
     "locations": [
       "11670 Lakeridge Pkwy., Ashland, VA 23005"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -707,7 +707,7 @@
     "locations": [
       "615 Maury St., Richmond, VA 23224"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -719,7 +719,7 @@
     "locations": [
       "25156 Highway 220, Boones Mill, VA 24065"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   },
   {
@@ -731,7 +731,7 @@
     "locations": [
       "42236 Wilderness Rd., Pennington Gap, VA 24277"
     ],
-    "description": "",
+    "summary": "",
     "products": []
   }
 ]
