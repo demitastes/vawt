@@ -31,7 +31,7 @@ Research and complete profiles in first-appearance order by voting window and bo
 ### Distillery Profile Research Progress
 
 - [x] R1B1: Researched and updated [Open Road](distilleries/open-road.html), [Brady's](distilleries/bradys.html), [Old House](distilleries/old-house.html), and [Three Crosses](distilleries/three-crosses.html).
-- [x] R1B2: Researched and updated [New Realm Brewing & Distilling](distilleries/new-realm-brewing-and-distilling.html), [Lost Whiskey Co](distilleries/lost-whiskey-co.html), [Highlands Distilling Co](distilleries/highlands-distilling-co.html), and [Springfield Distillery](distilleries/springfield-distillery.html).
+- [x] R1B2: Researched and updated [New Realm Brewing & Distilling](distilleries/new-realm-brewing-and-distilling.html), [Lost Whiskey Co](distilleries/lost-whiskey.html), [Highlands Distilling Co](distilleries/highlands-distilling-co.html), and [Springfield Distillery](distilleries/springfield-distillery.html).
 - [x] Doug confirmed official Instagram/Facebook links for Open Road, Brady's, Old House, and Three Crosses; record them in [distillery-links.json](distillery-links.json).
 - [ ] Doug input needed: confirm New Realm Brewing & Distilling's preferred official Instagram account for the VAWT profile.
 - [ ] Doug input needed: confirm Highlands Distilling Co's preferred official Instagram account, if any.
@@ -45,7 +45,7 @@ Research and complete profiles in first-appearance order by voting window and bo
 | 3 | May 30-Jun 5, 2026 | R1B1 | [Old House](distilleries/old-house.html) |  |
 | 4 | May 30-Jun 5, 2026 | R1B1 | [Three Crosses](distilleries/three-crosses.html) |  |
 | 5 | May 30-Jun 5, 2026 | R1B2 | [New Realm Brewing & Distilling](distilleries/new-realm-brewing-and-distilling.html) | Listed as New Realm in site data. |
-| 6 | May 30-Jun 5, 2026 | R1B2 | [Lost Whiskey Co](distilleries/lost-whiskey-co.html) |  |
+| 6 | May 30-Jun 5, 2026 | R1B2 | [Lost Whiskey Co](distilleries/lost-whiskey.html) |  |
 | 7 | May 30-Jun 5, 2026 | R1B2 | [Highlands Distilling Co](distilleries/highlands-distilling-co.html) | Listed as Highlands in site data. |
 | 8 | May 30-Jun 5, 2026 | R1B2 | [Springfield Distillery](distilleries/springfield-distillery.html) | Listed as Springfield in site data. |
 | 9 | Jun 6-Jun 12, 2026 | R1B3 | [KO Distilling](distilleries/ko-distilling.html) | Veteran-owned marker in `BRACKET.md`. |
