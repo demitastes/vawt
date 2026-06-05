@@ -129,6 +129,72 @@
       color: #22863a;
     }
 
+    .bout-links {
+      margin: 8px 0 0 0;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .bout-active-indicator {
+      display: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2d8e2d;
+      margin-right: 2px;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+    }
+
+    .bout.is-active .bout-active-indicator {
+      display: inline-block;
+    }
+
+    .bout-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 6px rgba(63, 36, 18, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .bout-link:hover {
+      background: var(--accent);
+      color: var(--panel);
+      box-shadow: 0 4px 10px rgba(63, 36, 18, 0.3);
+    }
+
+    .bout.is-active .bout-link {
+      background: #c1e9c1;
+      color: #2d8e2d;
+      box-shadow: 0 2px 6px rgba(45, 142, 45, 0.3);
+    }
+
+    .bout.is-active .bout-link:hover {
+      background: #2d8e2d;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(45, 142, 45, 0.4);
+    }
+
+    .round-column[data-side="left"] .bout-links {
+      justify-content: flex-end;
+    }
+
     .matchup {
       overflow: hidden;
       border: 1px solid var(--border);
@@ -294,6 +360,24 @@
         margin: 2px 0 4px;
       }
 
+      .bout-links {
+        margin: 6px 0 0 0;
+        gap: 6px;
+        justify-content: center;
+      }
+
+      .bout-link {
+        width: 18px;
+        height: 18px;
+        font-size: 7px;
+      }
+
+      .bout-active-indicator {
+        width: 6px;
+        height: 6px;
+        margin-right: 1px;
+      }
+
       .matchup {
         border-radius: 6px;
       }
@@ -409,6 +493,22 @@
       r4b1:  { start: "2026-10-17", end: "2026-10-23" },
       r4b2:  { start: "2026-10-24", end: "2026-10-30" },
       r5b1:  { start: "2026-10-31", end: "2026-11-06" },
+    };
+
+    const boutLinks = {
+      // Add bout links here as polls go live
+
+      // Example:
+      // r1b1: { instagram: "https://instagram.com/...", twitter: "https://x.com/...", youtube: "https://youtube.com/...", discord: "https://discord.gg/..." },
+
+      r1b1: {
+        instagram: "https://www.instagram.com/p/DZDF_ikASrH/",
+        youtube: "https://www.youtube.com/post/UgkxUmjksF2IY9cTtGlu9wRG0uFsW-KZ0O22",
+      },
+      r1b2: {
+        instagram: "https://www.instagram.com/p/DZDGxpYgkms/",
+        youtube: "https://www.youtube.com/post/Ugkxb0oL3X_mBtAPzHmf5X9Y8oiwGaqwgfVW",
+      },
     };
 
     const bracket = document.querySelector("#bracket");
@@ -537,7 +637,44 @@
         matchup.appendChild(competitor);
       });
 
-      boutEl.append(label, date, matchup);
+      const bodyElements = [label, date, matchup];
+
+      const boutId = key(round, bout);
+      const links = boutLinks[boutId];
+      if (links && (links.instagram || links.twitter || links.youtube || links.discord)) {
+        const linksContainer = document.createElement("div");
+        linksContainer.className = "bout-links";
+
+        if (isActiveBout(round, bout)) {
+          const indicator = document.createElement("div");
+          indicator.className = "bout-active-indicator";
+          linksContainer.appendChild(indicator);
+        }
+
+        const linkConfigs = [
+          { key: "instagram", label: "IG", title: "Vote on Instagram" },
+          { key: "twitter", label: "X", title: "Vote on X" },
+          { key: "youtube", label: "YT", title: "Vote on YouTube" },
+          { key: "discord", label: "DC", title: "Join Discord" }
+        ];
+
+        linkConfigs.forEach(({ key: linkKey, label: linkLabel, title: linkTitle }) => {
+          if (links[linkKey]) {
+            const link = document.createElement("a");
+            link.className = "bout-link";
+            link.href = links[linkKey];
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = linkLabel;
+            link.title = linkTitle;
+            linksContainer.appendChild(link);
+          }
+        });
+
+        bodyElements.push(linksContainer);
+      }
+
+      boutEl.append(...bodyElements);
       return boutEl;
     }
 
