@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bold Rock Distillery - VAWT Distillery Profile</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --ink: #201a17;
+      --muted: #6e625b;
+      --line: #a66c3b;
+      --panel: #fffdf9;
+      --panel-strong: #fff6df;
+      --accent: #8e431d;
+      --accent-soft: #f4dfc3;
+      --border: #d7b992;
+      --shadow: 0 12px 30px rgba(63, 36, 18, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 253, 249, 0.9), rgba(246, 241, 232, 0.98)),
+        radial-gradient(circle at top left, rgba(166, 108, 59, 0.18), transparent 30rem);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    a { color: var(--accent); }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 44px;
+    }
+
+    .crumb {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .hero {
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .link-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      background: var(--accent);
+      color: #fffdf9;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .link-button.is-placeholder {
+      border-color: var(--border);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    section,
+    aside {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 20px;
+    }
+
+    section + section { margin-top: 20px; }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    p { margin: 0 0 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    dl {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 8px 12px;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    dt {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    dd { margin: 0; }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li + li { margin-top: 6px; }
+
+    .todo {
+      border-left: 4px solid var(--line);
+      background: var(--panel-strong);
+      padding: 12px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag-list li {
+      margin: 0;
+      padding: 6px 9px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--panel-strong);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .source-list {
+      font-size: 13px;
+    }
+
+    .location-section {
+      margin-top: 20px;
+    }
+
+    .map-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .map-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .map-address {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .map-frame {
+      display: block;
+      width: 100%;
+      height: 260px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel-strong);
+    }
+
+    .map-link {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 24px, 1080px);
+        padding-top: 16px;
+      }
+
+      .hero,
+      section,
+      aside {
+        padding: 16px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      dl {
+        grid-template-columns: 1fr;
+      }
+
+      .map-frame {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <a class="crumb" href="./index.html">Back to distillery profiles</a>
+
+    <header class="hero">
+      <h1>Bold Rock Distillery</h1>
+      <p class="subtitle">VAWT 2026 entrant #31 - R1B9 - Jun 27-Jul 3, 2026</p>
+      <nav class="top-links" aria-label="Official links">
+        <span class="link-button is-placeholder">Official website: TODO</span>
+        <span class="link-button is-placeholder">Instagram: TODO</span>
+      </nav>
+    </header>
+
+    <div class="grid">
+      <div>
+        <section>
+          <h2>Summary</h2>
+          <p class="todo">TODO: Add a source-backed, Wikipedia-style summary of Bold Rock Distillery covering its story, production philosophy, and product portfolio construction.</p>
+        </section>
+
+        <section>
+          <h2>Product Portfolio</h2>
+          <p class="todo">TODO: Verify all current products from official sources. Link each product to its official product page when one exists.</p>
+          <h3>Known or bracket-supplied product hints</h3>
+          <ul><li>TODO: Confirm product categories.</li></ul>
+          <h3>Whiskey categories to verify</h3>
+          <ul>
+            <li>Bourbon: TODO</li>
+            <li>Rye: TODO</li>
+            <li>American single malt: TODO</li>
+            <li>Other American whiskey / corn / wheat / finished whiskey: TODO</li>
+            <li>Non-whiskey spirits: TODO</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Sources</h2>
+          <ul class="source-list">
+            <li>TODO: Official website source URL.</li>
+            <li>TODO: Official Instagram source URL.</li>
+            <li>TODO: Product page source URLs.</li>
+            <li>Location/address references: <a href="https://virginiaspirits.org/distilleries/" target="_blank" rel="noopener noreferrer">Virginia Spirits distillery directory</a>, plus official or local tourism pages where the directory did not list the entrant.</li>
+          </ul>
+        </section>
+
+        <section class="location-section" aria-labelledby="location-map-heading">
+          <h2 id="location-map-heading">Location Map</h2>
+          <div class="map-list">
+          <div class="map-card">
+            <p class="map-address">1020 Rockfish Valley Hwy., Ste. A, Nellysford, VA 22958</p>
+            <iframe
+              class="map-frame"
+              title="Location Map for Bold Rock Distillery"
+              src="https://www.google.com/maps?q=Bold%20Rock%20Distillery%201020%20Rockfish%20Valley%20Hwy.%2C%20Ste.%20A%2C%20Nellysford%2C%20VA%2022958&amp;output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+            <a class="map-link" href="https://www.google.com/maps?q=Bold%20Rock%20Distillery%201020%20Rockfish%20Valley%20Hwy.%2C%20Ste.%20A%2C%20Nellysford%2C%20VA%2022958" target="_blank" rel="noopener noreferrer">View larger map</a>
+          </div>
+          </div>
+        </section>
+
+      </div>
+
+      <aside>
+        <h2>Snapshot</h2>
+        <dl>
+          <dt>Short name</dt>
+          <dd>Bold Rock</dd>
+          <dt>Official name</dt>
+          <dd>Bold Rock Distillery</dd>
+          <dt>Bout</dt>
+          <dd>R1B9</dd>
+          <dt>Voting window</dt>
+          <dd>Jun 27-Jul 3, 2026</dd>
+          <dt>Location</dt>
+          <dd>1020 Rockfish Valley Hwy., Ste. A, Nellysford, VA 22958</dd>
+          <dt>Main product type</dt>
+          <dd>TODO: Verify from official source.</dd>
+        </dl>
+
+        <h2 style="margin-top: 22px;">Tournament Notes</h2>
+        <ul><li>No extra tournament notes recorded yet.</li></ul>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>
