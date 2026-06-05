@@ -85,6 +85,8 @@ function loadDistilleries() {
       website: distillery.website,
       instagram: distillery.instagram,
       facebook: distillery.facebook,
+      description: distillery.description || "",
+      products: distillery.products || [],
       bout: entrant.bout,
       dateRange: entrant.dateRange,
       notes: entrant.notes,
@@ -640,6 +642,23 @@ function renderBoutLinks(boutInfo) {
   return linkElements.length ? `Voting links: ${linkElements.join(" • ")}` : '<span class="bout-links-placeholder">&nbsp;</span>';
 }
 
+function getSpiritTypeSummary(products) {
+  const spiritTypes = ["bourbon", "rye", "american single malt", "moonshine", "vodka", "gin", "other"];
+  const producedTypes = new Set((products || []).map(p => p.type?.toLowerCase()));
+
+  return spiritTypes.map(type => {
+    const hasType = spiritTypes.slice(0, -1).includes(type)
+      ? producedTypes.has(type)
+      : Array.from(producedTypes).some(t => !["bourbon", "rye", "american single malt", "moonshine", "vodka", "gin"].includes(t));
+
+    const color = hasType ? "#059669" : "#dc2626";
+    const label = hasType ? "yes" : "no";
+    const style = `color: ${color}; font-weight: 700;`;
+
+    return `<li><strong>${escapeHtml(type)}:</strong> <span style="${style}">${label}</span></li>`;
+  }).join("\n");
+}
+
 function renderBoutList(item) {
   if (!item.bouts || item.bouts.length === 0) {
     return "";
@@ -760,9 +779,11 @@ ${locationEmbeds}
           <dd>${escapeHtml(item.dateRange)}</dd>
           <dt>Location</dt>
           <dd>${escapeHtml(locationLabel(item))}</dd>
-          <dt>Main product type</dt>
-          <dd>TODO: Verify from official source.</dd>
         </dl>
+        <h3 style="margin: 16px 0 8px; font-size: 14px;">Spirit types</h3>
+        <ul style="list-style: none; padding: 0; font-size: 13px;">
+          ${getSpiritTypeSummary(item.products)}
+        </ul>
       </aside>
     </div>
   </main>
