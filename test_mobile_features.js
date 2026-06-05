@@ -21,6 +21,29 @@ const { chromium } = require('playwright');
     console.log('🧪 Testing Mobile Features...\n');
 
     const page = await browser.newPage({ viewport: { width: 375, height: 667 } });
+    await page.addInitScript(() => {
+      const fixedNow = new Date('2026-06-01T12:00:00-04:00').valueOf();
+      const RealDate = Date;
+
+      class FixedDate extends RealDate {
+        constructor(...args) {
+          if (args.length === 0) {
+            super(fixedNow);
+          } else {
+            super(...args);
+          }
+        }
+
+        static now() {
+          return fixedNow;
+        }
+      }
+
+      FixedDate.UTC = RealDate.UTC;
+      FixedDate.parse = RealDate.parse;
+      Object.setPrototypeOf(FixedDate, RealDate);
+      window.Date = FixedDate;
+    });
     await page.goto(`file://${process.cwd()}/index.html`);
 
     // Test 1: Headings Centered
@@ -67,10 +90,15 @@ const { chromium } = require('playwright');
 
     // Test 4: Active Bout Indicator Visible
     console.log('\nTest 4: Active bout indicators');
-    const hasActiveIndicator = await page.locator('.bout.is-active .bout-active-indicator').isVisible();
+    const visibleActiveIndicators = await page.locator('.bout.is-active .bout-active-indicator').evaluateAll((indicators) => {
+      return indicators.filter((indicator) => {
+        const style = window.getComputedStyle(indicator);
+        return style.display !== 'none' && style.visibility !== 'hidden';
+      }).length;
+    });
 
-    if (hasActiveIndicator) {
-      console.log('  ✓ Active bout indicator is visible');
+    if (visibleActiveIndicators > 0) {
+      console.log(`  ✓ Active bout indicators are visible (${visibleActiveIndicators})`);
       passed++;
     } else {
       console.log('  ✗ Active bout indicator should be visible');

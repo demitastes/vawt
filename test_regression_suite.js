@@ -41,6 +41,11 @@ const tests = [
     name: 'Visual Rendering',
     file: 'test_responsive_visual.js',
     desc: 'Actual visual rendering at multiple viewports'
+  },
+  {
+    name: 'Distillery Profile Stubs',
+    file: 'test_distillery_profiles.js',
+    desc: 'Generated profile pages, profile index, and TODO links'
   }
 ];
 
