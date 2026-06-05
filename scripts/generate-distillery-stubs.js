@@ -63,6 +63,9 @@ function loadDistilleries() {
       name: distillery.name,
       officialName: distillery.officialName,
       locations: distillery.locations,
+      website: distillery.website,
+      instagram: distillery.instagram,
+      facebook: distillery.facebook,
       bout: entrant.bout,
       dateRange: entrant.dateRange,
       notes: entrant.notes,
@@ -132,6 +135,33 @@ function mapUrlFor(item, location) {
 
 function mapEmbedUrlFor(item, location) {
   return `${mapUrlFor(item, location)}&output=embed`;
+}
+
+function renderSocialLinks(item) {
+  const links = [];
+
+  const website = item.website;
+  if (website === undefined) {
+    links.push(`<span class="link-button is-placeholder">Official website: TODO</span>`);
+  } else if (website && website.trim()) {
+    links.push(`<a class="link-button" href="${escapeHtml(website)}" target="_blank" rel="noopener noreferrer">Official website</a>`);
+  }
+
+  const instagram = item.instagram;
+  if (instagram === undefined) {
+    links.push(`<span class="link-button is-placeholder">Instagram: TODO</span>`);
+  } else if (instagram && instagram.trim()) {
+    links.push(`<a class="link-button" href="${escapeHtml(instagram)}" target="_blank" rel="noopener noreferrer">Instagram</a>`);
+  }
+
+  const facebook = item.facebook;
+  if (facebook === undefined) {
+    links.push(`<span class="link-button is-placeholder">Facebook: TODO</span>`);
+  } else if (facebook && facebook.trim()) {
+    links.push(`<a class="link-button" href="${escapeHtml(facebook)}" target="_blank" rel="noopener noreferrer">Facebook</a>`);
+  }
+
+  return links.join("\n        ");
 }
 
 function renderLocationEmbeds(item) {
@@ -431,8 +461,7 @@ function renderStubPage(item, index) {
       <h1>${escapeHtml(title)}</h1>
       <p class="subtitle">VAWT 2026 entrant #${index + 1} - ${escapeHtml(item.bout)} - ${escapeHtml(item.dateRange)}</p>
       <nav class="top-links" aria-label="Official links">
-        <span class="link-button is-placeholder">Official website: TODO</span>
-        <span class="link-button is-placeholder">Instagram: TODO</span>
+        ${renderSocialLinks(item)}
       </nav>
     </header>
 
@@ -461,8 +490,9 @@ function renderStubPage(item, index) {
         <section>
           <h2>Sources</h2>
           <ul class="source-list">
-            <li>TODO: Official website source URL.</li>
-            <li>TODO: Official Instagram source URL.</li>
+            ${item.website && item.website.trim() ? `<li>Official website: <a href="${escapeHtml(item.website)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.website)}</a></li>` : '<li>TODO: Official website source URL.</li>'}
+            ${item.instagram && item.instagram.trim() ? `<li>Instagram: <a href="${escapeHtml(item.instagram)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.instagram)}</a></li>` : '<li>TODO: Official Instagram source URL.</li>'}
+            ${item.facebook && item.facebook.trim() ? `<li>Facebook: <a href="${escapeHtml(item.facebook)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.facebook)}</a></li>` : ''}
             <li>TODO: Product page source URLs.</li>
             <li>Location/address references: <a href="https://virginiaspirits.org/distilleries/" target="_blank" rel="noopener noreferrer">Virginia Spirits distillery directory</a>, plus official or local tourism pages where the directory did not list the entrant.</li>
           </ul>
