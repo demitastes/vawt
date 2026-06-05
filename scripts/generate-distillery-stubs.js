@@ -455,11 +455,9 @@ ${locationEmbeds}
       <aside>
         <h2>Snapshot</h2>
         <dl>
-          <dt>Profile slug</dt>
-          <dd>${escapeHtml(slug)}</dd>
-          <dt>Display name</dt>
+          <dt>Short name</dt>
           <dd>${escapeHtml(item.name)}</dd>
-          <dt>Listed name</dt>
+          <dt>Official name</dt>
           <dd>${escapeHtml(sourceName(item))}</dd>
           <dt>Bout</dt>
           <dd>${escapeHtml(item.bout)}</dd>
