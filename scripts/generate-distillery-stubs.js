@@ -85,7 +85,7 @@ function loadDistilleries() {
       website: distillery.website,
       instagram: distillery.instagram,
       facebook: distillery.facebook,
-      description: distillery.description || "",
+      summary: distillery.summary || "",
       products: distillery.products || [],
       bout: entrant.bout,
       dateRange: entrant.dateRange,
@@ -733,6 +733,40 @@ function getSpiritTypeSummary(products) {
   }).join("\n          ");
 }
 
+function getProductTypesForIndex(products) {
+  const knownTypes = ["bourbon", "rye", "asmw", "other whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur"];
+  const spiritTypeLabels = {
+    "bourbon": "Bourbon",
+    "rye": "Rye",
+    "asmw": "ASMW",
+    "other whiskey": "Other Whiskey",
+    "moonshine": "Moonshine",
+    "vodka": "Vodka",
+    "gin": "Gin",
+    "rum": "Rum",
+    "brandy": "Brandy",
+    "agave": "Agave",
+    "liqueur": "Liqueur",
+    "other": "Other"
+  };
+
+  if (!products || products.length === 0) {
+    return "Research pending";
+  }
+
+  const producedTypes = new Set(products.map(p => p.type?.toLowerCase()));
+  const displayTypes = Array.from(producedTypes)
+    .filter(type => type && type !== "other")
+    .map(type => spiritTypeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1))
+    .sort();
+
+  if (producedTypes.has("other") || Array.from(producedTypes).some(t => !knownTypes.includes(t))) {
+    displayTypes.push("Other");
+  }
+
+  return displayTypes.length > 0 ? displayTypes.join(", ") : "Research pending";
+}
+
 function renderBoutList(item) {
   if (!item.bouts || item.bouts.length === 0) {
     return "";
@@ -805,7 +839,9 @@ function renderStubPage(item, index) {
       <div>
         <section>
           <h2>Summary</h2>
-          <p class="todo">TODO: Add a source-backed, Wikipedia-style summary of ${escapeHtml(title)} covering its story, production philosophy, and product portfolio construction.</p>
+          ${item.summary && item.summary.trim()
+            ? `<p>${item.summary}</p>`
+            : `<p class="todo">TODO: Add a source-backed, Wikipedia-style summary of ${escapeHtml(title)} covering its story, production philosophy, and product portfolio construction.</p>`}
         </section>
 
 ${boutList}
@@ -855,14 +891,14 @@ function renderIndex() {
   const rows = distilleries.map((item, index) => {
     const title = pageTitle(item);
     const slug = slugify(title);
-    const hints = item.productHints && item.productHints.length ? item.productHints.join(", ") : "Research pending";
+    const productTypes = getProductTypesForIndex(item.products);
     return `
       <tr>
         <td>${index + 1}</td>
         <td><a href="./${slug}.html">${escapeHtml(title)}</a></td>
         <td>${escapeHtml(item.bout)}</td>
         <td>${escapeHtml(item.dateRange)}</td>
-        <td>${escapeHtml(hints)}</td>
+        <td>${escapeHtml(productTypes)}</td>
       </tr>`;
   }).join("\n");
 
@@ -937,7 +973,7 @@ function renderIndex() {
             <th>Distillery</th>
             <th>Bout</th>
             <th>Voting window</th>
-            <th>Known product hints</th>
+            <th>Product types</th>
           </tr>
         </thead>
         <tbody>${rows}
