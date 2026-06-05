@@ -385,11 +385,13 @@
         padding-bottom: 8px;
         border-bottom: 1px solid var(--border);
         margin-bottom: 4px;
+        text-align: center;
       }
 
       .bout-label {
         font-size: 10px;
         margin-bottom: 4px;
+        text-align: center;
       }
 
       .bout-date-container {
@@ -399,6 +401,12 @@
 
       .bout-date {
         font-size: 10px;
+      }
+
+      .bout-active-indicator {
+        width: 6px;
+        height: 6px;
+        margin: 0 0 0 6px;
       }
 
       .bout-links {
@@ -413,10 +421,16 @@
         font-size: 7px;
       }
 
-      .bout-active-indicator {
-        width: 6px;
-        height: 6px;
-        margin: 0 1px;
+      .round-column[data-side="left"] .bout-date-container,
+      .round-column[data-side="right"] .bout-date-container {
+        justify-content: center;
+        flex-direction: row;
+      }
+
+      .round-column[data-side="left"] .bout-active-indicator,
+      .round-column[data-side="right"] .bout-active-indicator {
+        margin-right: 0;
+        margin-left: 6px;
       }
 
       .matchup {
@@ -868,8 +882,25 @@
       }
     }
 
+    let wasMobile = isMobile();
     window.addEventListener("resize", () => {
-      if (!isMobile()) {
+      const nowMobile = isMobile();
+      if (wasMobile !== nowMobile) {
+        wasMobile = nowMobile;
+        requestAnimationFrame(() => {
+          if (nowMobile) {
+            // Clear inline styles when switching to mobile
+            document.querySelectorAll('.bout, .round-column, .championship').forEach(el => {
+              el.style.top = '';
+              el.style.height = '';
+              el.style.transform = '';
+            });
+            connectors.innerHTML = '';
+            connectors.style.display = 'none';
+          }
+          render();
+        });
+      } else if (!nowMobile) {
         layoutBracket();
         drawConnectors();
       }
