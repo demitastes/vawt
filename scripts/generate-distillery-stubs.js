@@ -7,6 +7,7 @@ const ROOT = path.resolve(__dirname, "..");
 const OUTPUT_DIR = path.join(ROOT, "distilleries");
 const DISTILLERY_DATA_PATH = path.join(ROOT, "data", "distillery-data.json");
 const TOURNAMENT_DATA_PATH = path.join(ROOT, "data", "tournament-data.json");
+const BOUT_DATA_PATH = path.join(ROOT, "data", "bout-data.json");
 const dryRun = process.argv.includes("--dry-run");
 
 // Distilleries whose profile page title uses officialName rather than short name.
@@ -47,7 +48,25 @@ function loadJson(filePath) {
 function loadDistilleries() {
   const distilleryRecords = loadJson(DISTILLERY_DATA_PATH);
   const tournamentData = loadJson(TOURNAMENT_DATA_PATH);
+  const boutDataArray = loadJson(BOUT_DATA_PATH);
   const distilleryByName = new Map(distilleryRecords.map((record) => [record.name, record]));
+  const boutByKey = new Map(
+    boutDataArray.map((bout) => [`r${bout.round}b${bout.bout}`, bout])
+  );
+
+  // Build a map of distillery name -> array of bouts they're in
+  const distilleryBouts = new Map();
+  tournamentData.entrants.forEach((entrant) => {
+    const boutKey = entrant.bout.toLowerCase().replace(/\s+/g, "");
+    if (!distilleryBouts.has(entrant.name)) {
+      distilleryBouts.set(entrant.name, []);
+    }
+    const boutInfo = boutByKey.get(boutKey);
+    distilleryBouts.get(entrant.name).push({
+      boutKey,
+      bout: boutInfo
+    });
+  });
 
   return tournamentData.entrants.map((entrant) => {
     const distillery = distilleryByName.get(entrant.name);
@@ -69,7 +88,8 @@ function loadDistilleries() {
       bout: entrant.bout,
       dateRange: entrant.dateRange,
       notes: entrant.notes,
-      productHints: entrant.productHints
+      productHints: entrant.productHints,
+      bouts: distilleryBouts.get(entrant.name) || []
     };
 
     if (
@@ -405,6 +425,85 @@ function renderCss() {
       font-weight: 800;
     }
 
+    .bouts-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    .bout-row {
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.2s ease;
+    }
+
+    .bout-row:hover {
+      background-color: var(--panel-strong);
+    }
+
+    .bout-row.is-active {
+      background-color: #f0fdf4;
+    }
+
+    .bout-row.is-active:hover {
+      background-color: #e8fbea;
+    }
+
+    .bouts-table td {
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    .bout-label {
+      font-weight: 800;
+      color: var(--accent);
+      width: 80px;
+    }
+
+    .bout-row.is-active .bout-label {
+      color: #2d8e2d;
+    }
+
+    .bout-dates {
+      color: var(--muted);
+      width: 140px;
+      font-size: 13px;
+    }
+
+    .bout-row.is-active .bout-dates {
+      color: #3da53d;
+      font-weight: 600;
+    }
+
+    .bout-links {
+      font-size: 12px;
+    }
+
+    .voting-link {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .voting-link:hover {
+      background-color: var(--accent);
+      color: #fffdf9;
+    }
+
+    .bout-row.is-active .voting-link {
+      background-color: #c1e9c1;
+      color: #2d8e2d;
+    }
+
+    .bout-row.is-active .voting-link:hover {
+      background-color: #2d8e2d;
+      color: #fff;
+    }
+
     @media (max-width: 760px) {
       .page {
         width: min(100% - 24px, 1080px);
@@ -428,8 +527,121 @@ function renderCss() {
       .map-frame {
         height: 220px;
       }
+
+      .bouts-table,
+      .bouts-table tbody,
+      .bouts-table tr,
+      .bouts-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .bout-row {
+        padding: 12px 0;
+        border: 0;
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        gap: 4px;
+      }
+
+      .bouts-table td {
+        padding: 2px 0;
+        display: block;
+        width: 100%;
+        font-size: 13px;
+      }
+
+      .bout-label {
+        width: 100%;
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+
+      .bout-dates {
+        width: 100%;
+      }
+
+      .bout-links {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 4px;
+      }
+
+      .voting-link {
+        font-size: 11px;
+        padding: 3px 6px;
+      }
     }
   `;
+}
+
+function isBoutActive(boutInfo) {
+  if (!boutInfo || !boutInfo.dateRange) return false;
+  const now = new Date();
+  const startDate = new Date(boutInfo.dateRange.start + "T12:00:00-04:00");
+  const endDate = new Date(boutInfo.dateRange.end + "T23:59:59-04:00");
+  return now >= startDate && now <= endDate;
+}
+
+function formatBoutDate(boutInfo) {
+  if (!boutInfo || !boutInfo.dateRange) return "";
+  const fmt = { month: "short", day: "numeric", timeZone: "UTC" };
+  const start = new Date(boutInfo.dateRange.start).toLocaleDateString("en-US", fmt);
+  const end = new Date(boutInfo.dateRange.end).toLocaleDateString("en-US", fmt);
+  return `${start} – ${end}`;
+}
+
+function renderBoutLinks(boutInfo) {
+  if (!boutInfo || !boutInfo.links) return "";
+  const links = boutInfo.links;
+  const linkConfigs = [
+    { key: "instagram", label: "Instagram", title: "Vote on Instagram" },
+    { key: "youtube", label: "YouTube", title: "Vote on YouTube" },
+    { key: "twitter", label: "Twitter/X", title: "Vote on Twitter/X" },
+    { key: "discord", label: "Discord", title: "Join Discord" }
+  ];
+
+  const linkElements = linkConfigs
+    .filter(({ key }) => links[key])
+    .map(({ key, label, title }) => {
+      return `<a class="voting-link" href="${escapeHtml(links[key])}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(title)}">${escapeHtml(label)}</a>`;
+    });
+
+  return linkElements.length ? linkElements.join(" • ") : "";
+}
+
+function renderBoutList(item) {
+  if (!item.bouts || item.bouts.length === 0) {
+    return "";
+  }
+
+  const boutRows = item.bouts
+    .map(({ boutKey, bout }) => {
+      const isActive = isBoutActive(bout);
+      const dateStr = formatBoutDate(bout);
+      const linksHtml = renderBoutLinks(bout);
+      const activeClass = isActive ? " is-active" : "";
+      const activeIndicator = isActive ? " 🟢" : "";
+
+      return `
+          <tr class="bout-row${activeClass}">
+            <td class="bout-label">${escapeHtml(boutKey.toUpperCase())}</td>
+            <td class="bout-dates">${escapeHtml(dateStr)}</td>
+            <td class="bout-links">${linksHtml}</td>
+          </tr>`;
+    })
+    .join("\n");
+
+  return `
+        <section>
+          <h2>Tournament Bouts</h2>
+          <table class="bouts-table">
+            <tbody>${boutRows}
+            </tbody>
+          </table>
+        </section>`;
 }
 
 function renderStubPage(item, index) {
@@ -438,6 +650,7 @@ function renderStubPage(item, index) {
   const notes = item.notes || [];
   const slug = slugify(title);
   const locationEmbeds = renderLocationEmbeds(item);
+  const boutList = renderBoutList(item);
   const hintItems = hints.length
     ? hints.map((hint) => `<li>${escapeHtml(hint)}</li>`).join("\n")
     : "<li>TODO: Confirm product categories.</li>";
@@ -471,6 +684,8 @@ function renderStubPage(item, index) {
           <h2>Summary</h2>
           <p class="todo">TODO: Add a source-backed, Wikipedia-style summary of ${escapeHtml(title)} covering its story, production philosophy, and product portfolio construction.</p>
         </section>
+
+${boutList}
 
         <section>
           <h2>Product Portfolio</h2>
