@@ -218,6 +218,7 @@
     .bout-row {
       border-bottom: 1px solid var(--border);
       transition: background-color 0.2s ease;
+      height: 40px;
     }
 
     .bout-row:hover {
@@ -233,8 +234,10 @@
     }
 
     .bouts-table td {
-      padding: 10px 12px;
+      padding: 0 12px;
       font-size: 14px;
+      vertical-align: middle;
+      height: 40px;
     }
 
     .bout-label {
@@ -244,6 +247,7 @@
       font-weight: 800;
       color: var(--accent);
       width: 80px;
+      height: 40px;
     }
 
     .bout-label-spacer {
@@ -269,6 +273,12 @@
 
     .bout-links {
       font-size: 12px;
+      min-height: 16px;
+    }
+
+    .bout-links-placeholder {
+      display: inline-block;
+      min-width: 1px;
     }
 
     .bout-active-indicator {
@@ -405,7 +415,7 @@
           <tr class="bout-row">
             <td class="bout-label"><span class="bout-label-spacer"></span>R1B12</td>
             <td class="bout-dates">Jul 4 – Jul 10</td>
-            <td class="bout-links"></td>
+            <td class="bout-links"><span class="bout-links-placeholder">&nbsp;</span></td>
           </tr>
             </tbody>
           </table>

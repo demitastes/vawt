@@ -434,6 +434,7 @@ function renderCss() {
     .bout-row {
       border-bottom: 1px solid var(--border);
       transition: background-color 0.2s ease;
+      height: 40px;
     }
 
     .bout-row:hover {
@@ -449,8 +450,10 @@ function renderCss() {
     }
 
     .bouts-table td {
-      padding: 10px 12px;
+      padding: 0 12px;
       font-size: 14px;
+      vertical-align: middle;
+      height: 40px;
     }
 
     .bout-label {
@@ -460,6 +463,7 @@ function renderCss() {
       font-weight: 800;
       color: var(--accent);
       width: 80px;
+      height: 40px;
     }
 
     .bout-label-spacer {
@@ -485,6 +489,12 @@ function renderCss() {
 
     .bout-links {
       font-size: 12px;
+      min-height: 16px;
+    }
+
+    .bout-links-placeholder {
+      display: inline-block;
+      min-width: 1px;
     }
 
     .bout-active-indicator {
@@ -612,7 +622,7 @@ function formatBoutDate(boutInfo) {
 }
 
 function renderBoutLinks(boutInfo) {
-  if (!boutInfo || !boutInfo.links) return "";
+  if (!boutInfo || !boutInfo.links) return '<span class="bout-links-placeholder">&nbsp;</span>';
   const links = boutInfo.links;
   const linkConfigs = [
     { key: "instagram", label: "Instagram", title: "Vote on Instagram" },
@@ -627,7 +637,7 @@ function renderBoutLinks(boutInfo) {
       return `<a class="voting-link" href="${escapeHtml(links[key])}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(title)}">${escapeHtml(label)}</a>`;
     });
 
-  return linkElements.length ? `Voting links: ${linkElements.join(" • ")}` : "";
+  return linkElements.length ? `Voting links: ${linkElements.join(" • ")}` : '<span class="bout-links-placeholder">&nbsp;</span>';
 }
 
 function renderBoutList(item) {
