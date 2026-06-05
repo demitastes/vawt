@@ -12,14 +12,14 @@ The full vision is in ROADMAP.md. Current phase: static website for bracket expl
 
 The project is split into distinct subsystems that can be developed in parallel:
 
-- **Static Website** (`bracket.html` + data): Initial phase. HTML file displaying bracket data from markdown files in `/data`.
+- **Static Website** (`index.html` + data): Initial phase. HTML file displaying bracket data from markdown files in `/data`.
 - **Backend** (future): Node.js/API layer to handle user accounts, bracket creation, real-time updates. Will read/write tournament data.
 - **Discord Bot** (future): Separate service querying the same data source about tournament progress and voting dates.
 - **Data Layer** (`/data`): Single source of truth. Initially markdown (BRACKET.md, TOURNAMENT_NOTES.md), will transition to CSV and JSON formats as tool complexity grows.
 
 ## Current State
 
-- `bracket.html`: Static HTML file with embedded CSS. Displays tournament bracket structure. Currently a skeleton; needs to be populated with data from `/data/BRACKET.md`.
+- `index.html`: Static HTML file with embedded CSS. Displays tournament bracket structure. Currently a skeleton; needs to be populated with data from `/data/BRACKET.md`.
 - `/data/BRACKET.md`: Tournament bracket structure in markdown. Contains round definitions and bout matchups. Non-coders will edit this.
 - `/data/TOURNAMENT_NOTES.md`: Metadata like new distilleries, annotations, notes about participants.
 
