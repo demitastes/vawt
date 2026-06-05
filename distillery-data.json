@@ -1,30 +1,222 @@
 [
   {
     "name": "Open Road",
-    "officialName": "Open Road Distilling Co.",
-    "website": "https://openroaddistillingco.com/",
-    "instagram": "https://www.instagram.com/openroaddistillingco/",
-    "facebook": "https://www.facebook.com/OpenRoadDistillingCo/"
+    "officialName": "Open Road"
   },
   {
     "name": "Brady's",
-    "officialName": "Brady's Distillery",
-    "website": "https://www.bradysdistillery.com/",
-    "instagram": "https://www.instagram.com/bradysdistillery/",
-    "facebook": "https://www.facebook.com/bradysdistillery/"
+    "officialName": "Brady's"
   },
   {
     "name": "Old House",
-    "officialName": "Old House Vineyards",
-    "website": "https://oldhousetoday.com/distillery/",
-    "instagram": "https://www.instagram.com/oldhousevineyards/",
-    "facebook": "https://www.facebook.com/oldhousevineyards/"
+    "officialName": "Old House"
   },
   {
     "name": "Three Crosses",
-    "officialName": "Three Crosses Distilling",
-    "website": "https://www.threecrossesdistilling.com/",
-    "instagram": "https://www.instagram.com/threecrossesdistilling/",
-    "facebook": "https://www.facebook.com/Threecrossesdistilling/"
+    "officialName": "Three Crosses"
+  },
+  {
+    "name": "New Realm",
+    "officialName": "New Realm Brewing & Distilling"
+  },
+  {
+    "name": "Lost Whiskey Co",
+    "officialName": "Lost Whiskey Co"
+  },
+  {
+    "name": "Highlands",
+    "officialName": "Highlands Distilling Co"
+  },
+  {
+    "name": "Springfield",
+    "officialName": "Springfield Distillery"
+  },
+  {
+    "name": "KO Distilling",
+    "officialName": "KO Distilling"
+  },
+  {
+    "name": "Mean Spirits",
+    "officialName": "Mean Spirits Distilling"
+  },
+  {
+    "name": "Reservoir",
+    "officialName": "Reservoir Distillery"
+  },
+  {
+    "name": "Deep Creek",
+    "officialName": "Deep Creek"
+  },
+  {
+    "name": "Five Mile Mountain",
+    "officialName": "Five Mile Mountain"
+  },
+  {
+    "name": "Ironclad",
+    "officialName": "Ironclad"
+  },
+  {
+    "name": "River Hill",
+    "officialName": "River Hill"
+  },
+  {
+    "name": "Cape Charles",
+    "officialName": "Cape Charles"
+  },
+  {
+    "name": "Virginia Distillery Co",
+    "officialName": "Virginia Distillery Co."
+  },
+  {
+    "name": "Silverback",
+    "officialName": "Silverback"
+  },
+  {
+    "name": "River City",
+    "officialName": "River City"
+  },
+  {
+    "name": "Spirit Lab",
+    "officialName": "Spirit Lab Distilling"
+  },
+  {
+    "name": "Reverend Spirits",
+    "officialName": "Reverend Spirits"
+  },
+  {
+    "name": "Bon Durant Brothers",
+    "officialName": "Bon Durant Brothers Distillery"
+  },
+  {
+    "name": "Twin Creeks",
+    "officialName": "Twin Creeks Distillery"
+  },
+  {
+    "name": "GW's Grist Mill",
+    "officialName": "George Washington's Grist Mill Distillery"
+  },
+  {
+    "name": "Ragged Branch",
+    "officialName": "Ragged Branch"
+  },
+  {
+    "name": "Devil's Backbone",
+    "officialName": "Devil's Backbone"
+  },
+  {
+    "name": "Tarnished Truth",
+    "officialName": "Tarnished Truth"
+  },
+  {
+    "name": "Blue Sky",
+    "officialName": "Blue Sky"
+  },
+  {
+    "name": "Blue Shepherd",
+    "officialName": "Blue Shepherd Spirits"
+  },
+  {
+    "name": "Caiseal",
+    "officialName": "Caiseal (Vanguard)"
+  },
+  {
+    "name": "Bold Rock",
+    "officialName": "Bold Rock Distillery"
+  },
+  {
+    "name": "Three Wives",
+    "officialName": "Three Wives Distillery Winchester"
+  },
+  {
+    "name": "Davis Valley",
+    "officialName": "Davis Valley Distillery"
+  },
+  {
+    "name": "Climax",
+    "officialName": "Climax"
+  },
+  {
+    "name": "Filibuster",
+    "officialName": "Filibuster Distillery"
+  },
+  {
+    "name": "A. Smith Bowman",
+    "officialName": "A. Smith Bowman"
+  },
+  {
+    "name": "Mt Defiance",
+    "officialName": "Mt Defiance Cidery & Distillery (Old Bolstead)"
+  },
+  {
+    "name": "Catoctin Creek",
+    "officialName": "Catoctin Creek Distilling Co."
+  },
+  {
+    "name": "Virginia Foothills",
+    "officialName": "Virginia Foothills Distillery"
+  },
+  {
+    "name": "Copper Fox",
+    "officialName": "Copper Fox"
+  },
+  {
+    "name": "Appalachian Heritage",
+    "officialName": "Appalachian Heritage Distillery"
+  },
+  {
+    "name": "Sandy River",
+    "officialName": "Sandy River Distillery"
+  },
+  {
+    "name": "Belmont Farm",
+    "officialName": "Belmont Farm Distillery"
+  },
+  {
+    "name": "Creek Bottom",
+    "officialName": "Creek Bottom"
+  },
+  {
+    "name": "Cool Springs",
+    "officialName": "Cool Springs"
+  },
+  {
+    "name": "Trial & Error",
+    "officialName": "Trial & Error"
+  },
+  {
+    "name": "J.H. Bards",
+    "officialName": "J.H. Bards"
+  },
+  {
+    "name": "Murlarkey",
+    "officialName": "Murlarkey"
+  },
+  {
+    "name": "Three Notches",
+    "officialName": "Three Notches (Brewery & Distillery)"
+  },
+  {
+    "name": "Lincoln Ridge",
+    "officialName": "Lincoln Ridge Distillery"
+  },
+  {
+    "name": "Hilltop",
+    "officialName": "Hilltop Distillery"
+  },
+  {
+    "name": "Sleepy Fox",
+    "officialName": "Sleepy Fox"
+  },
+  {
+    "name": "Bell Isle",
+    "officialName": "Bell Isle"
+  },
+  {
+    "name": "Franklin County",
+    "officialName": "Franklin County Distillers"
+  },
+  {
+    "name": "Axe Handle",
+    "officialName": "Axe Handle Distilling"
   }
 ]
