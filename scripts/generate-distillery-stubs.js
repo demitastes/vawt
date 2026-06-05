@@ -650,7 +650,17 @@ function renderProductPortfolio(products) {
         </section>`;
   }
 
-  const spiritTypes = ["bourbon", "rye", "american single malt", "whiskey", "moonshine", "vodka", "gin", "other"];
+  const spiritTypes = ["bourbon", "rye", "american single malt", "other whiskey", "moonshine", "vodka", "gin", "other"];
+  const spiritTypeLabels = {
+    "bourbon": "Bourbon",
+    "rye": "Rye",
+    "american single malt": "American Single Malt",
+    "other whiskey": "Other Whiskey",
+    "moonshine": "Moonshine",
+    "vodka": "Vodka",
+    "gin": "Gin",
+    "other": "Other"
+  };
   const productsByType = {};
 
   spiritTypes.forEach(type => {
@@ -675,7 +685,8 @@ function renderProductPortfolio(products) {
         return `<li>${escapeHtml(product.name)}</li>`;
       }).join("\n");
 
-      return `<h3>${escapeHtml(type.charAt(0).toUpperCase() + type.slice(1))}</h3>\n          <ul>\n${items}\n          </ul>`;
+      const label = spiritTypeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1);
+      return `<h3>${escapeHtml(label)}</h3>\n          <ul>\n${items}\n          </ul>`;
     })
     .join("\n\n          ");
 
@@ -686,19 +697,30 @@ function renderProductPortfolio(products) {
 }
 
 function getSpiritTypeSummary(products) {
-  const spiritTypes = ["bourbon", "rye", "american single malt", "whiskey", "moonshine", "vodka", "gin", "other"];
+  const spiritTypes = ["bourbon", "rye", "american single malt", "other whiskey", "moonshine", "vodka", "gin", "other"];
+  const spiritTypeLabels = {
+    "bourbon": "Bourbon",
+    "rye": "Rye",
+    "american single malt": "ASMW",
+    "other whiskey": "Other Whiskey",
+    "moonshine": "Moonshine",
+    "vodka": "Vodka",
+    "gin": "Gin",
+    "other": "Other"
+  };
   const producedTypes = new Set((products || []).map(p => p.type?.toLowerCase()));
 
   return spiritTypes.map(type => {
     const hasType = type === "other"
-      ? Array.from(producedTypes).some(t => !["bourbon", "rye", "american single malt", "whiskey", "moonshine", "vodka", "gin"].includes(t))
+      ? Array.from(producedTypes).some(t => !["bourbon", "rye", "american single malt", "other whiskey", "moonshine", "vodka", "gin"].includes(t))
       : producedTypes.has(type);
 
     const color = hasType ? "#059669" : "#dc2626";
     const label = hasType ? "yes" : "no";
     const badgeStyle = `display: inline-block; padding: 4px 8px; border: 1.5px solid ${color}; border-radius: 4px; color: ${color}; font-weight: 700; font-size: 12px;`;
+    const displayLabel = spiritTypeLabels[type] || type;
 
-    return `<dt>${escapeHtml(type)}</dt>\n          <dd><span style="${badgeStyle}">${label}</span></dd>`;
+    return `<dt>${escapeHtml(displayLabel)}</dt>\n          <dd><span style="${badgeStyle}">${label}</span></dd>`;
   }).join("\n          ");
 }
 
