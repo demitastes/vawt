@@ -83,15 +83,35 @@ vawt-website/
 
 ## Testing
 
-### Responsive Layout Tests (Critical - Run Before Merging Changes)
-
 **⚠️ IMPORTANT: Write test files to the repo and run them from there. DO NOT create ad-hoc test commands.**
 
 When you need to verify changes:
-- Check if a test file already exists for the task (e.g., `test_responsive_visual.js`, `test_responsive.js`)
+- Check if a test file already exists for the task (e.g., `test_responsive_visual.js`, `test_bout_data.mjs`)
 - If it exists, use it via `node <filename>`
 - If you need a new test, create a permanent test file in the repo that future agents can reuse
 - Never write one-off test commands in bash or temporary files
+
+### Run All Tests
+
+To run all test files at once:
+```bash
+node run-tests.mjs
+```
+
+This discovers and runs all `test_*.js`, `test_*.mjs`, `verify*.js`, and `verify*.mjs` files, reporting pass/fail status for each.
+
+### Bout Data & Active Indicator Tests
+
+Verifies that bout data is loaded correctly and active bouts display green styling:
+
+```bash
+node test_bout_data.mjs      # Check DOM classes for active bouts
+node test_bout_visual.mjs    # Verify computed styles (colors, backgrounds)
+```
+
+Run these after changes to bout data loading, active bout detection, or bout styling in `index.html`.
+
+### Responsive Layout Tests (Critical - Run Before Merging Changes)
 
 #### Static checks (no browser needed):
 ```bash
