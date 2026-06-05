@@ -86,6 +86,7 @@ function loadDistilleries() {
       instagram: distillery.instagram,
       facebook: distillery.facebook,
       summary: distillery.summary || "",
+      summarySourceLink: distillery["summary-source-link"] || "",
       products: distillery.products || [],
       bout: entrant.bout,
       dateRange: entrant.dateRange,
@@ -775,6 +776,25 @@ function getProductTypesForIndex(products) {
   return displayTypes.length > 0 ? displayTypes.join(", ") : "Research pending";
 }
 
+function renderSummarySection(item, title) {
+  if (!item.summary || !item.summary.trim()) {
+    return `<section>
+          <h2>Summary</h2>
+          <p class="todo">TODO: Add a source-backed, Wikipedia-style summary of ${escapeHtml(title)} covering its story, production philosophy, and product portfolio construction.</p>
+        </section>`;
+  }
+
+  const sourceLink = item.summarySourceLink && item.summarySourceLink.trim()
+    ? `<p style="margin: 12px 0 0; font-size: 13px;"><a href="${escapeHtml(item.summarySourceLink)}" target="_blank" rel="noopener noreferrer" style="color: var(--muted);">Source →</a></p>`
+    : "";
+
+  return `<section>
+          <h2>Summary</h2>
+          <p>${item.summary}</p>
+          ${sourceLink}
+        </section>`;
+}
+
 function renderBoutList(item) {
   if (!item.bouts || item.bouts.length === 0) {
     return "";
@@ -845,12 +865,7 @@ function renderStubPage(item, index) {
 
     <div class="grid">
       <div>
-        <section>
-          <h2>Summary</h2>
-          ${item.summary && item.summary.trim()
-            ? `<p>${item.summary}</p>`
-            : `<p class="todo">TODO: Add a source-backed, Wikipedia-style summary of ${escapeHtml(title)} covering its story, production philosophy, and product portfolio construction.</p>`}
-        </section>
+        ${renderSummarySection(item, title)}
 
 ${boutList}
 
