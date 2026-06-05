@@ -32,11 +32,11 @@ Research and complete profiles in first-appearance order by voting window and bo
 
 - [x] R1B1: Researched and updated [Open Road](distilleries/open-road.html), [Brady's](distilleries/bradys.html), [Old House](distilleries/old-house.html), and [Three Crosses](distilleries/three-crosses.html).
 - [x] R1B2: Researched and updated [New Realm Brewing & Distilling](distilleries/new-realm-brewing-and-distilling.html), [Lost Whiskey Co](distilleries/lost-whiskey-co.html), [Highlands Distilling Co](distilleries/highlands-distilling-co.html), and [Springfield Distillery](distilleries/springfield-distillery.html).
-- [ ] Doug input needed: confirm Old House's preferred official Instagram account.
+- [x] Doug confirmed official Instagram/Facebook links for Open Road, Brady's, Old House, and Three Crosses; record them in [distillery-links.json](distillery-links.json).
 - [ ] Doug input needed: confirm New Realm Brewing & Distilling's preferred official Instagram account for the VAWT profile.
 - [ ] Doug input needed: confirm Highlands Distilling Co's preferred official Instagram account, if any.
 - [ ] Doug input needed: confirm Springfield Distillery's preferred official Instagram account.
-- [ ] Doug input needed: decide whether to include secondary-source founding/opening dates for Open Road, Old House, and Three Crosses when official pages do not state those years.
+- [x] Doug confirmed secondary-source founding/opening dates may be included for Open Road, Old House, and Three Crosses when official pages do not state those years; document the source URL near the claim.
 
 | # | Voting window | Bout | Profile page | Bracket/source note |
 |---:|---|---|---|---|
