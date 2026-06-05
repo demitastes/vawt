@@ -33,7 +33,7 @@ Research and complete profiles in first-appearance order by voting window and bo
 | 1 | May 30-Jun 5, 2026 | R1B1 | [Open Road](distilleries/open-road.html) |  |
 | 2 | May 30-Jun 5, 2026 | R1B1 | [Brady's](distilleries/bradys.html) |  |
 | 3 | May 30-Jun 5, 2026 | R1B1 | [Old House](distilleries/old-house.html) |  |
-| 4 | May 30-Jun 5, 2026 | R1B1 | [3 Crosses](distilleries/3-crosses.html) |  |
+| 4 | May 30-Jun 5, 2026 | R1B1 | [Three Crosses](distilleries/three-crosses.html) |  |
 | 5 | May 30-Jun 5, 2026 | R1B2 | [New Realm Brewing & Distilling](distilleries/new-realm-brewing-and-distilling.html) | Listed as New Realm in site data. |
 | 6 | May 30-Jun 5, 2026 | R1B2 | [Lost Whiskey Co](distilleries/lost-whiskey-co.html) |  |
 | 7 | May 30-Jun 5, 2026 | R1B2 | [Highlands Distilling Co](distilleries/highlands-distilling-co.html) | Listed as Highlands in site data. |

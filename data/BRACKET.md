@@ -74,7 +74,7 @@ Round 1 Bout 1 Bracket:
 - Open Road
 - Brady's
 - Old House
-- 3 Crosses
+- Three Crosses
 
 Round 1 Bout 2 Bracket:
 - New Realm Brewing & Distilling

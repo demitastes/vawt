@@ -11,7 +11,7 @@ const distilleries = [
   { name: "Open Road", bout: "R1B1", dateRange: "May 30-Jun 5, 2026" },
   { name: "Brady's", bout: "R1B1", dateRange: "May 30-Jun 5, 2026" },
   { name: "Old House", bout: "R1B1", dateRange: "May 30-Jun 5, 2026" },
-  { name: "3 Crosses", bout: "R1B1", dateRange: "May 30-Jun 5, 2026" },
+  { name: "Three Crosses", bout: "R1B1", dateRange: "May 30-Jun 5, 2026" },
   { name: "New Realm", fullName: "New Realm Brewing & Distilling", bout: "R1B2", dateRange: "May 30-Jun 5, 2026" },
   { name: "Lost Whiskey Co", bout: "R1B2", dateRange: "May 30-Jun 5, 2026" },
   { name: "Highlands", fullName: "Highlands Distilling Co", bout: "R1B2", dateRange: "May 30-Jun 5, 2026" },
