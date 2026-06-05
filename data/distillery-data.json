@@ -449,7 +449,140 @@
     ],
     "summary": "Nestled in the heart of historical Halifax County, Virginia, Springfield Distillery stands as a testament to craftsmanship and tradition. Our distillery is located at Springfield, a house dating back to 1842, surrounded by scenic porch sipping country views, offering the perfect setting for creating our exceptional spirits.<br/><br/>At Springfield Distillery, we're proud to be recognized for our commitment to quality and craftsmanship. Our handcrafted spirits have received numerous awards, showcasing our dedication to creating exceptional whiskeys, bourbons, and specialty spirits. Explore our accolades and see why Springfield Distillery is celebrated by industry experts and enthusiasts alike.<br/><br/>Springfield Distillery is proudly women-owned, led by Kelly Gordon. Since 2016, Kelly's passion and dedication have driven the creation of our exceptional handcrafted spirits. Her vision and leadership embody the spirit of innovation and quality, making Springfield Distillery a standout in Virginia's distilling industry. Join us in celebrating the achievements of women in craft distilling.",
     "summary-source-link": "https://springfielddistillery.com/",
-    "products": []
+    "products": [
+      {
+        "name": "Springfield 1897 Straight Bourbon Whiskey (50% ABV / 100 Proof)",
+        "type": "bourbon",
+        "price": "$79.99",
+        "link": "https://springfielddistillery.square.site/product/springfield-1897/366?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "Golden Eagle Rye Whiskey with Natural Flavors (Aged 7 Years) (50% ABV / 100 Proof)",
+        "type": "rye",
+        "price": "$74.99",
+        "link": "https://springfielddistillery.square.site/product/rye-golden-eagle-rye-whiskey/AXM54DESTCO266CAFZ2FVW3P?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "River Road Straight Rye Whiskey (50% ABV / 100 Proof)",
+        "type": "rye",
+        "price": "$69.99",
+        "link": "https://springfielddistillery.square.site/product/rye-river-road-rye-whiskey/387?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "Springfield Straight Bourbon (50% ABV / 100 Proof)",
+        "type": "bourbon",
+        "price": "$54.99",
+        "link": "https://springfielddistillery.square.site/product/straight-bourbon/143?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "Springfield 1799 (Spirits Distilled from Grain with Virginia Honey) (50% ABV / 100 Proof)",
+        "type": "other",
+        "price": "$52.99",
+        "link": "https://springfielddistillery.square.site/product/springfield-1799/311?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "Springfield 1842 (Whiskey Aged in Port Barrels) (50% ABV / 100 Proof)",
+        "type": "other whiskey",
+        "price": "$44.99",
+        "link": "https://springfielddistillery.square.site/product/springfield-1842/74?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Orange Flavored Whiskey (45% ABV / 90 Proof)",
+        "type": "flavored whiskey",
+        "price": "$34.99",
+        "link": "https://springfielddistillery.square.site/product/scratch-orange-whiskey/333?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Sweet Heat Whiskey with Natural Flavors (45% ABV / 90 Proof)",
+        "type": "flavored whiskey",
+        "price": "$34.99",
+        "link": "https://springfielddistillery.square.site/product/scratch-sweet-heat-whiskey/334?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Blackberry Flavored Whiskey (30% ABV / 60 Proof)",
+        "type": "flavored whiskey",
+        "price": "$29.89",
+        "link": "https://springfielddistillery.square.site/product/scratch-blackberry-whiskey/40?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Apple Flavored Whiskey (30% ABV / 60 Proof)",
+        "type": "flavored whiskey",
+        "price": "$29.89",
+        "link": "https://springfielddistillery.square.site/product/scratch-apple-whiskey/HOESKNGY7RQD7ZZG65H3BVNF?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Maple Flavored Whiskey (30% ABV / 60 Proof)",
+        "type": "flavored whiskey",
+        "price": "$29.89",
+        "link": "https://springfielddistillery.square.site/product/scratch-maple-whiskey/PMOPBNULMRQNB5MXUYQBQ3D7?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Brown Sugar Cinnamon Flavored Corn Whiskey (30% ABV / 60 Proof)",
+        "type": "flavored whiskey",
+        "price": "$29.89",
+        "link": "https://springfielddistillery.square.site/product/scratch-brown-sugar-cinnamon-scratch-whiskey/23?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Irish Cream Flavored Whiskey (30% ABV / 60 Proof)",
+        "type": "flavored whiskey",
+        "price": "$29.89",
+        "link": "https://springfielddistillery.square.site/product/scratch-irish-cream/411?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Peach Flavored Whiskey (30% ABV / 60 Proof)",
+        "type": "flavored whiskey",
+        "price": "$29.89",
+        "link": "https://springfielddistillery.square.site/product/scratch-peach-whiskey/119?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Mint Flavored Whiskey (30% ABV / 60 Proof)",
+        "type": "flavored whiskey",
+        "price": "$29.89",
+        "link": "https://springfielddistillery.square.site/product/scratch-mint-whiskey/59?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "Beaver King Peppermint Rum Cream (15% ABV / 30 Proof)",
+        "type": "liqueur",
+        "price": "$24.99",
+        "link": "https://springfielddistillery.square.site/product/rum-cream-peppermint/406?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "Beaver King Coconut Rum Cream (15% ABV / 30 Proof)",
+        "type": "liqueur",
+        "price": "$24.99",
+        "link": "https://springfielddistillery.square.site/product/rum-cream-coconut/380?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "Beaver King Butterscotch Rum Cream (15% ABV / 30 Proof)",
+        "type": "liqueur",
+        "price": "$24.99",
+        "link": "https://springfielddistillery.square.site/product/rum-cream-butterscotch/373?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "Beaver King Sugar Cream Pie Rum Cream (15% ABV / 30 Proof)",
+        "type": "liqueur",
+        "price": "$24.99",
+        "link": "https://springfielddistillery.square.site/product/rum-cream-sugar-cream-pie/371?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "3 Berner Vodka (40% ABV / 80 Proof)",
+        "type": "vodka",
+        "price": "$28.99",
+        "link": "https://springfielddistillery.square.site/product/vodka-3-berner/365?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Corn Whiskey (45% ABV / 90 Proof)",
+        "type": "other whiskey",
+        "price": "$28.99",
+        "link": "https://springfielddistillery.square.site/product/scratch-corn-whiskey/327?cp=true&sa=true&sbp=false&q=false"
+      },
+      {
+        "name": "SCRATCH Strawberry Whiskey Smash Canned Cocktail (7.5% ABV / 15 Proof)",
+        "type": "other",
+        "price": "$14.99/4-pack",
+        "link": "https://springfielddistillery.square.site/product/canned-cocktail-strawberry-smash-4-pk-/310?cp=true&sa=true&sbp=false&q=false"
+      }
+    ]
   },
   {
     "name": "KO Distilling",
