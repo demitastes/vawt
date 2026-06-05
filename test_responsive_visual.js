@@ -161,8 +161,47 @@ async function runVisualTests() {
     console.log(`  ✅ Screenshot saved to /tmp/bracket_test_interactive.png`);
     await page.close();
 
-    // Test 4: Scroll Stability
-    console.log('\nTest 4: Winner Click Scroll Stability');
+    // Test 4: Profile links do not select winners
+    console.log('\nTest 4: Profile Link Isolation');
+    page = await browser.newPage({ viewport: { width: 1024, height: 800 } });
+    await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
+
+    const profileLinkCount = await page.locator('.profile-link').count();
+    if (profileLinkCount === 0) {
+      throw new Error('No profile links were rendered in the bracket');
+    }
+
+    const currentUrlBeforeProfileClick = page.url();
+    const [profilePage] = await Promise.all([
+      page.waitForEvent('popup'),
+      page.locator('.profile-link').first().click()
+    ]);
+    await profilePage.waitForLoadState('load');
+
+    const profileUrl = profilePage.url();
+    const winnerCountAfterProfileClick = await page.locator('.competitor.is-winner').count();
+    const currentUrlAfterProfileClick = page.url();
+
+    console.log(`  ✅ Rendered profile links: ${profileLinkCount}`);
+    console.log(`  ✅ Profile link opened new tab: ${profileUrl.includes('/distilleries/')}`);
+    console.log(`  ✅ Profile link did not select winner: ${winnerCountAfterProfileClick === 0}`);
+    console.log(`  ✅ Bracket stayed on current page: ${currentUrlBeforeProfileClick === currentUrlAfterProfileClick}`);
+
+    if (!profileUrl.includes('/distilleries/')) {
+      throw new Error(`Profile link opened unexpected URL: ${profileUrl}`);
+    }
+    if (winnerCountAfterProfileClick !== 0) {
+      throw new Error(`Profile link selected ${winnerCountAfterProfileClick} winner(s)`);
+    }
+    if (currentUrlBeforeProfileClick !== currentUrlAfterProfileClick) {
+      throw new Error(`Profile link navigated bracket page from ${currentUrlBeforeProfileClick} to ${currentUrlAfterProfileClick}`);
+    }
+
+    await profilePage.close();
+    await page.close();
+
+    // Test 5: Scroll Stability
+    console.log('\nTest 5: Winner Click Scroll Stability');
     page = await browser.newPage({ viewport: { width: 1024, height: 500 } });
     await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
 
@@ -185,8 +224,8 @@ async function runVisualTests() {
 
     await page.close();
 
-    // Test 5: Responsive Transition
-    console.log('\nTest 5: Responsive Transition at 720px Breakpoint');
+    // Test 6: Responsive Transition
+    console.log('\nTest 6: Responsive Transition at 720px Breakpoint');
     page = await browser.newPage({ viewport: { width: 720, height: 800 } });
     await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
 

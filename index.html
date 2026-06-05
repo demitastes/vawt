@@ -50,6 +50,28 @@
       letter-spacing: 0;
     }
 
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .site-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(63, 36, 18, 0.08);
+    }
+
     .bracket-shell {
       padding: 22px 30px 40px;
       overflow-x: auto;
@@ -230,13 +252,26 @@
       background: #f0fdf4;
     }
 
+    .competitor-row {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid #eadbc8;
+    }
+
+    .competitor-row:last-child {
+      border-bottom: 0;
+    }
+
+    .bout.is-active .competitor-row {
+      border-bottom-color: #c1e9c1;
+    }
+
     .competitor {
-      display: block;
-      width: 100%;
+      flex: 1 1 auto;
+      min-width: 0;
       min-height: 31px;
       padding: 8px 10px;
       border: 0;
-      border-bottom: 1px solid #eadbc8;
       background: transparent;
       color: var(--ink);
       font: inherit;
@@ -245,14 +280,6 @@
       text-align: inherit;
       cursor: pointer;
       transition: background-color 0.3s ease;
-    }
-
-    .bout.is-active .competitor {
-      border-bottom-color: #c1e9c1;
-    }
-
-    .competitor:last-child {
-      border-bottom: 0;
     }
 
     .competitor:hover:not(:disabled),
@@ -290,6 +317,54 @@
     .competitor:disabled {
       color: #978a80;
       cursor: default;
+    }
+
+    .profile-link {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      padding: 0 8px;
+      border-left: 1px solid #eadbc8;
+      background: rgba(244, 223, 195, 0.58);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .profile-link:hover,
+    .profile-link:focus-visible {
+      outline: none;
+      background: var(--accent);
+      color: var(--panel);
+    }
+
+    .bout.is-active .profile-link {
+      border-left-color: #c1e9c1;
+      background: rgba(193, 233, 193, 0.68);
+      color: #2d8e2d;
+    }
+
+    .bout.is-active .profile-link:hover,
+    .bout.is-active .profile-link:focus-visible {
+      background: #2d8e2d;
+      color: #fff;
+    }
+
+    .round-column[data-side="left"] .competitor-row {
+      flex-direction: row-reverse;
+    }
+
+    .round-column[data-side="left"] .profile-link {
+      border-right: 1px solid #eadbc8;
+      border-left: 0;
+    }
+
+    .round-column[data-side="left"] .bout.is-active .profile-link {
+      border-right-color: #c1e9c1;
     }
 
     .bout[data-round="5"] {
@@ -443,6 +518,11 @@
         min-height: 28px;
       }
 
+      .profile-link {
+        min-width: 48px;
+        font-size: 9px;
+      }
+
       .championship {
         grid-column: 1 / -1;
         text-align: center;
@@ -480,6 +560,9 @@
   <header>
     <h1>Virginia Whiskey Tournament 2026</h1>
     <p style="color: var(--muted); font-size: 12px; margin: 8px 0 0 0; font-weight: 500;">All voting closes at the end of the day (11:59pm EDT) on Friday.</p>
+    <nav class="site-nav" aria-label="Site sections">
+      <a href="distilleries/index.html">Distillery profiles</a>
+    </nav>
   </header>
 
   <main class="bracket-shell">
@@ -508,6 +591,64 @@
       ["Murlarkey", "Three Notches", "Lincoln Ridge", "Hilltop"],
       ["Sleepy Fox", "Bell Isle", "Franklin County", "Axe Handle"]
     ];
+
+    const distilleryProfiles = {
+      "Open Road": "distilleries/open-road.html",
+      "Brady's": "distilleries/bradys.html",
+      "Old House": "distilleries/old-house.html",
+      "3 Crosses": "distilleries/3-crosses.html",
+      "New Realm": "distilleries/new-realm-brewing-and-distilling.html",
+      "Lost Whiskey Co": "distilleries/lost-whiskey-co.html",
+      "Highlands": "distilleries/highlands-distilling-co.html",
+      "Springfield": "distilleries/springfield-distillery.html",
+      "KO Distilling": "distilleries/ko-distilling.html",
+      "Mean Spirits": "distilleries/mean-spirits-distilling.html",
+      "Reservoir": "distilleries/reservoir-distillery.html",
+      "Deep Creek": "distilleries/deep-creek.html",
+      "Five Mile Mountain": "distilleries/five-mile-mountain.html",
+      "Ironclad": "distilleries/ironclad.html",
+      "River Hill": "distilleries/river-hill.html",
+      "Cape Charles": "distilleries/cape-charles.html",
+      "Virginia Distillery Co": "distilleries/virginia-distillery-co.html",
+      "Silverback": "distilleries/silverback.html",
+      "River City": "distilleries/river-city.html",
+      "Spirit Lab": "distilleries/spirit-lab-distilling.html",
+      "Reverend Spirits": "distilleries/reverend-spirits.html",
+      "Bon Durant Brothers": "distilleries/bon-durant-brothers-distillery.html",
+      "Twin Creeks": "distilleries/twin-creeks-distillery.html",
+      "GW's Grist Mill": "distilleries/george-washingtons-grist-mill-distillery.html",
+      "Ragged Branch": "distilleries/ragged-branch.html",
+      "Devil's Backbone": "distilleries/devils-backbone.html",
+      "Tarnished Truth": "distilleries/tarnished-truth.html",
+      "Blue Sky": "distilleries/blue-sky.html",
+      "Blue Shepherd": "distilleries/blue-shepherd-spirits.html",
+      "Caiseal": "distilleries/caiseal-vanguard.html",
+      "Bold Rock": "distilleries/bold-rock-distillery.html",
+      "Three Wives": "distilleries/three-wives-distillery-winchester.html",
+      "Davis Valley": "distilleries/davis-valley-distillery.html",
+      "Climax": "distilleries/climax.html",
+      "Filibuster": "distilleries/filibuster-distillery.html",
+      "A. Smith Bowman": "distilleries/a-smith-bowman.html",
+      "Mt Defiance": "distilleries/mt-defiance-cidery-and-distillery-old-bolstead.html",
+      "Catoctin Creek": "distilleries/catoctin-creek-distilling-co.html",
+      "Virginia Foothills": "distilleries/virginia-foothills-distillery.html",
+      "Copper Fox": "distilleries/copper-fox.html",
+      "Appalachian Heritage": "distilleries/appalachian-heritage-distillery.html",
+      "Sandy River": "distilleries/sandy-river-distillery.html",
+      "Belmont Farm": "distilleries/belmont-farm-distillery.html",
+      "Creek Bottom": "distilleries/creek-bottom.html",
+      "Cool Springs": "distilleries/cool-springs.html",
+      "Trial & Error": "distilleries/trial-and-error.html",
+      "J.H. Bards": "distilleries/j-h-bards.html",
+      "Murlarkey": "distilleries/murlarkey.html",
+      "Three Notches": "distilleries/three-notches-brewery-and-distillery.html",
+      "Lincoln Ridge": "distilleries/lincoln-ridge-distillery.html",
+      "Hilltop": "distilleries/hilltop-distillery.html",
+      "Sleepy Fox": "distilleries/sleepy-fox.html",
+      "Bell Isle": "distilleries/bell-isle.html",
+      "Franklin County": "distilleries/franklin-county-distillers.html",
+      "Axe Handle": "distilleries/axe-handle-distilling.html"
+    };
 
     const rounds = [
       { round: 1, bouts: 16 },
@@ -664,6 +805,10 @@
       render({ restoreScroll });
     }
 
+    function profileUrlFor(name) {
+      return distilleryProfiles[name] || "";
+    }
+
     function createBout(round, bout) {
       const boutEl = document.createElement("article");
       boutEl.className = "bout";
@@ -699,6 +844,9 @@
       }
 
       entrantsFor(round, bout).forEach((name) => {
+        const row = document.createElement("div");
+        row.className = "competitor-row";
+
         const competitor = document.createElement("button");
         competitor.type = "button";
         competitor.className = "competitor";
@@ -713,7 +861,25 @@
           event.preventDefault();
           selectWinner(round, bout, name);
         });
-        matchup.appendChild(competitor);
+        row.appendChild(competitor);
+
+        const profileUrl = profileUrlFor(name);
+        if (profileUrl) {
+          const profileLink = document.createElement("a");
+          profileLink.className = "profile-link";
+          profileLink.href = profileUrl;
+          profileLink.target = "_blank";
+          profileLink.rel = "noopener noreferrer";
+          profileLink.textContent = "Profile";
+          profileLink.title = `Open ${name} profile in a new tab`;
+          profileLink.setAttribute("aria-label", `Open ${name} profile in a new tab`);
+          profileLink.addEventListener("click", (event) => {
+            event.stopPropagation();
+          });
+          row.appendChild(profileLink);
+        }
+
+        matchup.appendChild(row);
       });
 
       const bodyElements = [label, dateContainer, matchup];
