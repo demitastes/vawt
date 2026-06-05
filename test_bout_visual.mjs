@@ -3,8 +3,9 @@ import playwright from 'playwright';
 const browser = await playwright.chromium.launch();
 const page = await browser.newPage();
 
-// Navigate to the file
-await page.goto('file:///Users/doug/PERSONAL/DEMITASTES/dev/vawt-website-static/index.html');
+// Navigate to the file (use file:// URL with relative path from current directory)
+const indexPath = new URL('index.html', import.meta.url);
+await page.goto(indexPath.href);
 
 // Wait for render
 await page.waitForTimeout(1000);

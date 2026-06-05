@@ -8,8 +8,9 @@ page.on('console', msg => {
   console.log(`[${msg.type()}] ${msg.text()}`);
 });
 
-// Navigate to the file
-await page.goto('file:///Users/doug/PERSONAL/DEMITASTES/dev/vawt-website-static/index.html');
+// Navigate to the file (use file:// URL with relative path from current directory)
+const indexPath = new URL('index.html', import.meta.url);
+await page.goto(indexPath.href);
 
 // Wait a moment for data to load
 await page.waitForTimeout(1000);
