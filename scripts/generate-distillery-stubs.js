@@ -720,8 +720,6 @@ ${boutList}
         <section>
           <h2>Product Portfolio</h2>
           <p class="todo">TODO: Verify all current products from official sources. Link each product to its official product page when one exists.</p>
-          <h3>Known or bracket-supplied product hints</h3>
-          <ul>${hintItems}</ul>
           <h3>Whiskey categories to verify</h3>
           <ul>
             <li>Bourbon: TODO</li>
@@ -732,6 +730,7 @@ ${boutList}
           </ul>
         </section>
 
+${locationEmbeds}
         <section>
           <h2>Sources</h2>
           <ul class="source-list">
@@ -742,7 +741,6 @@ ${boutList}
             <li>Location/address references: <a href="https://virginiaspirits.org/distilleries/" target="_blank" rel="noopener noreferrer">Virginia Spirits distillery directory</a>, plus official or local tourism pages where the directory did not list the entrant.</li>
           </ul>
         </section>
-${locationEmbeds}
       </div>
 
       <aside>
@@ -761,9 +759,6 @@ ${locationEmbeds}
           <dt>Main product type</dt>
           <dd>TODO: Verify from official source.</dd>
         </dl>
-
-        <h2 style="margin-top: 22px;">Tournament Notes</h2>
-        <ul>${noteItems}</ul>
       </aside>
     </div>
   </main>
