@@ -651,12 +651,13 @@ function renderProductPortfolio(products) {
         </section>`;
   }
 
-  const spiritTypes = ["bourbon", "rye", "asmw", "other whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur", "other"];
+  const spiritTypes = ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur", "other"];
   const spiritTypeLabels = {
     "bourbon": "Bourbon",
     "rye": "Rye",
     "asmw": "American Single Malt Whiskey",
     "other whiskey": "Other Whiskey",
+    "flavored whiskey": "Flavored Whiskey",
     "moonshine": "Moonshine",
     "vodka": "Vodka",
     "gin": "Gin",
@@ -710,12 +711,13 @@ function renderProductPortfolio(products) {
 }
 
 function getSpiritTypeSummary(products) {
-  const spiritTypes = ["bourbon", "rye", "asmw", "other whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur", "other"];
+  const spiritTypes = ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur", "other"];
   const spiritTypeLabels = {
     "bourbon": "Bourbon",
     "rye": "Rye",
     "asmw": "ASMW",
     "other whiskey": "Other Whiskey",
+    "flavored whiskey": "Flavored Whiskey",
     "moonshine": "Moonshine",
     "vodka": "Vodka",
     "gin": "Gin",
@@ -726,7 +728,7 @@ function getSpiritTypeSummary(products) {
     "other": "Other"
   };
   const producedTypes = new Set((products || []).map(p => p.type?.toLowerCase()));
-  const knownTypes = ["bourbon", "rye", "asmw", "other whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur"];
+  const knownTypes = ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur"];
 
   return spiritTypes.map(type => {
     const hasType = type === "other"
@@ -743,12 +745,13 @@ function getSpiritTypeSummary(products) {
 }
 
 function getProductTypesForIndex(products) {
-  const knownTypes = ["bourbon", "rye", "asmw", "other whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur"];
+  const knownTypes = ["bourbon", "rye", "asmw", "other whiskey", "flavored whiskey", "moonshine", "vodka", "gin", "rum", "brandy", "agave", "liqueur"];
   const spiritTypeLabels = {
     "bourbon": "Bourbon",
     "rye": "Rye",
     "asmw": "ASMW",
     "other whiskey": "Other Whiskey",
+    "flavored whiskey": "Flavored Whiskey",
     "moonshine": "Moonshine",
     "vodka": "Vodka",
     "gin": "Gin",
