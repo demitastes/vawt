@@ -116,8 +116,14 @@
       text-transform: uppercase;
     }
 
-    .bout-date {
+    .bout-date-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       margin: 2px 0 6px;
+    }
+
+    .bout-date {
       color: var(--accent);
       font-size: 11px;
       font-weight: 700;
@@ -127,6 +133,87 @@
 
     .bout.is-active .bout-date {
       color: #22863a;
+    }
+
+    .bout-links {
+      margin: 8px 0 0 0;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .bout-active-indicator {
+      display: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2d8e2d;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+    }
+
+    .bout.is-active .bout-active-indicator {
+      display: inline-block;
+    }
+
+    .round-column[data-side="left"] .bout-date-container {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .round-column[data-side="right"] .bout-date-container {
+      width: 100%;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .round-column[data-side="right"] .bout-active-indicator {
+      margin-right: 0;
+      margin-left: 2px;
+    }
+
+    .bout-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 6px rgba(63, 36, 18, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .bout-link:hover {
+      background: var(--accent);
+      color: var(--panel);
+      box-shadow: 0 4px 10px rgba(63, 36, 18, 0.3);
+    }
+
+    .bout.is-active .bout-link {
+      background: #c1e9c1;
+      color: #2d8e2d;
+      box-shadow: 0 2px 6px rgba(45, 142, 45, 0.3);
+    }
+
+    .bout.is-active .bout-link:hover {
+      background: #2d8e2d;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(45, 142, 45, 0.4);
+    }
+
+    .round-column[data-side="left"] .bout-links {
+      justify-content: flex-end;
     }
 
     .matchup {
@@ -205,6 +292,22 @@
       cursor: default;
     }
 
+    .bout[data-round="5"] {
+      text-align: center;
+    }
+
+    .bout[data-round="5"] .bout-label {
+      text-transform: uppercase;
+    }
+
+    .bout[data-round="5"] .bout-date-container {
+      justify-content: center;
+    }
+
+    .bout[data-round="5"] .bout-links {
+      justify-content: center;
+    }
+
     .championship {
       position: relative;
       min-height: 1px;
@@ -274,7 +377,7 @@
       }
 
       .round-column::before {
-        content: attr(data-round);
+        content: "Round " attr(data-round);
         grid-column: 1 / -1;
         font-size: 12px;
         font-weight: 700;
@@ -282,16 +385,52 @@
         padding-bottom: 8px;
         border-bottom: 1px solid var(--border);
         margin-bottom: 4px;
+        text-align: center;
       }
 
       .bout-label {
         font-size: 10px;
         margin-bottom: 4px;
+        text-align: center;
+      }
+
+      .bout-date-container {
+        justify-content: center;
+        flex-direction: row;
       }
 
       .bout-date {
         font-size: 10px;
-        margin: 2px 0 4px;
+      }
+
+      .bout-active-indicator {
+        width: 6px;
+        height: 6px;
+        margin: 0 0 0 6px;
+      }
+
+      .bout-links {
+        margin: 6px 0 0 0;
+        gap: 6px;
+        justify-content: center;
+      }
+
+      .bout-link {
+        width: 18px;
+        height: 18px;
+        font-size: 7px;
+      }
+
+      .round-column[data-side="left"] .bout-date-container,
+      .round-column[data-side="right"] .bout-date-container {
+        justify-content: center;
+        flex-direction: row;
+      }
+
+      .round-column[data-side="left"] .bout-active-indicator,
+      .round-column[data-side="right"] .bout-active-indicator {
+        margin-right: 0;
+        margin-left: 6px;
       }
 
       .matchup {
@@ -340,6 +479,7 @@
 <body>
   <header>
     <h1>Virginia Whiskey Tournament 2026</h1>
+    <p style="color: var(--muted); font-size: 12px; margin: 8px 0 0 0; font-weight: 500;">All voting closes at noon EDT on the end date.</p>
   </header>
 
   <main class="bracket-shell">
@@ -411,6 +551,22 @@
       r5b1:  { start: "2026-10-31", end: "2026-11-06" },
     };
 
+    const boutLinks = {
+      // Add bout links here as polls go live
+
+      // Example:
+      // r1b1: { instagram: "https://instagram.com/...", twitter: "https://x.com/...", youtube: "https://youtube.com/...", discord: "https://discord.gg/..." },
+
+      r1b1: {
+        instagram: "https://www.instagram.com/p/DZDF_ikASrH/",
+        youtube: "https://www.youtube.com/post/UgkxUmjksF2IY9cTtGlu9wRG0uFsW-KZ0O22",
+      },
+      r1b2: {
+        instagram: "https://www.instagram.com/p/DZDGxpYgkms/",
+        youtube: "https://www.youtube.com/post/Ugkxb0oL3X_mBtAPzHmf5X9Y8oiwGaqwgfVW",
+      },
+    };
+
     const bracket = document.querySelector("#bracket");
     const connectors = document.querySelector(".connectors");
     const winners = new Map();
@@ -434,7 +590,7 @@
       const fmt = { month: "short", day: "numeric", timeZone: "UTC" };
       const start = new Date(entry.start).toLocaleDateString("en-US", fmt);
       const end   = new Date(entry.end).toLocaleDateString("en-US", fmt);
-      return `${start} – ${end}, Noon EDT`;
+      return `${start} – ${end}`;
     }
 
     function isActiveBout(round, bout) {
@@ -510,11 +666,21 @@
 
       const label = document.createElement("div");
       label.className = "bout-label";
-      label.textContent = `Round ${round} Bout ${bout}`;
+      label.textContent = round === 5 ? "Final" : `Round ${round} Bout ${bout}`;
+
+      const dateContainer = document.createElement("div");
+      dateContainer.className = "bout-date-container";
 
       const date = document.createElement("div");
       date.className = "bout-date";
       date.textContent = boutDate(round, bout);
+      dateContainer.appendChild(date);
+
+      if (isActiveBout(round, bout)) {
+        const indicator = document.createElement("div");
+        indicator.className = "bout-active-indicator";
+        dateContainer.appendChild(indicator);
+      }
 
       const matchup = document.createElement("div");
       matchup.className = "matchup";
@@ -537,7 +703,38 @@
         matchup.appendChild(competitor);
       });
 
-      boutEl.append(label, date, matchup);
+      const bodyElements = [label, dateContainer, matchup];
+
+      const boutId = key(round, bout);
+      const links = boutLinks[boutId];
+      if (links && (links.instagram || links.twitter || links.youtube || links.discord)) {
+        const linksContainer = document.createElement("div");
+        linksContainer.className = "bout-links";
+
+        const linkConfigs = [
+          { key: "instagram", label: "IG", title: "Vote on Instagram" },
+          { key: "twitter", label: "X", title: "Vote on X" },
+          { key: "youtube", label: "YT", title: "Vote on YouTube" },
+          { key: "discord", label: "DC", title: "Join Discord" }
+        ];
+
+        linkConfigs.forEach(({ key: linkKey, label: linkLabel, title: linkTitle }) => {
+          if (links[linkKey]) {
+            const link = document.createElement("a");
+            link.className = "bout-link";
+            link.href = links[linkKey];
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent = linkLabel;
+            link.title = linkTitle;
+            linksContainer.appendChild(link);
+          }
+        });
+
+        bodyElements.push(linksContainer);
+      }
+
+      boutEl.append(...bodyElements);
       return boutEl;
     }
 
@@ -565,7 +762,7 @@
 
       const champion = document.createElement("div");
       champion.className = "champion";
-      champion.textContent = winners.get(key(5, 1)) || "Champion";
+      champion.textContent = '🏆 ' + ( winners.get(key(5, 1)) || "Champion" ) + ' 🏆';
       center.appendChild(champion);
       return center;
     }
@@ -660,12 +857,27 @@
       }
     }
 
+    function resetDesktopLayoutStyles() {
+      bracket.style.height = "";
+      connectors.style.height = "";
+      connectors.removeAttribute("viewBox");
+      connectors.innerHTML = "";
+
+      document.querySelectorAll(".bout, .round-column, .championship, .champion").forEach((el) => {
+        el.style.top = "";
+        el.style.height = "";
+        el.style.transform = "";
+      });
+    }
+
     function isMobile() {
       return window.innerWidth < 720;
     }
 
     function render() {
+      resetDesktopLayoutStyles();
       bracket.innerHTML = "";
+      connectors.style.display = "";
 
       for (let round = 1; round <= 4; round += 1) {
         bracket.appendChild(createColumn(round, "left"));
@@ -677,18 +889,38 @@
         bracket.appendChild(createColumn(round, "right"));
       }
 
-      if (!isMobile()) {
-        requestAnimationFrame(() => {
+      if (isMobile()) {
+        resetDesktopLayoutStyles();
+        return;
+      }
+
+      requestAnimationFrame(() => {
+        layoutBracket();
+        drawConnectors();
+      });
+    }
+
+    let wasMobile = isMobile();
+    let resizeFrame = null;
+    window.addEventListener("resize", () => {
+      const nowMobile = isMobile();
+
+      if (resizeFrame) {
+        cancelAnimationFrame(resizeFrame);
+      }
+
+      if (wasMobile !== nowMobile) {
+        wasMobile = nowMobile;
+        resizeFrame = requestAnimationFrame(() => {
+          resizeFrame = null;
+          render();
+        });
+      } else if (!nowMobile) {
+        resizeFrame = requestAnimationFrame(() => {
+          resizeFrame = null;
           layoutBracket();
           drawConnectors();
         });
-      }
-    }
-
-    window.addEventListener("resize", () => {
-      if (!isMobile()) {
-        layoutBracket();
-        drawConnectors();
       }
     });
     render();
