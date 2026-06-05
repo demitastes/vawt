@@ -454,6 +454,8 @@ function renderCss() {
     }
 
     .bout-label {
+      display: flex;
+      align-items: center;
       font-weight: 800;
       color: var(--accent);
       width: 80px;
@@ -476,6 +478,21 @@ function renderCss() {
 
     .bout-links {
       font-size: 12px;
+    }
+
+    .bout-active-indicator {
+      display: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2d8e2d;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+      margin-left: 6px;
+    }
+
+    .bout-row.is-active .bout-active-indicator {
+      display: inline-block;
     }
 
     .voting-link {
@@ -623,11 +640,11 @@ function renderBoutList(item) {
       const dateStr = formatBoutDate(bout);
       const linksHtml = renderBoutLinks(bout);
       const activeClass = isActive ? " is-active" : "";
-      const activeIndicator = isActive ? " 🟢" : "";
+      const indicatorHtml = isActive ? '<span class="bout-active-indicator" aria-label="This bout is currently active"></span>' : "";
 
       return `
           <tr class="bout-row${activeClass}">
-            <td class="bout-label">${escapeHtml(boutKey.toUpperCase())}</td>
+            <td class="bout-label">${escapeHtml(boutKey.toUpperCase())}${indicatorHtml}</td>
             <td class="bout-dates">${escapeHtml(dateStr)}</td>
             <td class="bout-links">${linksHtml}</td>
           </tr>`;

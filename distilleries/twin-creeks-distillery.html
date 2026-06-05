@@ -238,6 +238,8 @@
     }
 
     .bout-label {
+      display: flex;
+      align-items: center;
       font-weight: 800;
       color: var(--accent);
       width: 80px;
@@ -260,6 +262,21 @@
 
     .bout-links {
       font-size: 12px;
+    }
+
+    .bout-active-indicator {
+      display: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2d8e2d;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+      margin-left: 6px;
+    }
+
+    .bout-row.is-active .bout-active-indicator {
+      display: inline-block;
     }
 
     .voting-link {
