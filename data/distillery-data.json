@@ -107,8 +107,45 @@
     "locations": [
       "18351 Corkys Ln., Culpeper, VA 22791"
     ],
-    "summary": "",
-    "products": []
+    "summary": "A quick look at how Old House Spirits differ from many of our peers. From the perspective of quality, we typically look at the unique properties that makes a spirit  identifiable. We then seek to improve upon those elements thereby establishing a spirit that is specific, while maintaining the integrity of the spirit itself. We don’t take shortcuts such as adding flavor essences, synthetic flavor enhancers, coloring or other such shortcuts. When you taste an Old House product you are enjoying a painstakingly created beverage that has been created for your enjoyment. Please note: Our Spirits are Small Batch and are continually changing and evolving.",
+    "summary-source-link": "https://oldhousetoday.com/distillery/our-spirits/",
+    "products": [
+      {
+        "name": "Diceros Barrel Aged Rum",
+        "type": "rum",
+        "link": "https://oldhousetoday.com/distillery/our-spirits/"
+      },
+      {
+        "name": "Dude Spirit",
+        "type": "vodka",
+        "link": "https://oldhousetoday.com/distillery/our-spirits/"
+      },
+      {
+        "name": "Agave Nectar",
+        "type": "agave",
+        "link": "https://oldhousetoday.com/distillery/our-spirits/"
+      },
+      {
+        "name": "Old House Whiskey VI (corn whiskey)",
+        "type": "other whiskey",
+        "link": "https://oldhousetoday.com/distillery/our-spirits/"
+      },
+      {
+        "name": "Grog",
+        "type": "rum",
+        "link": "https://oldhousetoday.com/distillery/our-spirits/"
+      },
+      {
+        "name": "Bumbo 1758 (spiced rum)",
+        "type": "rum",
+        "link": "https://oldhousetoday.com/distillery/our-spirits/"
+      },
+      {
+        "name": "Black X Coffee",
+        "type": "liqueur",
+        "link": "https://oldhousetoday.com/distillery/our-spirits/"
+      }
+    ]
   },
   {
     "name": "Three Crosses",
@@ -119,8 +156,88 @@
     "locations": [
       "3835 Old Buckingham Rd., Powhatan, VA 23139"
     ],
-    "summary": "",
-    "products": []
+    "summary": "Three Crosses is the first legal distillery in Powhatan County, Virginia. We proudly hand-craft spirits to our exacting standards. Truly a hobby that got out of hand, our current 150 and 250-gallon stills are hand-built in Missouri by Affordable Distilling Company. Together, we have created an environment where people can come in and enjoy handcrafted spirits while making some new friends; that’s what Three Crosses Distilling Co. is all about.",
+    "summary-source-link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-about",
+    "products": [
+      {
+        "name": "Three Crosses American Whiskey",
+        "type": "other whiskey",
+        "price": "$39.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Old Red Fez Bourbon Whiskey",
+        "type": "bourbon",
+        "price": "$44.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Three Crosses American Barrel Proof Whiskey",
+        "type": "other whiskey",
+        "price": "$64.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Old Corps Bourbon Whiskey",
+        "type": "bourbon",
+        "price": "$49.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Madison Reserve Bourbon Whiskey",
+        "type": "bourbon",
+        "price": "$64.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "10-42: End of Watch Bourbon Whiskey",
+        "type": "bourbon",
+        "price": "$39.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Black Chevron Vodka",
+        "type": "vodka",
+        "price": "$21.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Old Buckingham Gin",
+        "type": "gin",
+        "price": "$31.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Eve's Rebellion Apple Spiced Rum",
+        "type": "rum",
+        "price": "$29.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Crossed Rifles White Rum",
+        "type": "rum",
+        "price": "$24.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Crossed Rifles Spiced Rum",
+        "type": "rum",
+        "price": "$24.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Noble Hound Rye Whiskey",
+        "type": "rye",
+        "price": "$39.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      },
+      {
+        "name": "Noble Hound Dark Rye",
+        "type": "rye",
+        "price": "$41.99/750ml",
+        "link": "https://www.threecrossesdistilling.com/powhatan-three-crosses-distilling-company-drink-menu"
+      }
+    ]
   },
   {
     "name": "New Realm",
@@ -132,8 +249,70 @@
       "5941 Harbour View Blvd., Suffolk, VA 23435",
       "1209 Craft Ln., Virginia Beach, VA 23454"
     ],
-    "summary": "",
-    "products": []
+    "summary": "Small-batch spirits born in Georgia<br/><br/>Welcome to a whole New Realm of Distilled Spirits<br/><br/>At New Realm, we strive to unearth new ideas and distill (pun intended) the classics down to their most pure and beautiful expressions. From unique twists on revered spirits to reclaiming alcohol from our Non-Alcoholic beer and distilling it into something entirely new, there’s always something worth seeking out in our ever-changing, ever-expanding domain. Have a seat, grab a glass and prepare your tastebuds for something unlike anything else you’ve ever had.",
+    "summary-source-link": "https://newrealmbrewing.com/spirits/",
+    "products": [
+      {
+        "name": "Agave Spirit (45% ABV / 90 Proof)",
+        "type": "agave",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Bourbon (45% ABV / 90 Proof)",
+        "type": "bourbon",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Vodka (45% ABV / 90 Proof)",
+        "type": "vodka",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Gin (45% ABV / 90 Proof)",
+        "type": "gin",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Rum (45% ABV / 90 Proof)",
+        "type": "rum",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Bourbon Barrel Rested Gin (45% ABV / 90 Proof)",
+        "type": "gin",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Jalapeno Agave Spirit (40% ABV / 80 Proof)",
+        "type": "agave",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "R+D Gin #001 (40% ABV / 80 Proof)",
+        "type": "gin",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Strawberry & Wildflower Honey Gin (35% ABV / 70 Proof)",
+        "type": "gin",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Coffee Liqueur made with Maple Syrup, Vanilla Beans, and Perc Coffee (35% ABV / 70 Proof)",
+        "type": "liqueur",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Old Fashioned with bitters and Demerera sugar (33.8% ABV / 67.6 Proof)",
+        "type": "other",
+        "link": "https://newrealmbrewing.com/spirits/"
+      },
+      {
+        "name": "Peach Bourbon (35% ABV / 70 Proof)",
+        "type": "bourbon",
+        "link": "https://newrealmbrewing.com/spirits/"
+      }
+    ]
   },
   {
     "name": "Lost Whiskey",
@@ -144,8 +323,58 @@
     "locations": [
       "2811 Merrilee Dr., Ste. D, Fairfax, VA 22031"
     ],
-    "summary": "",
-    "products": []
+    "summary": "We are architects and craftsmen who started a whiskey company. We like things old and natural: wood, steel, people, buildings, landscapes, souls, or hell...any good story. We prefer analog over the digital, the simple over the complex, the slow over the frantic. We don't think we're alone - yearning for more long days in the saddle, on the porch, fishing a remote river, early morning adventures and long dinners with loved ones. We think whiskey and architecture are key and compatible ingredients to life. Our straight bourbon is single barrel with a unique story number leather band. Celebrate that experience, save the leather, remember that day, that moment, that smile, that conversation. Because for us there is nothing more valuable than your STORY.<br/><br/>To make a good bourbon you have to start with good chemistry, equipment, and raw distillate. We proudly source from some of the finest distillers in America - a proven secret for some of the finest whiskies in the world. From here we add value in the only way we know how: through our Architecture, with our Love of nature, with the hour glass of time, and by ONLY offering single barrel products. Each barrel has it's unique story to tell - we never blend. We don’t add any frivolous flavors to our whiskey. We keep our recipe simple. We want our whiskey consumed over a couple of ice cubes and the lost art of conversation. Our bottles are purposefully smaller - to be enjoyed in a single sitting or adventure. Each bottle is handcrafted by the owners - wrapped in a uniquely branded leather strap. We want you to enjoy the time, remember that day, that person, that story - forever. To us the value of whiskey is one part chemistry and art the other part story and kinship - to us the most valuable element of any life well lived.",
+    "summary-source-link": "https://www.lostwhiskey.com/bourbon",
+    "products": [
+      {
+        "name": "Special Edition: 250th Birthday Lost Whiskey Club High Wheat Single Barrel Straight Bourbon Whiskey (45% ABV / 90 Proof)",
+        "type": "bourbon",
+        "price": "$54.99/750ml",
+        "link": "https://www.lostwhiskey.com/ship-bourbon"
+      },
+      {
+        "name": "Lost Whiskey Club High Wheat Single Barrel Straight Bourbon (45% ABV / 90 Proof)",
+        "type": "bourbon",
+        "price": "$32.99/375ml",
+        "link": "https://www.lostwhiskey.com/ship-bourbon"
+      },
+      {
+        "name": "Lost Whiskey Club High Wheat Single Barrel Straight Bourbon Whiskey (45% ABV / 90 Proof)",
+        "type": "bourbon",
+        "price": "$54.99/750ml",
+        "link": "https://www.lostwhiskey.com/ship-bourbon"
+      },
+      {
+        "name": "Lost Whiskey Club High Rye Single Barrel Straight Bourbon (45% ABV / 90 Proof)",
+        "type": "bourbon",
+        "price": "$32.99/375ml",
+        "link": "https://www.lostwhiskey.com/ship-bourbon"
+      },
+      {
+        "name": "Lost Whiskey Club High Rye Single Barrel Straight Bourbon (45% ABV / 90 Proof)",
+        "type": "bourbon",
+        "price": "$54.99/750ml",
+        "link": "https://www.lostwhiskey.com/ship-bourbon"
+      },
+      {
+        "name": "Lost Whiskey Club High Wheat Single Barrel Cask Strength Straight Bourbon Whiskey (Around 60% ABV / Around 120 Proof)",
+        "type": "bourbon",
+        "price": "$49.99/375ml",
+        "link": "https://www.lostwhiskey.com/ship-bourbon"
+      },
+      {
+        "name": "Lost Whiskey Club High Rye Single Barrel Cask Strength Straight Bourbon Whiskey (Around 60% ABV / Around 120 Proof)",
+        "type": "bourbon",
+        "price": "$49.99/375ml",
+        "link": "https://www.lostwhiskey.com/ship-bourbon"
+      },
+      {
+        "name": "Lost Whiskey Club 10 Year Double Barrel American Whiskey (50% ABV / 100 Proof)",
+        "type": "other whiskey",
+        "price": "$69.99/375ml",
+        "link": "https://www.lostwhiskey.com/ship-bourbon"
+      }
+    ]
   },
   {
     "name": "Highlands Distilling",
@@ -156,8 +385,58 @@
     "locations": [
       "1200 VA-16, Marion, VA 24354"
     ],
-    "summary": "",
-    "products": []
+    "summary": "The Blue Ridge Highlands of Southwest Virginia has been the epicenter of the spirits trade for over 200 years. The Scots and Irish plied their trade illegally, under the cover of night. Pursued relentlessly by the \"Revenuers\", the cat and mouse game continues to this day. We aim to keep this tradition alive for you to experience, albeit \"legally\". We are distilling, bottling and aging hand-crafted, small-batch products... moonshine, several whiskys, bourbon, vodka and gin. All of our products celebrate our local heritage.",
+    "summary-source-link": "https://www.highlandsdistillingco.com/about",
+    "products": [
+      {
+        "name": "Virginia Rye Whisky (Aged Approximately 3 Years) (45% ABV / 90 Proof)",
+        "type": "rye",
+        "price": "$40.99 - $44.99",
+        "link": "https://www.highlandsdistillingco.com/product/virginia-rye-whisky/55?cs=true&cst=custom"
+      },
+      {
+        "name": "CAVU Straight Bourbon Whisky (Aged 5 Years) (54.5% ABV / 109 Proof)",
+        "type": "bourbon",
+        "price": "$69.99",
+        "link": "https://www.highlandsdistillingco.com/product/cavu-straight-bourbon-whisky/2?cs=true&cst=custom"
+      },
+      {
+        "name": "Dragon Virginia Vodka (40% ABV / 80 Proof)",
+        "type": "vodka",
+        "price": "$22.99",
+        "link": "https://www.highlandsdistillingco.com/product/dragon-virginia-vodka/104?cs=true&cst=custom"
+      },
+      {
+        "name": "Trooper's Virginia Single Malt Whisky (Aged 3 Years) (47.5% ABV / 95 Proof)",
+        "type": "asmw",
+        "price": "$44.99",
+        "link": "https://www.highlandsdistillingco.com/product/trooper-s-virginia-single-malt-whisky/110?cs=true&cst=custom"
+      },
+      {
+        "name": "Revelations (Virginia Smoked Whiskey) (Aged 3 Years) (47.5% ABV / 95 Proof)",
+        "type": "other whiskey",
+        "price": "$49.99",
+        "link": "https://www.highlandsdistillingco.com/product/revelations/64?cs=true&cst=custom"
+      },
+      {
+        "name": "War Horn Corn Whisky (43.5% ABV / 87 Proof)",
+        "type": "other whiskey",
+        "price": "$34.99",
+        "link": "https://www.highlandsdistillingco.com/product/war-horn-corn-whisky/1?cs=true&cst=custom"
+      },
+      {
+        "name": "Dragon Navy Strength Gin (57% ABV / 114 Proof)",
+        "type": "gin",
+        "price": "$32.99",
+        "link": "https://www.highlandsdistillingco.com/product/dragon-navy-strength-gin/GNM666D5JU6C3SEYDQVMBFWV?cs=true&cst=custom"
+      },
+      {
+        "name": "Shiner's Gold Moonshine 750ml (50.5% ABV / 101 Proof)",
+        "type": "moonshine",
+        "price": "$27.99",
+        "link": "https://www.highlandsdistillingco.com/product/shiner-s-gold-moonshine-750ml/4?cs=true&cst=custom"
+      }
+    ]
   },
   {
     "name": "Springfield Distillery",
@@ -168,7 +447,8 @@
     "locations": [
       "9040 River Rd., Halifax, VA 24558"
     ],
-    "summary": "",
+    "summary": "Nestled in the heart of historical Halifax County, Virginia, Springfield Distillery stands as a testament to craftsmanship and tradition. Our distillery is located at Springfield, a house dating back to 1842, surrounded by scenic porch sipping country views, offering the perfect setting for creating our exceptional spirits.<br/><br/>At Springfield Distillery, we're proud to be recognized for our commitment to quality and craftsmanship. Our handcrafted spirits have received numerous awards, showcasing our dedication to creating exceptional whiskeys, bourbons, and specialty spirits. Explore our accolades and see why Springfield Distillery is celebrated by industry experts and enthusiasts alike.<br/><br/>Springfield Distillery is proudly women-owned, led by Kelly Gordon. Since 2016, Kelly's passion and dedication have driven the creation of our exceptional handcrafted spirits. Her vision and leadership embody the spirit of innovation and quality, making Springfield Distillery a standout in Virginia's distilling industry. Join us in celebrating the achievements of women in craft distilling.",
+    "summary-source-link": "https://springfielddistillery.com/",
     "products": []
   },
   {

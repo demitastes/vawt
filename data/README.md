@@ -75,6 +75,7 @@ Product type must be one of the following:
   "rye",
   "asmw",
   "other whiskey",
+  "flavored whiskey",
   "moonshine",
   "vodka",
   "gin",
