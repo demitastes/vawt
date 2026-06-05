@@ -118,6 +118,11 @@ Tests actual rendering at desktop (1024px) and mobile (375px) viewport sizes. Ca
 - Before committing responsive layout or design changes
 - **Future agents: ALWAYS use the formal test files instead of creating ad-hoc verification commands**
 
+**Test File Maintenance:**
+- Do NOT delete test files after using them — they're permanent verification assets for future agents
+- If you create a temporary verification script for testing, leave it in the repo if it's reusable
+- Unused or stale test files should be removed, but only if explicitly identified as no longer relevant
+
 ### Future Tests
 
 As the project grows:
