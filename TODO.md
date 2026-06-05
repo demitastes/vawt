@@ -28,6 +28,16 @@ Use `node scripts/generate-distillery-stubs.js --dry-run` before regenerating if
 
 Research and complete profiles in first-appearance order by voting window and bout:
 
+### Distillery Profile Research Progress
+
+- [x] R1B1: Researched and updated [Open Road](distilleries/open-road.html), [Brady's](distilleries/bradys.html), [Old House](distilleries/old-house.html), and [Three Crosses](distilleries/three-crosses.html).
+- [x] R1B2: Researched and updated [New Realm Brewing & Distilling](distilleries/new-realm-brewing-and-distilling.html), [Lost Whiskey Co](distilleries/lost-whiskey-co.html), [Highlands Distilling Co](distilleries/highlands-distilling-co.html), and [Springfield Distillery](distilleries/springfield-distillery.html).
+- [ ] Doug input needed: confirm Old House's preferred official Instagram account.
+- [ ] Doug input needed: confirm New Realm Brewing & Distilling's preferred official Instagram account for the VAWT profile.
+- [ ] Doug input needed: confirm Highlands Distilling Co's preferred official Instagram account, if any.
+- [ ] Doug input needed: confirm Springfield Distillery's preferred official Instagram account.
+- [ ] Doug input needed: decide whether to include secondary-source founding/opening dates for Open Road, Old House, and Three Crosses when official pages do not state those years.
+
 | # | Voting window | Bout | Profile page | Bracket/source note |
 |---:|---|---|---|---|
 | 1 | May 30-Jun 5, 2026 | R1B1 | [Open Road](distilleries/open-road.html) |  |

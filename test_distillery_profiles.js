@@ -36,8 +36,6 @@ const profileFiles = fs.existsSync(DISTILLERIES_DIR)
 check(profileFiles.length === 55, "Generated 55 distillery profile pages", `Expected 55 distillery profile pages, found ${profileFiles.length}`);
 
 const requiredSnippets = [
-  "Official website: TODO",
-  "Instagram: TODO",
   "<h2>Summary</h2>",
   "<h2>Product Portfolio</h2>",
   "<h2>Sources</h2>"
@@ -55,9 +53,28 @@ const forbiddenPublicSnippets = [
 
 profileFiles.forEach((file) => {
   const html = fs.readFileSync(path.join(DISTILLERIES_DIR, file), "utf8");
+  check(
+    html.includes("Official website: TODO") || html.includes(">Official website</a>"),
+    `${file} includes official website control`,
+    `${file} missing official website control`
+  );
+  check(
+    html.includes("Instagram: TODO") || html.includes(">Instagram</a>"),
+    `${file} includes Instagram control`,
+    `${file} missing Instagram control`
+  );
   requiredSnippets.forEach((snippet) => {
     check(html.includes(snippet), `${file} includes ${snippet}`, `${file} missing ${snippet}`);
   });
+  if (html.includes("<h2 id=\"location-map-heading\">Location Map</h2>")) {
+    [
+      "https://www.google.com/maps?q=",
+      "&amp;output=embed",
+      "View larger map"
+    ].forEach((snippet) => {
+      check(html.includes(snippet), `${file} map includes ${snippet}`, `${file} map missing ${snippet}`);
+    });
+  }
   forbiddenPublicSnippets.forEach((snippet) => {
     check(!html.includes(snippet), `${file} does not expose ${snippet}`, `${file} exposes internal reference ${snippet}`);
   });

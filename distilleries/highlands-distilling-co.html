@@ -175,6 +175,40 @@
       font-size: 13px;
     }
 
+    .location-section {
+      margin-top: 20px;
+    }
+
+    .map-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .map-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .map-address {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .map-frame {
+      display: block;
+      width: 100%;
+      height: 260px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel-strong);
+    }
+
+    .map-link {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
     @media (max-width: 760px) {
       .page {
         width: min(100% - 24px, 1080px);
@@ -194,6 +228,10 @@
       dl {
         grid-template-columns: 1fr;
       }
+
+      .map-frame {
+        height: 220px;
+      }
     }
   </style>
 </head>
@@ -205,7 +243,7 @@
       <h1>Highlands Distilling Co</h1>
       <p class="subtitle">VAWT 2026 entrant #7 - R1B2 - May 30-Jun 5, 2026</p>
       <nav class="top-links" aria-label="Official links">
-        <span class="link-button is-placeholder">Official website: TODO</span>
+        <a class="link-button" href="https://www.highlandsdistillingco.com/" target="_blank" rel="noopener noreferrer">Official website</a>
         <span class="link-button is-placeholder">Instagram: TODO</span>
       </nav>
     </header>
@@ -214,32 +252,54 @@
       <div>
         <section>
           <h2>Summary</h2>
-          <p class="todo">TODO: Add a source-backed, Wikipedia-style summary of Highlands Distilling Co covering its story, production philosophy, and product portfolio construction.</p>
+          <p>Highlands Distilling Company is a Marion distillery established in 2019 by a U.S. Navy veteran, according to Virginia Spirits. Its product naming emphasizes Southwest Virginia heritage, the Blue Ridge Highlands, military service, and first responders, with a portfolio spanning bourbon, rye, single malt whisky, smoked whisky, moonshine, and gin.</p>
+          <p class="todo">TODO: Ask user to confirm the preferred official Instagram account for Highlands Distilling Co; this pass found official website and Facebook references but no clear Instagram URL.</p>
         </section>
 
         <section>
           <h2>Product Portfolio</h2>
-          <p class="todo">TODO: Verify all current products from official sources. Link each product to its official product page when one exists.</p>
+          <p>Virginia Spirits lists CAVU Straight Bourbon Whisky, War Horn Virginia Whisky and Virginia Rye Whisky, Trooper's Virginia Single Malt Whisky, Revelations Virginia Smoked Whisky, Shiner's Gold Moonshine, and Highlands Navy Strength Gin.</p>
           <h3>Known or bracket-supplied product hints</h3>
-          <ul><li>TODO: Confirm product categories.</li></ul>
+          <ul><li>Listed as Highlands in site data.</li></ul>
           <h3>Whiskey categories to verify</h3>
           <ul>
-            <li>Bourbon: TODO</li>
-            <li>Rye: TODO</li>
-            <li>American single malt: TODO</li>
-            <li>Other American whiskey / corn / wheat / finished whiskey: TODO</li>
-            <li>Non-whiskey spirits: TODO</li>
+            <li>Bourbon: CAVU Straight Bourbon Whisky.</li>
+            <li>Rye: War Horn Virginia Rye Whisky.</li>
+            <li>American single malt: Trooper's Virginia Single Malt Whisky.</li>
+            <li>Other American whiskey / corn / wheat / finished whiskey: War Horn Virginia Whisky, Revelations Virginia Smoked Whisky, and Shiner's Gold Moonshine.</li>
+            <li>Non-whiskey spirits: Highlands Navy Strength Gin.</li>
           </ul>
         </section>
 
         <section>
           <h2>Sources</h2>
           <ul class="source-list">
-            <li>TODO: Official website source URL.</li>
             <li>TODO: Official Instagram source URL.</li>
-            <li>TODO: Product page source URLs.</li>
+            <li><a href="https://www.highlandsdistillingco.com/" target="_blank" rel="noopener noreferrer">Official website</a></li>
+            <li><a href="https://virginiaspirits.org/distillery/highlands-distilling-company/" target="_blank" rel="noopener noreferrer">Virginia Spirits profile</a></li>
+            <li><a href="https://www.abc.virginia.gov/products/bourbon/highlands-distilling-cavu-bourbon?productSize=0" target="_blank" rel="noopener noreferrer">Virginia ABC CAVU Bourbon product page</a></li>
+            <li><a href="https://www.abc.virginia.gov/products/whiskey/highlands-distilling-war-horn-whiskey" target="_blank" rel="noopener noreferrer">Virginia ABC War Horn Whiskey product page</a></li>
+            <li>Location/address references: <a href="https://virginiaspirits.org/distilleries/" target="_blank" rel="noopener noreferrer">Virginia Spirits distillery directory</a>, plus official or local tourism pages where the directory did not list the entrant.</li>
           </ul>
         </section>
+
+        <section class="location-section" aria-labelledby="location-map-heading">
+          <h2 id="location-map-heading">Location Map</h2>
+          <div class="map-list">
+          <div class="map-card">
+            <p class="map-address">1200 VA-16, Marion, VA 24354</p>
+            <iframe
+              class="map-frame"
+              title="Location Map for Highlands Distilling Co"
+              src="https://www.google.com/maps?q=Highlands%20Distilling%20Co%201200%20VA-16%2C%20Marion%2C%20VA%2024354&amp;output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+            <a class="map-link" href="https://www.google.com/maps?q=Highlands%20Distilling%20Co%201200%20VA-16%2C%20Marion%2C%20VA%2024354" target="_blank" rel="noopener noreferrer">View larger map</a>
+          </div>
+          </div>
+        </section>
+
       </div>
 
       <aside>
@@ -256,9 +316,9 @@
           <dt>Voting window</dt>
           <dd>May 30-Jun 5, 2026</dd>
           <dt>Location</dt>
-          <dd>TODO: Ask user or verify from official source.</dd>
+          <dd>1200 VA-16, Marion, VA 24354</dd>
           <dt>Main product type</dt>
-          <dd>TODO: Verify from official source.</dd>
+          <dd>Bourbon, rye, single malt whisky, moonshine, and gin</dd>
         </dl>
 
         <h2 style="margin-top: 22px;">Tournament Notes</h2>

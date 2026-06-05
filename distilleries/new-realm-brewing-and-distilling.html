@@ -175,6 +175,40 @@
       font-size: 13px;
     }
 
+    .location-section {
+      margin-top: 20px;
+    }
+
+    .map-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .map-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .map-address {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .map-frame {
+      display: block;
+      width: 100%;
+      height: 260px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel-strong);
+    }
+
+    .map-link {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
     @media (max-width: 760px) {
       .page {
         width: min(100% - 24px, 1080px);
@@ -193,6 +227,10 @@
 
       dl {
         grid-template-columns: 1fr;
+      }
+
+      .map-frame {
+        height: 220px;
       }
     }
   </style>
@@ -238,8 +276,39 @@
             <li>TODO: Official website source URL.</li>
             <li>TODO: Official Instagram source URL.</li>
             <li>TODO: Product page source URLs.</li>
+            <li>Location/address references: <a href="https://virginiaspirits.org/distilleries/" target="_blank" rel="noopener noreferrer">Virginia Spirits distillery directory</a>, plus official or local tourism pages where the directory did not list the entrant.</li>
           </ul>
         </section>
+
+        <section class="location-section" aria-labelledby="location-map-heading">
+          <h2 id="location-map-heading">Location Map</h2>
+          <div class="map-list">
+          <div class="map-card">
+            <p class="map-address">5941 Harbour View Blvd., Suffolk, VA 23435</p>
+            <iframe
+              class="map-frame"
+              title="Location Map 1 for New Realm Brewing &amp; Distilling"
+              src="https://www.google.com/maps?q=New%20Realm%20Brewing%20%26%20Distilling%205941%20Harbour%20View%20Blvd.%2C%20Suffolk%2C%20VA%2023435&amp;output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+            <a class="map-link" href="https://www.google.com/maps?q=New%20Realm%20Brewing%20%26%20Distilling%205941%20Harbour%20View%20Blvd.%2C%20Suffolk%2C%20VA%2023435" target="_blank" rel="noopener noreferrer">View larger map</a>
+          </div>
+
+          <div class="map-card">
+            <p class="map-address">1209 Craft Ln., Virginia Beach, VA 23454</p>
+            <iframe
+              class="map-frame"
+              title="Location Map 2 for New Realm Brewing &amp; Distilling"
+              src="https://www.google.com/maps?q=New%20Realm%20Brewing%20%26%20Distilling%201209%20Craft%20Ln.%2C%20Virginia%20Beach%2C%20VA%2023454&amp;output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+            <a class="map-link" href="https://www.google.com/maps?q=New%20Realm%20Brewing%20%26%20Distilling%201209%20Craft%20Ln.%2C%20Virginia%20Beach%2C%20VA%2023454" target="_blank" rel="noopener noreferrer">View larger map</a>
+          </div>
+          </div>
+        </section>
+
       </div>
 
       <aside>
@@ -256,7 +325,7 @@
           <dt>Voting window</dt>
           <dd>May 30-Jun 5, 2026</dd>
           <dt>Location</dt>
-          <dd>TODO: Ask user or verify from official source.</dd>
+          <dd>2 known locations</dd>
           <dt>Main product type</dt>
           <dd>TODO: Verify from official source.</dd>
         </dl>

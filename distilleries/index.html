@@ -175,6 +175,40 @@
       font-size: 13px;
     }
 
+    .location-section {
+      margin-top: 20px;
+    }
+
+    .map-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .map-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .map-address {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .map-frame {
+      display: block;
+      width: 100%;
+      height: 260px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel-strong);
+    }
+
+    .map-link {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
     @media (max-width: 760px) {
       .page {
         width: min(100% - 24px, 1080px);
@@ -193,6 +227,10 @@
 
       dl {
         grid-template-columns: 1fr;
+      }
+
+      .map-frame {
+        height: 220px;
       }
     }
   
