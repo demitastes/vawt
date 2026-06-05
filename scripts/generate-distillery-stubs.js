@@ -609,7 +609,7 @@ function renderBoutLinks(boutInfo) {
       return `<a class="voting-link" href="${escapeHtml(links[key])}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(title)}">${escapeHtml(label)}</a>`;
     });
 
-  return linkElements.length ? linkElements.join(" • ") : "";
+  return linkElements.length ? `Vote here: ${linkElements.join(" • ")}` : "";
 }
 
 function renderBoutList(item) {
