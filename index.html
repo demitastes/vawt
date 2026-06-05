@@ -292,6 +292,22 @@
       cursor: default;
     }
 
+    .bout[data-round="5"] {
+      text-align: center;
+    }
+
+    .bout[data-round="5"] .bout-label {
+      text-transform: uppercase;
+    }
+
+    .bout[data-round="5"] .bout-date-container {
+      justify-content: center;
+    }
+
+    .bout[data-round="5"] .bout-links {
+      justify-content: center;
+    }
+
     .championship {
       position: relative;
       min-height: 1px;
@@ -636,7 +652,7 @@
 
       const label = document.createElement("div");
       label.className = "bout-label";
-      label.textContent = `Round ${round} Bout ${bout}`;
+      label.textContent = round === 5 ? "Final" : `Round ${round} Bout ${bout}`;
 
       const dateContainer = document.createElement("div");
       dateContainer.className = "bout-date-container";
