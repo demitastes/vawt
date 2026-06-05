@@ -741,10 +741,9 @@ function getProductTypesForIndex(products) {
   }
 
   const producedTypes = new Set(products.map(p => p.type?.toLowerCase()));
-  const displayTypes = Array.from(producedTypes)
-    .filter(type => type && type !== "other")
-    .map(type => SPIRIT_TYPES.LABELS[type] || type.charAt(0).toUpperCase() + type.slice(1))
-    .sort();
+  const displayTypes = SPIRIT_TYPES.ALL
+    .filter(type => type !== "other" && producedTypes.has(type))
+    .map(type => SPIRIT_TYPES.LABELS[type] || type.charAt(0).toUpperCase() + type.slice(1));
 
   if (producedTypes.has("other") || Array.from(producedTypes).some(t => !SPIRIT_TYPES.KNOWN.includes(t))) {
     displayTypes.push("Other");
