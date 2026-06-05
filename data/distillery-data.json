@@ -11,44 +11,39 @@
     "description": "",
     "products": [
       {
-        "name": "Bourbon Whiskey",
+        "name": "Independence Bourbon (blend of straight bourbon whiskeys)",
         "type": "bourbon",
-        "link": ""
+        "link": "https://openroaddistillingco.com/product/independence-bourbon/"
       },
       {
-        "name": "Rye Whiskey",
-        "type": "rye",
-        "link": ""
-      },
-      {
-        "name": "Vodka",
-        "type": "vodka",
-        "link": ""
-      },
-      {
-        "name": "Gin",
+        "name": "American Gin",
         "type": "gin",
-        "link": ""
+        "link": "https://openroaddistillingco.com/product/gin/"
       },
       {
-        "name": "Moonshine",
-        "type": "moonshine",
-        "link": ""
+        "name": "American Vodka",
+        "type": "vodka",
+        "link": "https://openroaddistillingco.com/product/american-vodka/"
       },
       {
-        "name": "American Single Malt",
-        "type": "asmw",
-        "link": ""
+        "name": "Eagle Eye Rye (blend of straight rye whiskeys)",
+        "type": "rye",
+        "link": "https://openroaddistillingco.com/product/rye/"
       },
       {
-        "name": "American Whiskey",
-        "type": "other whiskey",
-        "link": ""
+        "name": "Reserve Rye",
+        "type": "rye",
+        "link": "https://openroaddistillingco.com/product/reserve-rye/"
       },
       {
-        "name": "Blueberry Vodka",
+        "name": "Reserve Bourbon",
+        "type": "bourbon",
+        "link": "https://openroaddistillingco.com/product/reserve-bourbon/"
+      },
+      {
+        "name": "Maple Old Fashioned",
         "type": "other",
-        "link": ""
+        "link": "https://openroaddistillingco.com/product/maple-old-fashioned/"
       }
     ]
   },

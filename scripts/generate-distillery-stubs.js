@@ -819,7 +819,6 @@ ${locationEmbeds}
             ${item.website && item.website.trim() ? `<li>Official website: <a href="${escapeHtml(item.website)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.website)}</a></li>` : '<li>TODO: Official website source URL.</li>'}
             ${item.instagram && item.instagram.trim() ? `<li>Instagram: <a href="${escapeHtml(item.instagram)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.instagram)}</a></li>` : '<li>TODO: Official Instagram source URL.</li>'}
             ${item.facebook && item.facebook.trim() ? `<li>Facebook: <a href="${escapeHtml(item.facebook)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.facebook)}</a></li>` : ''}
-            <li>TODO: Product page source URLs.</li>
             <li>Location/address references: <a href="https://virginiaspirits.org/distilleries/" target="_blank" rel="noopener noreferrer">Virginia Spirits distillery directory</a>, plus official or local tourism pages where the directory did not list the entrant.</li>
           </ul>
         </section>
