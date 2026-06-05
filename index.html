@@ -116,8 +116,14 @@
       text-transform: uppercase;
     }
 
-    .bout-date {
+    .bout-date-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       margin: 2px 0 6px;
+    }
+
+    .bout-date {
       color: var(--accent);
       font-size: 11px;
       font-weight: 700;
@@ -145,13 +151,28 @@
       height: 8px;
       border-radius: 50%;
       background: #2d8e2d;
-      margin-right: 2px;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
     }
 
     .bout.is-active .bout-active-indicator {
       display: inline-block;
+    }
+
+    .round-column[data-side="left"] .bout-date-container {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .round-column[data-side="right"] .bout-date-container {
+      width: 100%;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .round-column[data-side="right"] .bout-active-indicator {
+      margin-right: 0;
+      margin-left: 2px;
     }
 
     .bout-link {
@@ -355,9 +376,13 @@
         margin-bottom: 4px;
       }
 
+      .bout-date-container {
+        justify-content: center;
+        flex-direction: row;
+      }
+
       .bout-date {
         font-size: 10px;
-        margin: 2px 0 4px;
       }
 
       .bout-links {
@@ -375,7 +400,7 @@
       .bout-active-indicator {
         width: 6px;
         height: 6px;
-        margin-right: 1px;
+        margin: 0 1px;
       }
 
       .matchup {
@@ -424,6 +449,7 @@
 <body>
   <header>
     <h1>Virginia Whiskey Tournament 2026</h1>
+    <p style="color: var(--muted); font-size: 12px; margin: 8px 0 0 0; font-weight: 500;">All voting closes at noon EDT on the end date.</p>
   </header>
 
   <main class="bracket-shell">
@@ -534,7 +560,7 @@
       const fmt = { month: "short", day: "numeric", timeZone: "UTC" };
       const start = new Date(entry.start).toLocaleDateString("en-US", fmt);
       const end   = new Date(entry.end).toLocaleDateString("en-US", fmt);
-      return `${start} – ${end}, Noon EDT`;
+      return `${start} – ${end}`;
     }
 
     function isActiveBout(round, bout) {
@@ -612,9 +638,19 @@
       label.className = "bout-label";
       label.textContent = `Round ${round} Bout ${bout}`;
 
+      const dateContainer = document.createElement("div");
+      dateContainer.className = "bout-date-container";
+
       const date = document.createElement("div");
       date.className = "bout-date";
       date.textContent = boutDate(round, bout);
+      dateContainer.appendChild(date);
+
+      if (isActiveBout(round, bout)) {
+        const indicator = document.createElement("div");
+        indicator.className = "bout-active-indicator";
+        dateContainer.appendChild(indicator);
+      }
 
       const matchup = document.createElement("div");
       matchup.className = "matchup";
@@ -637,19 +673,13 @@
         matchup.appendChild(competitor);
       });
 
-      const bodyElements = [label, date, matchup];
+      const bodyElements = [label, dateContainer, matchup];
 
       const boutId = key(round, bout);
       const links = boutLinks[boutId];
       if (links && (links.instagram || links.twitter || links.youtube || links.discord)) {
         const linksContainer = document.createElement("div");
         linksContainer.className = "bout-links";
-
-        if (isActiveBout(round, bout)) {
-          const indicator = document.createElement("div");
-          indicator.className = "bout-active-indicator";
-          linksContainer.appendChild(indicator);
-        }
 
         const linkConfigs = [
           { key: "instagram", label: "IG", title: "Vote on Instagram" },
