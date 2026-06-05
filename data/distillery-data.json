@@ -8,7 +8,7 @@
     "locations": [
       "1871 Fountain Dr., Ste. 100, Reston, VA 20190"
     ],
-    "description": "",
+    "description": "Over the past 15 years of opening and operating restaurants, including award-winning fine dining and speakeasy-influenced concepts, we established a meticulous process of tasting and revision that we use for recipe development.  In our endeavor to offer the finest hand-crafted cocktails, an idea took hold that we should develop a line of quality spirits that would elevate our beverage offerings and our guests experiences.  It was this idea that lead to the creation of Open Road Distilling Co.<br/><br/>Located in the heart of Reston Town Center, Open Road Distilling Co. features an operational distillery, tasting room, and bonded store.  Join us for daily tastings of our in-house distilled American Vodka, American Gin, and in-house blended Eagle Eye Rye and Independence Bourbon.  Enjoy these spirits in their true form or in one of our handcrafted cocktails.  If you prefer to enjoy our spirits at home, purchase a bottle of your favorite from our store. (https://openroaddistillingco.com/about/)",
     "products": [
       {
         "name": "Independence Bourbon (blend of straight bourbon whiskeys)",
@@ -56,17 +56,43 @@
     "locations": [
       "711 Pocahontas Ave. NE, Roanoke, VA 24012"
     ],
-    "description": "",
+    "description": "3 Roanoke natives, Tim, Brian and Andy decided a while back to bring something to their hometown that had not been done in over 100 years. Founded in 2020, Brady's Distillery offers carefully blended and aged craft spirts such as whiskey, bourbon, vodka and rum. Each spirit has been meticulously curated to satisfy anyone from the most sophisticated bourbon enthusiast to the up-and-coming novice. We simply can't wait to have you for a visit. (https://www.bradysdistillery.com/about-us)",
     "products": [
       {
-        "name": "Moonshine",
-        "type": "moonshine",
-        "link": ""
+        "name": "Brady's Accomplice Bourbon",
+        "type": "bourbon",
+        "price": "$44.99",
+        "link": "https://www.bradysdistillery.com/spirits"
       },
       {
-        "name": "Gin",
+        "name": "Brady's Accomplice Toasted Rye",
+        "type": "rye",
+        "price": "$54.99",
+        "link": "https://www.bradysdistillery.com/spirits"
+      },
+      {
+        "name": "Lazy Jack Rum",
+        "type": "rum",
+        "price": "$24.99",
+        "link": "https://www.bradysdistillery.com/spirits"
+      },
+      {
+        "name": "Brady's Prohibition Gin",
         "type": "gin",
-        "link": ""
+        "price": "$39.99",
+        "link": "https://www.bradysdistillery.com/spirits"
+      },
+      {
+        "name": "Brady's Whiskey Barrel Gin",
+        "type": "gin",
+        "price": "$49.99",
+        "link": "https://www.bradysdistillery.com/spirits"
+      },
+      {
+        "name": "Brady's Vodka",
+        "type": "vodka",
+        "price": "$24.99",
+        "link": "https://www.bradysdistillery.com/spirits"
       }
     ]
   },
