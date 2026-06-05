@@ -857,12 +857,27 @@
       }
     }
 
+    function resetDesktopLayoutStyles() {
+      bracket.style.height = "";
+      connectors.style.height = "";
+      connectors.removeAttribute("viewBox");
+      connectors.innerHTML = "";
+
+      document.querySelectorAll(".bout, .round-column, .championship, .champion").forEach((el) => {
+        el.style.top = "";
+        el.style.height = "";
+        el.style.transform = "";
+      });
+    }
+
     function isMobile() {
       return window.innerWidth < 720;
     }
 
     function render() {
+      resetDesktopLayoutStyles();
       bracket.innerHTML = "";
+      connectors.style.display = "";
 
       for (let round = 1; round <= 4; round += 1) {
         bracket.appendChild(createColumn(round, "left"));
@@ -874,35 +889,38 @@
         bracket.appendChild(createColumn(round, "right"));
       }
 
-      if (!isMobile()) {
-        requestAnimationFrame(() => {
-          layoutBracket();
-          drawConnectors();
-        });
+      if (isMobile()) {
+        resetDesktopLayoutStyles();
+        return;
       }
+
+      requestAnimationFrame(() => {
+        layoutBracket();
+        drawConnectors();
+      });
     }
 
     let wasMobile = isMobile();
+    let resizeFrame = null;
     window.addEventListener("resize", () => {
       const nowMobile = isMobile();
+
+      if (resizeFrame) {
+        cancelAnimationFrame(resizeFrame);
+      }
+
       if (wasMobile !== nowMobile) {
         wasMobile = nowMobile;
-        requestAnimationFrame(() => {
-          if (nowMobile) {
-            // Clear inline styles when switching to mobile
-            document.querySelectorAll('.bout, .round-column, .championship').forEach(el => {
-              el.style.top = '';
-              el.style.height = '';
-              el.style.transform = '';
-            });
-            connectors.innerHTML = '';
-            connectors.style.display = 'none';
-          }
+        resizeFrame = requestAnimationFrame(() => {
+          resizeFrame = null;
           render();
         });
       } else if (!nowMobile) {
-        layoutBracket();
-        drawConnectors();
+        resizeFrame = requestAnimationFrame(() => {
+          resizeFrame = null;
+          layoutBracket();
+          drawConnectors();
+        });
       }
     });
     render();

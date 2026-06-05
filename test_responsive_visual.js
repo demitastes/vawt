@@ -42,6 +42,40 @@ async function runVisualTests() {
   try {
     browser = await chromium.launch({ headless: true });
 
+    async function countOverlaps(page, selector) {
+      const elements = await page.locator(selector).all();
+      const boxes = [];
+
+      for (const element of elements) {
+        const box = await element.boundingBox();
+        if (box) {
+          boxes.push({
+            id: `${await element.getAttribute('data-round')}-${await element.getAttribute('data-bout')}`,
+            x: box.x,
+            y: box.y,
+            width: box.width,
+            height: box.height
+          });
+        }
+      }
+
+      const overlaps = [];
+      for (let i = 0; i < boxes.length; i++) {
+        for (let j = i + 1; j < boxes.length; j++) {
+          const p1 = boxes[i];
+          const p2 = boxes[j];
+          const xOverlap = p1.x < p2.x + p2.width && p2.x < p1.x + p1.width;
+          const yOverlap = p1.y < p2.y + p2.height && p2.y < p1.y + p1.height;
+
+          if (xOverlap && yOverlap) {
+            overlaps.push(`${p1.id} overlaps ${p2.id}`);
+          }
+        }
+      }
+
+      return overlaps;
+    }
+
     // Test 1: Desktop Layout
     console.log('Test 1: Desktop Layout (1024px width)');
     let page = await browser.newPage({ viewport: { width: 1024, height: 800 } });
@@ -70,34 +104,10 @@ async function runVisualTests() {
     console.log(`  ✅ SVG connectors hidden: ${connectorsHidden}`);
     console.log(`  ✅ Found ${mobileCompetitorCount} competitor buttons`);
 
-    // Check for overlapping elements
-    const bouts = await page.locator('.bout').all();
-    const positions = [];
-
-    for (const bout of bouts) {
-      const box = await bout.boundingBox();
-      if (box) {
-        positions.push({
-          id: `${await bout.getAttribute('data-round')}-${await bout.getAttribute('data-bout')}`,
-          top: box.y,
-          height: box.height
-        });
-      }
-    }
-
-    let overlaps = 0;
-    for (let i = 0; i < positions.length; i++) {
-      for (let j = i + 1; j < positions.length; j++) {
-        const p1 = positions[i];
-        const p2 = positions[j];
-        const overlap = !(p1.top + p1.height <= p2.top || p2.top + p2.height <= p1.top);
-        if (overlap) overlaps++;
-      }
-    }
-
-    console.log(`  ✅ Overlapping elements: ${overlaps}`);
-    if (overlaps > 0) {
-      console.log(`     ❌ WARNING: ${overlaps} pairs of elements overlap!`);
+    const mobileOverlaps = await countOverlaps(page, '.bout');
+    console.log(`  ✅ Overlapping elements: ${mobileOverlaps.length}`);
+    if (mobileOverlaps.length > 0) {
+      throw new Error(`Mobile layout has overlapping bouts:\n${mobileOverlaps.join('\n')}`);
     }
 
     await page.screenshot({ path: '/tmp/bracket_test_mobile.png' });
@@ -142,6 +152,23 @@ async function runVisualTests() {
 
     const connectorsBelow = await page.isVisible('.connectors');
     console.log(`  ✅ At 719px - connectors hidden: ${!connectorsBelow}`);
+
+    const transitionOverlaps = await countOverlaps(page, '.bout');
+    const bracketInlineHeight = await page.locator('#bracket').evaluate((el) => el.style.height);
+    const connectorInlineDisplay = await page.locator('.connectors').evaluate((el) => el.style.display);
+    console.log(`  ✅ Post-resize overlapping elements: ${transitionOverlaps.length}`);
+    console.log(`  ✅ Post-resize bracket inline height cleared: ${bracketInlineHeight === ''}`);
+    console.log(`  ✅ Post-resize connector inline display cleared: ${connectorInlineDisplay === ''}`);
+
+    if (transitionOverlaps.length > 0) {
+      throw new Error(`Desktop-to-mobile resize has overlapping bouts:\n${transitionOverlaps.join('\n')}`);
+    }
+    if (bracketInlineHeight !== '') {
+      throw new Error(`Desktop-to-mobile resize left inline bracket height: ${bracketInlineHeight}`);
+    }
+    if (connectorInlineDisplay !== '') {
+      throw new Error(`Desktop-to-mobile resize left inline connector display: ${connectorInlineDisplay}`);
+    }
 
     await page.close();
 
