@@ -24,6 +24,31 @@
         "name": "Vodka",
         "type": "vodka",
         "link": ""
+      },
+      {
+        "name": "Gin",
+        "type": "gin",
+        "link": ""
+      },
+      {
+        "name": "Moonshine",
+        "type": "moonshine",
+        "link": ""
+      },
+      {
+        "name": "American Single Malt",
+        "type": "asmw",
+        "link": ""
+      },
+      {
+        "name": "American Whiskey",
+        "type": "other whiskey",
+        "link": ""
+      },
+      {
+        "name": "Blueberry Vodka",
+        "type": "other",
+        "link": ""
       }
     ]
   },
