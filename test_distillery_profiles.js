@@ -7,6 +7,7 @@ const ROOT = __dirname;
 const DISTILLERIES_DIR = path.join(ROOT, "distilleries");
 const TODO_FILE = path.join(ROOT, "TODO.md");
 const BRACKET_FILE = path.join(ROOT, "index.html");
+const DISTILLERY_DATA_FILE = path.join(ROOT, "data", "distillery-data.json");
 
 let failures = 0;
 
@@ -23,6 +24,48 @@ function fileExists(relativePath) {
   return fs.existsSync(path.join(ROOT, relativePath));
 }
 
+function loadDistilleryData() {
+  try {
+    const data = fs.readFileSync(DISTILLERY_DATA_FILE, "utf8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error("Failed to load distillery data:", error.message);
+    return [];
+  }
+}
+
+function getDistilleryByName(name, distilleries) {
+  // Check both short name and official name
+  return distilleries.find((d) => d.name === name || d.officialName === name);
+}
+
+function hasWebsiteData(distillery) {
+  return distillery && distillery.website && distillery.website.trim() !== "";
+}
+
+function hasInstagramData(distillery) {
+  return distillery && distillery.instagram && distillery.instagram.trim() !== "";
+}
+
+function isWebsiteFieldDefined(distillery) {
+  return distillery && distillery.hasOwnProperty("website");
+}
+
+function isInstagramFieldDefined(distillery) {
+  return distillery && distillery.hasOwnProperty("instagram");
+}
+
+function decodeHtmlEntities(text) {
+  const entities = {
+    "&amp;": "&",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&quot;": '"',
+    "&#39;": "'"
+  };
+  return text.replace(/&[a-z]+;/g, (match) => entities[match] || match);
+}
+
 console.log("=== Distillery Profile Stub Test Suite ===\n");
 
 check(fileExists("docs/distillery-profile-pages/SKILL.md"), "Profile-page skill exists", "Missing docs/distillery-profile-pages/SKILL.md");
@@ -34,6 +77,9 @@ const profileFiles = fs.existsSync(DISTILLERIES_DIR)
   : [];
 
 check(profileFiles.length === 55, "Generated 55 distillery profile pages", `Expected 55 distillery profile pages, found ${profileFiles.length}`);
+
+// Load distillery data for validation
+const distilleryData = loadDistilleryData();
 
 const requiredSnippets = [
   "<h2>Summary</h2>",
@@ -53,16 +99,75 @@ const forbiddenPublicSnippets = [
 
 profileFiles.forEach((file) => {
   const html = fs.readFileSync(path.join(DISTILLERIES_DIR, file), "utf8");
-  check(
-    html.includes("Official website: TODO") || html.includes(">Official website</a>"),
-    `${file} includes official website control`,
-    `${file} missing official website control`
-  );
-  check(
-    html.includes("Instagram: TODO") || html.includes(">Instagram</a>"),
-    `${file} includes Instagram control`,
-    `${file} missing Instagram control`
-  );
+
+  // Extract distillery name from the H1 tag in the HTML
+  // This is more reliable than reconstructing from the filename
+  const h1Match = html.match(/<h1[^>]*>([^<]+)<\/h1>/);
+  const distilleryName = h1Match ? decodeHtmlEntities(h1Match[1]) : null;
+
+  if (!distilleryName) {
+    console.error(`${file}: Could not extract distillery name from H1 tag`);
+    return;
+  }
+
+  const distillery = getDistilleryByName(distilleryName, distilleryData);
+
+  // Extract only the top-links section for social media button checking
+  // This avoids false positives from TODO items in the Sources section
+  const topLinksMatch = html.match(/<nav[^>]*class="top-links"[^>]*>([\s\S]*?)<\/nav>/);
+  const topLinksContent = topLinksMatch ? topLinksMatch[1] : "";
+
+  // Check official website control based on data availability and field definition
+  // If the field is not defined in distillery-data.json: expect placeholder
+  // If the field is defined but has data: expect actual link
+  // If the field is defined but empty: expect nothing (not rendered)
+  if (!isWebsiteFieldDefined(distillery)) {
+    // Field not defined at all - should have placeholder
+    check(
+      topLinksContent.includes("Official website: TODO") && topLinksContent.includes("is-placeholder"),
+      `${file} includes official website placeholder (field undefined)`,
+      `${file} missing official website placeholder (field undefined)`
+    );
+  } else if (hasWebsiteData(distillery)) {
+    // Field defined with actual data - should have link
+    check(
+      topLinksContent.includes(">Official website</a>"),
+      `${file} includes official website link`,
+      `${file} missing official website link (has data)`
+    );
+  } else {
+    // Field defined but empty - should not render anything
+    check(
+      !topLinksContent.includes("Official website"),
+      `${file} correctly omits empty official website`,
+      `${file} incorrectly shows official website when empty`
+    );
+  }
+
+  // Check Instagram control based on data availability and field definition
+  if (!isInstagramFieldDefined(distillery)) {
+    // Field not defined at all - should have placeholder
+    check(
+      topLinksContent.includes("Instagram: TODO") && topLinksContent.includes("is-placeholder"),
+      `${file} includes Instagram placeholder (field undefined)`,
+      `${file} missing Instagram placeholder (field undefined)`
+    );
+  } else if (hasInstagramData(distillery)) {
+    // Field defined with actual data - should have link
+    check(
+      topLinksContent.includes(">Instagram</a>"),
+      `${file} includes Instagram link`,
+      `${file} missing Instagram link (has data)`
+    );
+  } else {
+    // Field defined but empty - should not render anything
+    check(
+      !topLinksContent.includes(">Instagram</a>") && !topLinksContent.includes("Instagram: TODO"),
+      `${file} correctly omits empty Instagram`,
+      `${file} incorrectly shows Instagram when empty`
+    );
+  }
+
   requiredSnippets.forEach((snippet) => {
     check(html.includes(snippet), `${file} includes ${snippet}`, `${file} missing ${snippet}`);
   });
