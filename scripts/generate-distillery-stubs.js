@@ -720,12 +720,16 @@ ${boutList}
         <section>
           <h2>Product Portfolio</h2>
           <p class="todo">TODO: Verify all current products from official sources. Link each product to its official product page when one exists.</p>
-          <h3>Whiskey categories to verify</h3>
+          <h3>Whiskey categories:</h3>
           <ul>
             <li>Bourbon: TODO</li>
             <li>Rye: TODO</li>
             <li>American single malt: TODO</li>
-            <li>Other American whiskey / corn / wheat / finished whiskey: TODO</li>
+            <li>Other whiskey: TODO</li>
+            <li>Moonshine: TODO</li>
+          </ul>
+          <h3>Other products:</h3>
+          <ul>
             <li>Non-whiskey spirits: TODO</li>
           </ul>
         </section>
