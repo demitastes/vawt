@@ -240,9 +240,16 @@
     .bout-label {
       display: flex;
       align-items: center;
+      gap: 6px;
       font-weight: 800;
       color: var(--accent);
       width: 80px;
+    }
+
+    .bout-label-spacer {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
     }
 
     .bout-row.is-active .bout-label {
@@ -265,18 +272,12 @@
     }
 
     .bout-active-indicator {
-      display: none;
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #2d8e2d;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
-      margin-left: 6px;
-    }
-
-    .bout-row.is-active .bout-active-indicator {
-      display: inline-block;
     }
 
     .voting-link {
@@ -402,7 +403,7 @@
           <table class="bouts-table">
             <tbody>
           <tr class="bout-row">
-            <td class="bout-label">R1B16</td>
+            <td class="bout-label"><span class="bout-label-spacer"></span>R1B16</td>
             <td class="bout-dates">Jul 18 – Jul 24</td>
             <td class="bout-links"></td>
           </tr>

@@ -240,9 +240,16 @@
     .bout-label {
       display: flex;
       align-items: center;
+      gap: 6px;
       font-weight: 800;
       color: var(--accent);
       width: 80px;
+    }
+
+    .bout-label-spacer {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
     }
 
     .bout-row.is-active .bout-label {
@@ -265,18 +272,12 @@
     }
 
     .bout-active-indicator {
-      display: none;
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #2d8e2d;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
-      margin-left: 6px;
-    }
-
-    .bout-row.is-active .bout-active-indicator {
-      display: inline-block;
     }
 
     .voting-link {
@@ -404,7 +405,7 @@
           <table class="bouts-table">
             <tbody>
           <tr class="bout-row is-active">
-            <td class="bout-label">R1B1<span class="bout-active-indicator" aria-label="This bout is currently active"></span></td>
+            <td class="bout-label"><span class="bout-active-indicator" aria-label="This bout is currently active"></span>R1B1</td>
             <td class="bout-dates">May 30 – Jun 5</td>
             <td class="bout-links">Voting links: <a class="voting-link" href="https://www.instagram.com/p/DZDF_ikASrH/" target="_blank" rel="noopener noreferrer" title="Vote on Instagram">Instagram</a> • <a class="voting-link" href="https://www.youtube.com/post/UgkxUmjksF2IY9cTtGlu9wRG0uFsW-KZ0O22" target="_blank" rel="noopener noreferrer" title="Vote on YouTube">YouTube</a></td>
           </tr>
