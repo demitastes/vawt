@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(node scripts/generate-distillery-stubs.js)",
+      "Bash(node scripts/generate-bracket-data.js)",
       "Bash(node run-tests.mjs)",
 
       "Bash(node test_bout_data.mjs)",

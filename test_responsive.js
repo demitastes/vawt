@@ -13,13 +13,17 @@ const fs = require('fs');
 const path = require('path');
 
 const HTML_FILE = path.join(__dirname, 'index.html');
+const CSS_FILE = path.join(__dirname, 'styles.css');
+const JS_FILE = path.join(__dirname, 'bracket.js');
 
 // Simple JSDOM-like test runner for checking computed styles
 function testResponsiveLayout() {
   console.log('=== Responsive Layout Test Suite ===\n');
 
-  // Read the HTML file
+  // Read the HTML, CSS, and JS files
   const html = fs.readFileSync(HTML_FILE, 'utf8');
+  const css = fs.readFileSync(CSS_FILE, 'utf8');
+  const js = fs.readFileSync(JS_FILE, 'utf8');
   let failures = 0;
 
   function check(condition, passMessage, failMessage) {
@@ -33,19 +37,19 @@ function testResponsiveLayout() {
 
   // Test 1: Check CSS media query exists
   console.log('Test 1: CSS Media Query');
-  const hasMediaQuery = html.includes('@media (max-width: 719px)');
+  const hasMediaQuery = css.includes('@media (max-width: 719px)');
   check(hasMediaQuery, 'Media query found', 'Media query missing');
 
   // Test 2: Check mobile-specific CSS rules
   console.log('\nTest 2: Mobile CSS Rules');
   const mobileRules = [
-    { rule: '.bracket', property: 'display: flex', hasRule: html.includes('display: flex') },
-    { rule: '.bracket', property: 'flex-direction: column', hasRule: html.includes('flex-direction: column') },
-    { rule: '.bout', property: 'position: static !important', hasRule: html.includes('position: static !important') },
-    { rule: '.bout', property: 'top: auto !important', hasRule: html.includes('top: auto !important') },
-    { rule: '.connectors', property: 'display: none', hasRule: html.includes('display: none') },
-    { rule: '.round-column', property: 'display: grid', hasRule: html.includes('display: grid') },
-    { rule: '.round-column', property: 'grid-template-columns: 1fr 1fr', hasRule: html.includes('grid-template-columns: 1fr 1fr') }
+    { rule: '.bracket', property: 'display: flex', hasRule: css.includes('display: flex') },
+    { rule: '.bracket', property: 'flex-direction: column', hasRule: css.includes('flex-direction: column') },
+    { rule: '.bout', property: 'position: static !important', hasRule: css.includes('position: static !important') },
+    { rule: '.bout', property: 'top: auto !important', hasRule: css.includes('top: auto !important') },
+    { rule: '.connectors', property: 'display: none', hasRule: css.includes('display: none') },
+    { rule: '.round-column', property: 'display: grid', hasRule: css.includes('display: grid') },
+    { rule: '.round-column', property: 'grid-template-columns: 1fr 1fr', hasRule: css.includes('grid-template-columns: 1fr 1fr') }
   ];
 
   mobileRules.forEach(({ rule, property, hasRule }) => {
@@ -54,16 +58,16 @@ function testResponsiveLayout() {
 
   // Test 3: Check JavaScript mobile detection
   console.log('\nTest 3: JavaScript Mobile Detection');
-  const hasMobileFunc = html.includes('function isMobile()');
-  const checksMobileInRender = html.includes('if (isMobile())') || html.includes('const mobileLayout = isMobile()');
+  const hasMobileFunc = js.includes('function isMobile()');
+  const checksMobileInRender = js.includes('if (isMobile())') || js.includes('const mobileLayout = isMobile()');
   check(hasMobileFunc, 'isMobile() function exists', 'isMobile() function missing');
   check(checksMobileInRender, 'render() checks isMobile()', 'render() does not check isMobile()');
 
   // Test 4: Check for conflicting absolute positioning
   console.log('\nTest 4: Positioning Overrides');
-  const hasTopOverride = html.includes('top: auto !important');
-  const hasTransformOverride = html.includes('transform: none !important');
-  const hasLayoutReset = html.includes('function resetDesktopLayoutStyles()');
+  const hasTopOverride = css.includes('top: auto !important');
+  const hasTransformOverride = css.includes('transform: none !important');
+  const hasLayoutReset = js.includes('function resetDesktopLayoutStyles()') || js.includes('const resetDesktopLayoutStyles');
   check(hasTopOverride, 'top property reset on mobile', 'top property not reset');
   check(hasTransformOverride, 'transform property reset on mobile', 'transform not reset');
   check(hasLayoutReset, 'desktop inline layout reset exists', 'desktop inline layout reset missing');

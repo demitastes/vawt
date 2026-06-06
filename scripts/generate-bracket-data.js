@@ -16,6 +16,7 @@ const path = require("path");
 
 const PROJECT_ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(PROJECT_ROOT, "data");
+const DISTILLERIES_DIR = path.join(PROJECT_ROOT, "distilleries");
 const BRACKET_DATA_JS = path.join(PROJECT_ROOT, "bracket-data.js");
 
 function loadJSON(filePath) {
@@ -61,7 +62,44 @@ function generateFirstRound(tournamentData) {
   return result;
 }
 
-function generateDistilleryProfiles(distilleryData) {
+function findDistilleryFile(distillery, distilleryDir) {
+  // Try to match the distillery with an actual HTML file
+  const shortName = distillery.name
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/'/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const officialName = distillery.officialName || distillery.name;
+  const longName = officialName
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/'/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const distilleryFiles = fs.readdirSync(distilleryDir);
+
+  // Try matching against short name first
+  const shortMatch = distilleryFiles.find(f => f === `${shortName}.html`);
+  if (shortMatch) return shortMatch;
+
+  // Try matching against long name
+  const longMatch = distilleryFiles.find(f => f === `${longName}.html`);
+  if (longMatch) return longMatch;
+
+  // Fallback: try a loose match
+  for (const file of distilleryFiles) {
+    const baseName = file.replace('.html', '');
+    if (baseName.includes(shortName)) return file;
+    if (baseName.includes(longName)) return file;
+  }
+
+  return null;
+}
+
+function generateDistilleryProfiles(distilleryData, distilleryDir) {
   if (!Array.isArray(distilleryData)) {
     throw new Error("Invalid distillery-data.json: expected array");
   }
@@ -71,19 +109,10 @@ function generateDistilleryProfiles(distilleryData) {
     if (!distillery.name) {
       throw new Error("Invalid distillery: missing 'name'");
     }
-    // Convert name to kebab-case using algorithm:
-    // 1. Remove apostrophes
-    // 2. Replace non-alphanumerics and spaces with single hyphen
-    // 3. Lowercase
-    // Examples: "GW's Grist Mill" -> "gws-grist-mill"
-    //           "Trial & Error" -> "trial-error"
-    const kebabName = distillery.name
-      .replace(/'/g, "")                  // Remove apostrophes
-      .replace(/[^\w-]/g, "-")            // Replace non-word chars (except hyphen) with hyphen
-      .replace(/-+/g, "-")                // Coalesce multiple hyphens to single
-      .toLowerCase()
-      .replace(/^-|-$/g, "");             // Remove leading/trailing hyphens
-    profiles[distillery.name] = `distilleries/${kebabName}.html`;
+    const fileName = findDistilleryFile(distillery, distilleryDir);
+    if (fileName) {
+      profiles[distillery.name] = `distilleries/${fileName}`;
+    }
   });
 
   return profiles;
@@ -160,7 +189,7 @@ function main() {
     // Generate data structures
     console.log("🔄 Generating data structures...");
     const firstRound = generateFirstRound(tournamentData);
-    const distilleryProfiles = generateDistilleryProfiles(distilleryData);
+    const distilleryProfiles = generateDistilleryProfiles(distilleryData, DISTILLERIES_DIR);
     console.log(`   ✓ firstRound (${firstRound.length} bouts)`);
     console.log(`   ✓ distilleryProfiles (${Object.keys(distilleryProfiles).length} profiles)`);
     console.log(`   ✓ rounds (5 rounds)`);

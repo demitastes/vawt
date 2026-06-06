@@ -189,10 +189,12 @@ const indexHtml = fileExists("distilleries/index.html")
   ? fs.readFileSync(path.join(DISTILLERIES_DIR, "index.html"), "utf8")
   : "";
 const bracketHtml = fileExists("index.html") ? fs.readFileSync(BRACKET_FILE, "utf8") : "";
+const bracketJs = fileExists("bracket.js") ? fs.readFileSync(path.join(__dirname, "bracket.js"), "utf8") : "";
+const bracketData = fileExists("bracket-data.js") ? fs.readFileSync(path.join(__dirname, "bracket-data.js"), "utf8") : "";
 
 profileFiles.forEach((file) => {
   check(indexHtml.includes(`./${file}`), `Index links to ${file}`, `Index missing link to ${file}`);
-  check(bracketHtml.includes(`distilleries/${file}`), `Bracket links to ${file}`, `Bracket missing profile link to ${file}`);
+  check(bracketHtml.includes(`distilleries/${file}`) || bracketJs.includes(`distilleries/${file}`) || bracketData.includes(`distilleries/${file}`), `Bracket links to ${file}`, `Bracket missing profile link to ${file}`);
 });
 
 forbiddenPublicSnippets.forEach((snippet) => {
@@ -206,9 +208,9 @@ const brokenTodoLinks = todoLinks.filter((relativePath) => !fileExists(relativeP
 check(todo.includes("docs/distillery-profile-pages/SKILL.md"), "TODO points future agents to profile-page skill", "TODO missing skill reference");
 check(todoLinks.length >= 55, "TODO includes profile links for research order", `Expected at least 55 profile links in TODO, found ${todoLinks.length}`);
 check(brokenTodoLinks.length === 0, "All TODO profile links resolve", `Broken TODO profile links:\n${brokenTodoLinks.join("\n")}`);
-check(bracketHtml.includes('className = "profile-link"'), "Bracket renders dedicated profile links", "Bracket missing profile-link renderer");
-check(bracketHtml.includes('target = "_blank"'), "Profile links open in a new tab", "Profile links do not target a new tab");
-check(bracketHtml.includes("event.stopPropagation()"), "Profile link clicks stop propagation", "Profile links do not stop click propagation");
+check(bracketJs.includes('className = "profile-link"'), "Bracket renders dedicated profile links", "Bracket missing profile-link renderer");
+check(bracketJs.includes('target = "_blank"'), "Profile links open in a new tab", "Profile links do not target a new tab");
+check(bracketJs.includes("event.stopPropagation()"), "Profile link clicks stop propagation", "Profile links do not stop click propagation");
 
 const threeCrossesHtml = fileExists("distilleries/three-crosses.html")
   ? fs.readFileSync(path.join(DISTILLERIES_DIR, "three-crosses.html"), "utf8")
