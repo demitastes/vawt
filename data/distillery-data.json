@@ -677,8 +677,40 @@
     "locations": [
       "2401 Colonial Ave., Norfolk, VA 23517"
     ],
-    "summary": "",
-    "products": []
+    "summary": "Our Mission is to Craft Exceptional Distilled Spirits that Awaken the Senses, Elevate Every Occasion, and Honor the Art of True Craftsmanship. From Bold Bourbon and Smooth American Single Malt to Spicy Rye, Crisp Vodka, and Refreshing Gin, Every Bottle is Crafted with Dedication and Skill.<br/><br/>Lou Shepard and Dave Hall, Co-owners of Mean Spirits Distillery in Norfolk, Virginia, Share More Than a Business—They Share 56 Years of Combined Service in the U.S. Navy, Where they Operated at the Highest Level of Naval Special Warfare. That Same Operational Excellence and Experience Drives Everything They Do at Mean Spirits Distillery.<br/><br/>Every Bottle Begins Long Before the Label. We Select Grains, Ferment Slowly, Distill with Precision, and Mature in Carefully Chosen Barrels Shaped by Norfolk’s Climate. Each Cask is Tasted, Blended for Balance, Proofed with Patience, and Bottled On-site—Disciplined Craftsmanship You Can Taste in Every Pour.<br/><br/>Mean Spirits Distillery was Founded on the Belief That Premium Spirits Bring People Together. When a Population Comes Together, That Central Point is the MEAN. We Celebrate What Unites Us Through Every Bottle We Produce.",
+    "summary-source-link": "https://www.meanspiritsdistillery.com/",
+    "products": [
+      {
+        "name": "American Single Malt Whiskey (Aged at Least 3 Years) (48% ABV / 96 Proof)",
+        "type": "asmw",
+        "price": "$66.49",
+        "link": "https://www.meanspiritsdistillery.com/product/american-single-malt-whiskey"
+      },
+      {
+        "name": "Bourbon Whiskey (52.5% ABV / 105 Proof)",
+        "type": "bourbon",
+        "price": "$74.79/750ml",
+        "link": "https://www.meanspiritsdistillery.com/product/bourbon-whiskey"
+      },
+      {
+        "name": "American Rye Whiskey (45% ABV / 90 Proof)",
+        "type": "rye",
+        "price": "$57.79/750ml",
+        "link": "https://www.meanspiritsdistillery.com/product/american-rye-whiskey"
+      },
+      {
+        "name": "American Vodka (40% ABV / 80 Proof)",
+        "type": "vodka",
+        "price": "$31.69/750ml",
+        "link": "https://www.meanspiritsdistillery.com/product/american-vodka"
+      },
+      {
+        "name": "American Gin (45% ABV / 90 Proof)",
+        "type": "gin",
+        "price": "$38.69/750ml",
+        "link": "https://www.meanspiritsdistillery.com/product/american-gin"
+      }
+    ]
   },
   {
     "name": "Reservoir",
