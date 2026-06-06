@@ -1047,7 +1047,7 @@ function renderStubPage(item, index) {
     <a class="crumb" href="./index.html">Back to distillery profiles</a>
 
     <header class="hero">
-      <h1>${escapeHtml(title)}</h1>
+      <h1>${escapeHtml(sourceName(item))}</h1>
       <p class="subtitle">VAWT 2026 entrant #${index + 1} - ${escapeHtml(item.bout)} - ${escapeHtml(item.dateRange)}</p>
       <nav class="top-links" aria-label="Official links">
         ${renderSocialLinks(item)}
