@@ -672,6 +672,12 @@ function renderCss() {
         flex-shrink: 0;
       }
 
+      .bouts-table .bout-active-indicator {
+        width: 6px;
+        height: 6px;
+        margin-right: 4px;
+      }
+
       .bouts-table .bout-dates {
         color: var(--muted);
         flex-shrink: 0;
