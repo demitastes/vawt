@@ -1,4 +1,9 @@
 import { chromium } from 'playwright';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const HTML_FILE = `file://${path.resolve(__dirname, 'distilleries/open-road.html')}`;
 
 const browser = await chromium.launch();
 const context = await browser.newContext({
@@ -6,7 +11,7 @@ const context = await browser.newContext({
 });
 
 const page = await context.newPage();
-await page.goto('http://localhost:8888/distilleries/open-road.html', { waitUntil: 'networkidle' });
+await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
 await page.waitForTimeout(500);
 
 const screenshot = await page.screenshot({ path: './test_mobile_indicator.png' });
