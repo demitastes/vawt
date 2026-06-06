@@ -1089,6 +1089,14 @@ function renderIndex() {
       font-weight: 500;
     }
 
+    tbody tr.distillery-row.is-active td a {
+      color: #2d8e2d;
+    }
+
+    tbody tr.distillery-row.is-active td a:hover {
+      color: #1d5c1d;
+    }
+
     .distillery-row .bout-active-indicator {
       display: inline-block;
       width: 8px;
