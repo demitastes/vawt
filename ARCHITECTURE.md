@@ -27,6 +27,10 @@ This repo currently ships a single static bracket experience in `index.html`. Th
 - Advanced rows are computed from organizer-defined winners in `bout-data.json`, so a profile can show both the original appearance and later brackets it has reached.
 - The table should not use an "advances to" column; the current design keeps each bout as its own row.
 - Active bouts receive the same active indicator treatment used in the bracket view.
+- The row structure is intentionally explicit: indicator cell, bout key cell, dates cell, vote-label cell, and link cell all stay separate so one element’s height cannot distort another.
+- When a row has no active indicator or no voting links, it still keeps matching placeholder cells so desktop and mobile rendering stay aligned.
+- Placeholder cells should preserve width and vertical centering rather than collapsing to empty space; that keeps the row rhythm consistent when the UI switches between active and inactive states.
+- Mobile layout should preserve the same cell ordering and centered alignment, even when the row becomes a wrapped or stacked flow, so the table still reads as one coherent record instead of a bundle of unrelated fragments.
 - If a distillery name changes in `distillery-data.json`, the generator expects the canonical name used in `tournament-data.json` to match.
 
 ## Bracket State
