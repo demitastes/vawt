@@ -15,6 +15,7 @@
       "Bash(node test_index_margin.js)",
       "Bash(node test_index_styles.js)",
       "Bash(node test_layout_changes.mjs)",
+      "Bash(node test_local_storage.mjs)",
       "Bash(node test_mobile_bout_overflow.mjs)",
       "Bash(node test_mobile_features.js)",
       "Bash(node test_mobile_indicator.mjs)",
