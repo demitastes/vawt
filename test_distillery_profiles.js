@@ -210,6 +210,18 @@ check(bracketHtml.includes('className = "profile-link"'), "Bracket renders dedic
 check(bracketHtml.includes('target = "_blank"'), "Profile links open in a new tab", "Profile links do not target a new tab");
 check(bracketHtml.includes("event.stopPropagation()"), "Profile link clicks stop propagation", "Profile links do not stop click propagation");
 
+const threeCrossesHtml = fileExists("distilleries/three-crosses.html")
+  ? fs.readFileSync(path.join(DISTILLERIES_DIR, "three-crosses.html"), "utf8")
+  : "";
+check(
+  !threeCrossesHtml.includes("<th>Advances to</th>") &&
+    !threeCrossesHtml.includes('class="bout-advances"') &&
+    threeCrossesHtml.includes('<td class="bout-label">R1B1</td>') &&
+    threeCrossesHtml.includes('<td class="bout-label">R2B1</td>'),
+  "Three Crosses profile lists original and computed advanced bouts as rows",
+  "Three Crosses profile missing R1B1/R2B1 rows or still renders an Advances to column"
+);
+
 if (failures > 0) {
   console.log(`\n=== Distillery Profile Checks Failed: ${failures} issue(s) ===`);
   process.exit(1);

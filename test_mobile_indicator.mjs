@@ -3,46 +3,213 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const HTML_FILE = `file://${path.resolve(__dirname, 'distilleries/open-road.html')}`;
+
+const pages = [
+  {
+    label: 'distillery profile',
+    url: `file://${path.resolve(__dirname, 'distilleries/open-road.html')}`,
+    locator: '.bouts-table .bout-active-indicator',
+    expectedParentClass: 'bout-indicator-cell',
+    rowLocator: '.bouts-table .bout-row.is-active',
+    expectedRowAlignment: 'center',
+  },
+  {
+    label: 'distillery index',
+    url: `file://${path.resolve(__dirname, 'distilleries/index.html')}`,
+    locator: '.distillery-row .bout-active-indicator',
+    expectedParentClass: 'distillery-indicator-cell',
+    numberCellLocator: '.distillery-row.is-active td:nth-child(2)',
+  },
+];
 
 const browser = await chromium.launch();
 const context = await browser.newContext({
-  viewport: { width: 375, height: 667 }
+  viewport: { width: 375, height: 667 },
 });
 
-const page = await context.newPage();
-await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
-await page.waitForTimeout(500);
+let failures = 0;
 
-const screenshot = await page.screenshot({ path: './test_mobile_indicator.png' });
-console.log('Screenshot saved to test_mobile_indicator.png');
+async function checkIndicator({ label, url, locator, expectedParentClass }) {
+  const page = await context.newPage();
+  await page.goto(url, { waitUntil: 'networkidle' });
 
-// Scroll to the bouts table section
-await page.locator('.bouts-table').scrollIntoViewIfNeeded().catch(() => {});
-await page.waitForTimeout(200);
-
-// Take a second screenshot of the bouts table area
-const boutScreenshot = await page.screenshot({ path: './test_mobile_indicator_bouts.png' });
-console.log('Screenshot of bouts table saved to test_mobile_indicator_bouts.png');
-
-// Check if active indicators are visible and properly positioned
-const allIndicators = await page.locator('.bout-active-indicator').count();
-console.log(`Found ${allIndicators} active indicators on page`);
-
-// Check any bout-active-indicator
-const anyIndicator = page.locator('.bout-active-indicator').first();
-const box = await anyIndicator.boundingBox();
-if (box) {
-  console.log(`Indicator position: x=${box.x.toFixed(1)}, y=${box.y.toFixed(1)}, width=${box.width}, height=${box.height}`);
-
-  // Check if it's within viewport bounds (375px wide)
-  if (box.x >= 0 && box.x + box.width <= 375) {
-    console.log('✓ Indicator is within viewport bounds - properly positioned on mobile');
-  } else {
-    console.log(`✗ Indicator extends outside viewport (x=${box.x.toFixed(1)}, right edge=${(box.x + box.width).toFixed(1)}, viewport=375)`);
+  const indicator = page.locator(locator).first();
+  const count = await page.locator(locator).count();
+  if (count === 0) {
+    console.error(`FAIL ${label}: expected at least one active indicator`);
+    failures++;
+    await page.close();
+    return;
   }
-} else {
-  console.log('Could not get indicator bounding box');
+
+  await indicator.scrollIntoViewIfNeeded();
+  const box = await indicator.boundingBox();
+  const styles = await indicator.evaluate((el) => {
+    const computed = window.getComputedStyle(el);
+    return {
+      display: computed.display,
+      width: computed.width,
+      height: computed.height,
+      borderRadius: computed.borderRadius,
+    };
+  });
+  const parentClass = await indicator.evaluate((el) => el.parentElement?.className || '');
+
+  const width = Number.parseFloat(styles.width);
+  const height = Number.parseFloat(styles.height);
+  const isCircle = styles.display === 'inline-block'
+    && width >= 8
+    && width === height
+    && styles.borderRadius === '50%';
+  const isInViewport = box && box.x >= 3 && box.x + box.width <= 375;
+
+  if (!isCircle) {
+    console.error(`FAIL ${label}: expected an inline-block circular indicator, got ${JSON.stringify(styles)}`);
+    failures++;
+  } else if (!isInViewport) {
+    console.error(`FAIL ${label}: indicator overlaps the viewport edge at ${JSON.stringify(box)}`);
+    failures++;
+  } else if (!parentClass.split(/\s+/).includes(expectedParentClass)) {
+    console.error(`FAIL ${label}: expected indicator parent cell class ${expectedParentClass}, got "${parentClass}"`);
+    failures++;
+  } else {
+    console.log(`PASS ${label}: active indicator is a visible mobile dot in its own cell`);
+  }
+
+  await page.close();
 }
 
+async function checkRowAlignment({ label, url, rowLocator, expectedRowAlignment }) {
+  if (!rowLocator) return;
+
+  const page = await context.newPage();
+  await page.goto(url, { waitUntil: 'networkidle' });
+
+  const row = page.locator(rowLocator).first();
+  const alignment = await row.evaluate((el) => window.getComputedStyle(el).alignItems);
+
+  if (alignment !== expectedRowAlignment) {
+    console.error(`FAIL ${label}: expected row alignment ${expectedRowAlignment}, got ${alignment}`);
+    failures++;
+  } else {
+    console.log(`PASS ${label}: active row contents are vertically centered`);
+  }
+
+  await page.close();
+}
+
+async function checkNumberCell({ label, url, numberCellLocator }) {
+  if (!numberCellLocator) return;
+
+  const page = await context.newPage();
+  await page.goto(url, { waitUntil: 'networkidle' });
+
+  const text = (await page.locator(numberCellLocator).first().textContent())?.trim();
+
+  if (!/^\d+$/.test(text || '')) {
+    console.error(`FAIL ${label}: expected active row number cell to contain only a number, got "${text}"`);
+    failures++;
+  } else {
+    console.log(`PASS ${label}: active row number text is isolated from the indicator`);
+  }
+
+  await page.close();
+}
+
+async function checkDesktopIndicatorCell() {
+  const page = await context.newPage();
+  await page.setViewportSize({ width: 1024, height: 667 });
+  await page.goto(`file://${path.resolve(__dirname, 'distilleries/three-crosses.html')}`, { waitUntil: 'networkidle' });
+
+  const cell = page.locator('.bouts-table .bout-indicator-cell').first();
+  const indicator = page.locator('.bouts-table .bout-active-indicator').first();
+  const cellStyles = await cell.evaluate((el) => {
+    const computed = window.getComputedStyle(el);
+    return {
+      height: computed.height,
+      verticalAlign: computed.verticalAlign,
+      lineHeight: computed.lineHeight,
+    };
+  });
+  const cellBox = await cell.boundingBox();
+  const indicatorBox = await indicator.boundingBox();
+  const cellCenter = cellBox.y + (cellBox.height / 2);
+  const indicatorCenter = indicatorBox.y + (indicatorBox.height / 2);
+  const centerDelta = Math.abs(cellCenter - indicatorCenter);
+
+  if (cellStyles.height === '40px') {
+    console.error(`FAIL desktop profile: indicator cell has unnecessary fixed 40px height`);
+    failures++;
+  } else if (cellStyles.verticalAlign !== 'middle') {
+    console.error(`FAIL desktop profile: expected indicator cell vertical-align middle, got ${cellStyles.verticalAlign}`);
+    failures++;
+  } else if (centerDelta > 1) {
+    console.error(`FAIL desktop profile: indicator is not vertically centered in its cell, delta ${centerDelta.toFixed(2)}px`);
+    failures++;
+  } else {
+    console.log('PASS desktop profile: indicator cell is compact and vertically centered');
+  }
+
+  await page.close();
+}
+
+async function checkInactivePlaceholderCell() {
+  const page = await context.newPage();
+  await page.setViewportSize({ width: 1024, height: 667 });
+  await page.goto(`file://${path.resolve(__dirname, 'distilleries/three-crosses.html')}`, { waitUntil: 'networkidle' });
+
+  const activeRow = page.locator('.bouts-table .bout-row', { hasText: 'R1B1' }).first();
+  const inactiveRow = page.locator('.bouts-table .bout-row', { hasText: 'R2B1' }).first();
+  const activeCell = activeRow.locator('.bout-indicator-cell');
+  const inactiveCell = inactiveRow.locator('.bout-indicator-cell');
+
+  const activeIndicatorCount = await activeCell.locator('.bout-active-indicator').count();
+  const inactiveIndicatorCount = await inactiveCell.locator('.bout-active-indicator').count();
+  const inactiveSpacerCount = await inactiveCell.locator('.bout-label-spacer').count();
+  const activeMargin = await activeCell.locator('.bout-active-indicator').first().evaluate((el) => window.getComputedStyle(el).margin);
+  const inactiveMargin = await inactiveCell.locator('.bout-label-spacer').first().evaluate((el) => window.getComputedStyle(el).margin);
+  const activeBox = await activeCell.boundingBox();
+  const inactiveBox = await inactiveCell.boundingBox();
+  const activeCellIndex = await activeCell.evaluate((el) => el.cellIndex);
+  const inactiveCellIndex = await inactiveCell.evaluate((el) => el.cellIndex);
+  const widthDelta = Math.abs(activeBox.width - inactiveBox.width);
+
+  if (activeIndicatorCount !== 1) {
+    console.error('FAIL desktop profile: active bout row should render one active indicator');
+    failures++;
+  } else if (inactiveIndicatorCount !== 0) {
+    console.error('FAIL desktop profile: inactive bout row should not render an active indicator');
+    failures++;
+  } else if (inactiveSpacerCount !== 1) {
+    console.error('FAIL desktop profile: inactive bout row should render one placeholder spacer in the indicator cell');
+    failures++;
+  } else if (activeCellIndex !== inactiveCellIndex || activeCellIndex !== 0) {
+    console.error(`FAIL desktop profile: indicator placeholder cells should be first cells, got ${activeCellIndex} and ${inactiveCellIndex}`);
+    failures++;
+  } else if (activeMargin !== '3px' || inactiveMargin !== '3px') {
+    console.error(`FAIL desktop profile: active indicator and inactive spacer should both use 3px margin, got ${activeMargin} and ${inactiveMargin}`);
+    failures++;
+  } else if (widthDelta > 1) {
+    console.error(`FAIL desktop profile: active and inactive indicator cells should match widths, delta ${widthDelta.toFixed(2)}px`);
+    failures++;
+  } else {
+    console.log('PASS desktop profile: inactive bout row uses a matching empty indicator cell');
+  }
+
+  await page.close();
+}
+
+for (const pageInfo of pages) {
+  await checkIndicator(pageInfo);
+  await checkRowAlignment(pageInfo);
+  await checkNumberCell(pageInfo);
+}
+
+await checkDesktopIndicatorCell();
+await checkInactivePlaceholderCell();
+
 await browser.close();
+
+if (failures > 0) {
+  process.exit(1);
+}

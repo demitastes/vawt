@@ -92,7 +92,7 @@ function loadDistilleries() {
     });
   });
 
-  return tournamentData.entrants.map((entrant) => {
+  const mergedDistilleries = tournamentData.entrants.map((entrant) => {
     const distillery = distilleryByName.get(entrant.name);
 
     if (!distillery) {
@@ -129,6 +129,26 @@ function loadDistilleries() {
 
     return merged;
   });
+
+  mergedDistilleries.forEach((item) => {
+    for (let index = 0; index < item.bouts.length; index += 1) {
+      const { bout } = item.bouts[index];
+      if (!bout || !isBoutWinner(item, bout)) continue;
+
+      const target = targetFor(bout.round, bout.bout);
+      if (!target) continue;
+
+      const targetKey = `r${target.round}b${target.bout}`;
+      if (item.bouts.some((entry) => entry.boutKey === targetKey)) continue;
+
+      item.bouts.push({
+        boutKey: targetKey,
+        bout: boutByKey.get(targetKey)
+      });
+    }
+  });
+
+  return mergedDistilleries;
 }
 
 const distilleries = loadDistilleries();
@@ -461,7 +481,6 @@ function renderCss() {
     .bout-row {
       border-bottom: 1px solid var(--border);
       transition: background-color 0.2s ease;
-      height: 40px;
     }
 
     .bout-row:hover {
@@ -477,26 +496,31 @@ function renderCss() {
     }
 
     .bouts-table td {
-      padding: 0 12px;
+      padding: 8px 12px;
       font-size: 14px;
       vertical-align: middle;
-      height: 40px;
+    }
+
+    .bout-indicator-cell {
+      width: 28px;
+      padding: 8px 4px 8px 12px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 0;
     }
 
     .bout-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
       font-weight: 800;
       color: var(--accent);
       width: 80px;
-      height: 40px;
     }
 
     .bout-label-spacer {
+      display: inline-block;
       width: 8px;
       height: 8px;
       flex-shrink: 0;
+      margin: 3px;
     }
 
     .bout-row.is-active .bout-label {
@@ -525,12 +549,15 @@ function renderCss() {
     }
 
     .bout-active-indicator {
+      display: inline-block;
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #2d8e2d;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+      vertical-align: middle;
+      margin: 3px;
     }
 
     .voting-link {
@@ -651,7 +678,7 @@ function renderCss() {
         border-bottom: 1px solid var(--border);
         display: flex !important;
         gap: 8px;
-        align-items: flex-start;
+        align-items: center;
         flex-wrap: nowrap;
       }
 
@@ -667,15 +694,23 @@ function renderCss() {
         height: auto;
       }
 
+      .bouts-table .bout-indicator-cell {
+        width: auto;
+        padding: 0;
+        flex-shrink: 0;
+      }
+
       .bouts-table .bout-label {
         font-weight: 700;
         flex-shrink: 0;
       }
 
       .bouts-table .bout-active-indicator {
-        width: 6px;
-        height: 6px;
-        margin-right: 4px;
+        display: inline-block !important;
+        width: 8px;
+        height: 8px;
+        margin: 3px;
+        border-radius: 50%;
       }
 
       .bouts-table .bout-dates {
@@ -748,6 +783,47 @@ function formatBoutDate(boutInfo) {
   const start = new Date(boutInfo.dateRange.start).toLocaleDateString("en-US", fmt);
   const end = new Date(boutInfo.dateRange.end).toLocaleDateString("en-US", fmt);
   return `${start} – ${end}`;
+}
+
+function targetFor(round, bout) {
+  if (round >= 5) return null;
+
+  if (round === 4) {
+    return { round: 5, bout: 1 };
+  }
+
+  const sideIndex = Math.ceil(bout / 2);
+  const nextSideIndex = Math.ceil(sideIndex / 2);
+  const nextBout = bout % 2 === 1 ? (nextSideIndex * 2) - 1 : nextSideIndex * 2;
+  return { round: round + 1, bout: nextBout };
+}
+
+function organizerWinnerFor(boutInfo) {
+  if (!boutInfo) return "";
+  const winner = boutInfo.organizerWinner || boutInfo.winner || boutInfo.result;
+  if (typeof winner === "string") return winner;
+  if (winner && typeof winner.winner === "string") return winner.winner;
+  return "";
+}
+
+function normalizedName(name) {
+  return String(name || "")
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\b(co|company|distilling|distillery|llc|inc)\b/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function isBoutWinner(item, boutInfo) {
+  const winner = normalizedName(organizerWinnerFor(boutInfo));
+  if (!winner) return false;
+
+  return [item.name, item.officialName, item.fullName]
+    .filter(Boolean)
+    .map(normalizedName)
+    .some((name) => name === winner || name.startsWith(`${winner} `) || winner.startsWith(`${name} `));
 }
 
 function renderBoutLinks(boutInfo) {
@@ -883,14 +959,15 @@ function renderBoutList(item) {
       const isActive = isBoutActive(bout);
       const dateStr = formatBoutDate(bout);
       const linksHtml = renderBoutLinks(bout);
-      const activeClass = isActive ? " is-active" : "";
-      const indicatorOrSpacer = isActive
+      const rowClass = isActive ? " is-active" : "";
+      const indicator = isActive
         ? '<span class="bout-active-indicator" aria-label="This bout is currently active"></span>'
         : '<span class="bout-label-spacer"></span>';
 
       return `
-          <tr class="bout-row${activeClass}">
-            <td class="bout-label">${indicatorOrSpacer}${escapeHtml(boutKey.toUpperCase())}</td>
+          <tr class="bout-row${rowClass}">
+            <td class="bout-indicator-cell">${indicator}</td>
+            <td class="bout-label">${escapeHtml(boutKey.toUpperCase())}</td>
             <td class="bout-dates">${escapeHtml(dateStr)}</td>
             <td class="bout-links">${linksHtml}</td>
           </tr>`;
@@ -997,10 +1074,11 @@ function renderIndex() {
     const activeClass = isActive ? " is-active" : "";
     const activeIndicator = isActive
       ? '<span class="bout-active-indicator" aria-label="This bout is currently voting"></span>'
-      : '';
+      : '<span class="bout-label-spacer"></span>';
     return `
       <tr class="distillery-row${activeClass}">
-        <td>${activeIndicator}${index + 1}</td>
+        <td class="distillery-indicator-cell">${activeIndicator}</td>
+        <td>${index + 1}</td>
         <td><a href="./${slug}.html">${escapeHtml(title)}</a></td>
         <td>${escapeHtml(item.bout)}</td>
         <td>${escapeHtml(item.dateRange)}</td>
@@ -1027,7 +1105,7 @@ function renderIndex() {
       padding: 10px;
       border-bottom: 1px solid var(--border);
       text-align: left;
-      vertical-align: top;
+      vertical-align: middle;
       font-size: 14px;
     }
 
@@ -1039,31 +1117,38 @@ function renderIndex() {
 
     th:nth-child(1),
     td:nth-child(1) {
-      width: 40px;
+      width: 28px;
       text-align: center;
       white-space: nowrap;
     }
 
     th:nth-child(2),
     td:nth-child(2) {
-      width: 0;
-      min-width: 150px;
+      width: 40px;
+      text-align: center;
+      white-space: nowrap;
     }
 
     th:nth-child(3),
     td:nth-child(3) {
-      width: 60px;
-      white-space: nowrap;
+      width: 0;
+      min-width: 150px;
     }
 
     th:nth-child(4),
     td:nth-child(4) {
-      width: 140px;
+      width: 60px;
       white-space: nowrap;
     }
 
     th:nth-child(5),
     td:nth-child(5) {
+      width: 140px;
+      white-space: nowrap;
+    }
+
+    th:nth-child(6),
+    td:nth-child(6) {
       width: 0;
       min-width: 200px;
     }
@@ -1105,7 +1190,7 @@ function renderIndex() {
       background: #2d8e2d;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
-      margin-right: 6px;
+      margin: 3px;
       vertical-align: middle;
     }
 
@@ -1125,7 +1210,7 @@ function renderIndex() {
         padding: 2px 0;
         border-bottom: 1px solid var(--border);
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 20px 1fr;
         gap: 1px;
       }
 
@@ -1138,25 +1223,34 @@ function renderIndex() {
       }
 
       td:nth-child(1) {
+        grid-column: 1;
         font-weight: 700;
         font-size: 11px;
       }
 
       td:nth-child(2) {
+        grid-column: 2;
+        font-weight: 700;
+        font-size: 11px;
+      }
+
+      td:nth-child(3) {
+        grid-column: 1 / -1;
         font-weight: 700;
         font-size: 13px;
       }
 
-      td:nth-child(3),
       td:nth-child(4),
-      td:nth-child(5) {
+      td:nth-child(5),
+      td:nth-child(6) {
+        grid-column: 1 / -1;
         font-size: 12px;
       }
 
       .distillery-row .bout-active-indicator {
-        width: 6px;
-        height: 6px;
-        margin-right: 4px;
+        width: 8px;
+        height: 8px;
+        margin: 3px;
       }
     }
   </style>
@@ -1174,10 +1268,11 @@ function renderIndex() {
       <p>Each page contains links to official website, Instagram, and Facebook, an "about the distillery" summary, a list of products, whiskey and spirits categories the distillery produces, and source-backed summary copy.</p>
       <table>
         <thead>
-          <tr>
-            <th>#</th>
-            <th>Distillery</th>
-            <th>Bout</th>
+        <tr>
+          <th></th>
+          <th>#</th>
+          <th>Distillery</th>
+          <th>Bout</th>
             <th>Voting window</th>
             <th>Product types</th>
           </tr>
