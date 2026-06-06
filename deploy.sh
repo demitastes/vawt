@@ -1,1 +1,1 @@
-git checkout static -- index.html 'distilleries/*.html' bracket.js styles.css
+git checkout static -- index.html 'distilleries/*.html' styles.css bracket.js bracket-data.js
