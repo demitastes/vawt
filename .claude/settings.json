@@ -1,19 +1,32 @@
 {
   "permissions": {
     "allow": [
+      "Bash(node scripts/generate-distillery-stubs.js)",
+      "Bash(node run-tests.mjs)",
+
+      "Bash(node test_bout_data.mjs)",
+      "Bash(node test_bout_visual.mjs)",
+      "Bash(node test_dates.mjs)",
+      "Bash(node test_distillery_mobile_layout.js)",
+      "Bash(node test_distillery_profiles.js)",
+      "Bash(node test_layout_changes.mjs)",
+      "Bash(node test_mobile_features.js)",
+      "Bash(node test_mobile_indicator.mjs)",
+      "Bash(node test_regression_suite.js)",
+      "Bash(node test_responsive_reflow.js)",
+      "Bash(node test_responsive_visual.js)",
+      "Bash(node test_responsive.js)",
+      "Bash(node verify_bouts.js)",
+      "Bash(node verify_desktop_bouts.js)",
+      "Bash(node verify_desktop_labels.js)",
+      "Bash(node verify_mobile_labels.js)",
+      "Bash(node verify-changes.mjs)",
+
       "Bash(rtk curl *)",
       "Bash(rtk grep *)",
       "Bash(rtk ls *)",
       "Bash(rtk read *)",
       "Bash(rtk wc *)",
-      "Bash(node test_distillery_profiles.js)",
-      "Bash(node scripts/generate-distillery-stubs.js)",
-      "Bash(node test_distillery_mobile_layout.js)",
-      "Bash(node run-tests.mjs)",
-      "Bash(node verify_bouts.js)",
-      "Bash(node verify_desktop_labels.mjs)",
-      "Bash(node verify_mobile_labels.mjs)",
-      "Bash(node verify-changes.mjs)",
       "Bash(rtk ps *)"
     ]
   }
