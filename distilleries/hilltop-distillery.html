@@ -218,7 +218,6 @@
     .bout-row {
       border-bottom: 1px solid var(--border);
       transition: background-color 0.2s ease;
-      height: 40px;
     }
 
     .bout-row:hover {
@@ -234,26 +233,31 @@
     }
 
     .bouts-table td {
-      padding: 0 12px;
+      padding: 8px 12px;
       font-size: 14px;
       vertical-align: middle;
-      height: 40px;
+    }
+
+    .bout-indicator-cell {
+      width: 28px;
+      padding: 8px 4px 8px 12px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 0;
     }
 
     .bout-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
       font-weight: 800;
       color: var(--accent);
       width: 80px;
-      height: 40px;
     }
 
     .bout-label-spacer {
+      display: inline-block;
       width: 8px;
       height: 8px;
       flex-shrink: 0;
+      margin: 3px;
     }
 
     .bout-row.is-active .bout-label {
@@ -276,18 +280,29 @@
       min-height: 16px;
     }
 
+    .bout-vote-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      width: 44px;
+    }
+
     .bout-links-placeholder {
       display: inline-block;
       min-width: 1px;
     }
 
     .bout-active-indicator {
+      display: inline-block;
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #2d8e2d;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+      vertical-align: middle;
+      margin: 3px;
     }
 
     .voting-link {
@@ -316,6 +331,30 @@
       color: #fff;
     }
 
+    .spirit-types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .spirit-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1.5px solid currentColor;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .spirit-badge.no {
+      color: #dc2626;
+    }
+
+    .spirit-badge.yes {
+      color: #059669;
+    }
+
     @media (max-width: 760px) {
       .page {
         width: min(100% - 24px, 1080px);
@@ -329,15 +368,40 @@
       }
 
       .grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      .grid > div {
+        width: 100%;
+        min-width: 0;
+      }
+
+      section {
+        width: 100%;
+        display: flow-root;
       }
 
       dl {
-        grid-template-columns: 1fr;
+        grid-template-columns: 70px 1fr;
+        gap: 6px 8px;
+        font-size: 13px;
+      }
+
+      dt {
+        font-size: 11px;
+      }
+
+      dd {
+        font-size: 13px;
       }
 
       .map-frame {
         height: 220px;
+      }
+
+      .bout-row {
+        padding: 16px 0;
       }
 
       .bouts-table,
@@ -348,12 +412,70 @@
         width: 100%;
       }
 
-      .bout-row {
-        padding: 12px 0;
+      .bouts-table .bout-row {
+        height: auto;
+        padding: 8px 0;
         border: 0;
         border-bottom: 1px solid var(--border);
-        display: grid;
-        gap: 4px;
+        display: flex !important;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: nowrap;
+      }
+
+      .bouts-table .bout-label,
+      .bouts-table .bout-dates,
+      .bouts-table .bout-vote-label,
+      .bouts-table .bout-links {
+        white-space: nowrap;
+        font-size: 12px;
+        display: inline !important;
+        padding: 0;
+        width: auto;
+        line-height: 1;
+        height: auto;
+      }
+
+      .bouts-table .bout-indicator-cell {
+        width: auto;
+        padding: 0;
+        flex-shrink: 0;
+      }
+
+      .bouts-table .bout-label {
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .bouts-table .bout-active-indicator {
+        display: inline-block !important;
+        width: 8px;
+        height: 8px;
+        margin: 3px;
+        border-radius: 50%;
+      }
+
+      .bouts-table .bout-dates {
+        color: var(--muted);
+        flex-shrink: 0;
+      }
+
+      .bouts-table .bout-vote-label {
+        width: 44px;
+        min-width: 44px;
+        flex: 0 0 44px;
+        text-align: left;
+      }
+
+      .bouts-table .voting-link {
+        padding: 3px 8px;
+        font-size: 0 !important;
+        margin: 0;
+        display: inline-block;
+      }
+
+      .bouts-table .voting-link::before {
+        font-size: 11px;
       }
 
       .bouts-table td {
@@ -366,24 +488,39 @@
       .bout-label {
         width: 100%;
         font-size: 13px;
-        margin-bottom: 4px;
       }
 
       .bout-dates {
         width: 100%;
       }
 
+      .bout-vote-label {
+        width: 44px;
+        min-width: 44px;
+      }
+
       .bout-links {
-        width: 100%;
+        width: auto;
+        min-width: 0;
+        flex: 1 1 auto;
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
-        margin-top: 4px;
+        align-items: center;
       }
 
       .voting-link {
-        font-size: 11px;
+        font-size: 0;
         padding: 3px 6px;
+      }
+
+      .voting-link::before {
+        font-size: 11px;
+        content: attr(data-abbr);
+      }
+
+      section + section {
+        margin-top: 20px;
       }
     }
   </style>
@@ -413,8 +550,10 @@
           <table class="bouts-table">
             <tbody>
           <tr class="bout-row">
-            <td class="bout-label"><span class="bout-label-spacer"></span>R1B15</td>
+            <td class="bout-indicator-cell"><span class="bout-label-spacer"></span></td>
+            <td class="bout-label">R1B15</td>
             <td class="bout-dates">Jul 18 – Jul 24</td>
+            <td class="bout-vote-label"><span class="bout-links-placeholder">&nbsp;</span></td>
             <td class="bout-links"><span class="bout-links-placeholder">&nbsp;</span></td>
           </tr>
             </tbody>
@@ -471,34 +610,21 @@
         </dl>
 
         <h3 style="margin: 20px 0 0; padding-top: 20px; border-top: 1px solid var(--border); font-size: 18px; line-height: 1.2; letter-spacing: 0;">Spirit types</h3>
-        <dl style="margin-top: 12px;">
-          <dt>Bourbon</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Rye</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>ASMW</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Other Whiskey</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Flavored Whiskey</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Moonshine</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Vodka</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Gin</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Rum</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Brandy</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Agave</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Liqueur</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-          <dt>Other</dt>
-          <dd><span style="display: inline-block; padding: 4px 8px; border: 1.5px solid #dc2626; border-radius: 4px; color: #dc2626; font-weight: 700; font-size: 12px;">no</span></dd>
-        </dl>
+        <div class="spirit-types" style="margin-top: 12px;">
+          <span class="spirit-badge no">Bourbon: no</span>
+          <span class="spirit-badge no">Rye: no</span>
+          <span class="spirit-badge no">ASMW: no</span>
+          <span class="spirit-badge no">Other Whiskey: no</span>
+          <span class="spirit-badge no">Flavored Whiskey: no</span>
+          <span class="spirit-badge no">Moonshine: no</span>
+          <span class="spirit-badge no">Vodka: no</span>
+          <span class="spirit-badge no">Gin: no</span>
+          <span class="spirit-badge no">Rum: no</span>
+          <span class="spirit-badge no">Brandy: no</span>
+          <span class="spirit-badge no">Agave: no</span>
+          <span class="spirit-badge no">Liqueur: no</span>
+          <span class="spirit-badge no">Other: no</span>
+        </div>
       </aside>
     </div>
   </main>

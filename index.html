@@ -72,6 +72,32 @@
       box-shadow: 0 4px 12px rgba(63, 36, 18, 0.08);
     }
 
+    .bracket-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .reset-selections {
+      min-height: 34px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--accent);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(63, 36, 18, 0.08);
+    }
+
+    .reset-selections:hover,
+    .reset-selections:focus-visible {
+      outline: none;
+      background: var(--accent-soft);
+    }
+
     .bracket-shell {
       padding: 22px 30px 40px;
       overflow-x: auto;
@@ -165,6 +191,13 @@
       align-items: center;
       position: relative;
       z-index: 2;
+    }
+
+    .vote-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
     .bout-active-indicator {
@@ -314,10 +347,30 @@
       background: #3da53d;
     }
 
+    .competitor.is-organizer-winner {
+      background: #f1d7b2;
+      color: #5f2c12;
+      font-weight: 800;
+    }
+
+    .bout.is-active .competitor.is-organizer-winner {
+      background: #d6efd0;
+      color: #1f6f32;
+    }
+
     .competitor:disabled {
       color: #978a80;
       cursor: default;
     }
+
+    .competitor.is-organizer-winner:disabled {
+      color: #5f2c12;
+    }
+
+    .bout.is-active .competitor.is-organizer-winner:disabled {
+      color: #1f6f32;
+    }
+
 
     .profile-link {
       display: inline-flex;
@@ -563,6 +616,9 @@
     <nav class="site-nav" aria-label="Site sections">
       <a href="distilleries/index.html">Distillery profiles</a>
     </nav>
+    <div class="bracket-actions">
+      <button class="reset-selections" id="reset-selections" type="button">Reset selections</button>
+    </div>
   </header>
 
   <main class="bracket-shell">
@@ -698,10 +754,106 @@
 
     const bracket = document.querySelector("#bracket");
     const connectors = document.querySelector(".connectors");
+    const resetSelectionsButton = document.querySelector("#reset-selections");
     const winners = new Map();
+    const organizerWinners = new Map();
+    const STORAGE_KEY = "vawt-2026-bracket-selections";
 
     function key(round, bout) {
       return `r${round}b${bout}`;
+    }
+
+    function boutKeyToParts(boutKey) {
+      const match = /^r(\d+)b(\d+)$/.exec(boutKey);
+      if (!match) return null;
+      return {
+        round: Number(match[1]),
+        bout: Number(match[2])
+      };
+    }
+
+    function organizerWinnerFor(info) {
+      if (!info) return "";
+      const winner = info.organizerWinner || info.winner || info.result;
+      if (typeof winner === "string") return winner;
+      if (winner && typeof winner.winner === "string") return winner.winner;
+      return "";
+    }
+
+    function loadOrganizerWinners() {
+      organizerWinners.clear();
+
+      boutData.forEach((info) => {
+        const winner = organizerWinnerFor(info);
+        if (winner) {
+          organizerWinners.set(key(info.round, info.bout), winner);
+        }
+      });
+    }
+
+    function applyOrganizerWinners() {
+      organizerWinners.forEach((winner, boutKey) => {
+        winners.set(boutKey, winner);
+      });
+    }
+
+    function selectionsForStorage() {
+      return Array.from(winners.entries()).filter(([boutKey]) => {
+        return !organizerWinners.has(boutKey);
+      });
+    }
+
+    function saveSelections() {
+      try {
+        const selections = selectionsForStorage();
+        if (selections.length === 0) {
+          localStorage.removeItem(STORAGE_KEY);
+          return;
+        }
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+      } catch (error) {
+        // Browsers can disable localStorage; bracket picking still works in memory.
+      }
+    }
+
+    function loadSavedSelections() {
+      let savedSelections = [];
+
+      try {
+        const rawSelections = localStorage.getItem(STORAGE_KEY);
+        if (!rawSelections) return;
+
+        const parsedSelections = JSON.parse(rawSelections);
+        if (!Array.isArray(parsedSelections)) return;
+        savedSelections = parsedSelections;
+      } catch (error) {
+        return;
+      }
+
+      const normalizedSelections = savedSelections
+        .map(([boutKey, winner]) => {
+          const parts = boutKeyToParts(boutKey);
+          if (!parts || typeof winner !== "string") return null;
+          return { ...parts, boutKey, winner };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.round - b.round || a.bout - b.bout);
+
+      normalizedSelections.forEach(({ round, bout, boutKey, winner }) => {
+        if (organizerWinners.has(boutKey)) return;
+        if (entrantsFor(round, bout).includes(winner)) {
+          winners.set(boutKey, winner);
+        }
+      });
+    }
+
+    function resetSelections() {
+      const restoreScroll = preserveScrollPosition();
+      winners.clear();
+      applyOrganizerWinners();
+      saveSelections();
+      render({ restoreScroll });
     }
 
     function sideForBout(bout) {
@@ -771,7 +923,10 @@
       let target = targetFor(round, bout);
 
       while (target.round <= 5) {
-        winners.delete(key(target.round, target.bout));
+        const targetKey = key(target.round, target.bout);
+        if (!organizerWinners.has(targetKey)) {
+          winners.delete(targetKey);
+        }
         if (target.round === 5) break;
         target = targetFor(target.round, target.bout);
       }
@@ -787,9 +942,11 @@
     }
 
     function selectWinner(round, bout, winner) {
+      if (organizerWinners.has(key(round, bout))) return;
       const restoreScroll = preserveScrollPosition();
       clearDownstream(round, bout);
       winners.set(key(round, bout), winner);
+      saveSelections();
       render({ restoreScroll });
     }
 
@@ -840,9 +997,17 @@
         competitor.className = "competitor";
         competitor.textContent = name;
         competitor.disabled = name.includes(" Winner");
+        if (organizerWinners.has(key(round, bout))) {
+          competitor.disabled = true;
+        }
 
         if (winners.get(key(round, bout)) === name) {
           competitor.classList.add("is-winner");
+        }
+
+        if (organizerWinners.get(key(round, bout)) === name) {
+          competitor.classList.add("is-organizer-winner");
+          competitor.textContent = "🏆 " + name;
         }
 
         competitor.addEventListener("click", (event) => {
@@ -877,6 +1042,11 @@
       if (links && (links.instagram || links.twitter || links.youtube || links.discord)) {
         const linksContainer = document.createElement("div");
         linksContainer.className = "bout-links";
+
+        const voteLabel = document.createElement("span");
+        voteLabel.className = "vote-label";
+        voteLabel.textContent = "Vote:";
+        linksContainer.appendChild(voteLabel);
 
         const linkConfigs = [
           { key: "instagram", label: "IG", title: "Vote on Instagram" },
@@ -1103,6 +1273,11 @@
       }
     });
 
+    resetSelectionsButton.addEventListener("click", resetSelections);
+
+    loadOrganizerWinners();
+    applyOrganizerWinners();
+    loadSavedSelections();
     render();
   </script>
 </body>
