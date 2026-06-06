@@ -593,8 +593,80 @@
     "locations": [
       "10381 Central Park Dr., Ste. 105, Manassas, VA 20110"
     ],
-    "summary": "",
-    "products": []
+    "summary": "Lifelong friends Bill Karlson and John O’Mara are the K & O in KO Distilling.  They met as classmates and cadet midshipmen at the United States Merchant Marine Academy (USMMA) and have been friends ever since.  After graduation, Bill and John went their separate ways but followed similar paths.  Both initially sailed in the merchant marine and served in the United States Navy Reserve.  Later, both had successful careers in the defense contracting industry.<br/><br/>Upon retiring early, the question became, “what next?”  Neither one satisfied with sitting idle, in 2013 Bill and John set off to create craft spirits with local ingredients, high-quality production methods, and a passion that they were excited to share with their local community.<br/><br/>Since breaking ground in 2015, Bill and John have turned KO Distilling into a state-of-the-art production facility and local attraction in Manassas, VA.  After their initial offering of unaged craft whiskey and gins in 2015, Bill and John realized their goal of producing their first aged spirit, Bare Knuckle American Wheat Whiskey, in November 2016.<br/><br/>KO is proud to be one of more than 1200 craft distilleries in the US and one of only 50 in Virginia. The distillery attracts visitors seeking locally crafted spirits.  We hope to see you soon!",
+    "summary-source-link": "https://kodistilling.com/about-ko-distilling/",
+    "products": [
+      {
+        "name": "Distiller's Reserve Straight Rye Whiskey (Bottled-in-Bond) (Aged at Least 4 Years) (50% ABV / 100 Proof)",
+        "type": "rye",
+        "link": "https://kodistilling.com/distillers-reserve-rye-whiskey/"
+      },
+      {
+        "name": "Distiller's Reserve Straight Bourbon Whiskey (Bottled-in-Bond) (Aged at Least 4 Years) (50% ABV / 100 Proof)",
+        "type": "bourbon",
+        "link": "https://kodistilling.com/distillers-reserve/"
+      },
+      {
+        "name": "Battle Standard 142 Gin (Navy Strength) (57% ABV / 114 Proof)",
+        "type": "gin",
+        "link": "https://kodistilling.com/battle-standard-142-navy-strength-gin/"
+      },
+      {
+        "name": "Battle Standard 142 Gin (Standard Strength) (45% ABV / 90 Proof)",
+        "type": "gin",
+        "link": "https://kodistilling.com/battle-standard-142-gin-standard-strength/"
+      },
+      {
+        "name": "Battle Standard 142 Gin (Barrel Finished) (45% ABV / 90 Proof)",
+        "type": "gin",
+        "link": "https://kodistilling.com/ko-distilling-spirits/battle-standard-barrel-finished-gin/"
+      },
+      {
+        "name": "Bare Knuckle High Rye Bourbon (Aged 6 Years) (45% ABV / 90 Proof)",
+        "type": "bourbon",
+        "link": "https://kodistilling.com/bare-knuckle-high-rye-bourbon/"
+      },
+      {
+        "name": "Bare Knuckle High Rye Bourbon (Single Barrel) (Aged 6 Years)",
+        "type": "bourbon",
+        "link": "https://kodistilling.com/bare-knuckle-high-rye-bourbon/"
+      },
+      {
+        "name": "Bare Knuckle High Rye Bourbon (Cask Strength) (Aged 6 Years) (Around 60%-64% ABV / Around 120-128 Proof)",
+        "type": "bourbon",
+        "link": "https://kodistilling.com/bare-knuckle-high-rye-bourbon/"
+      },
+      {
+        "name": "Bare Knuckle Bourbon Whiskey (45% ABV / 90 Proof)",
+        "type": "bourbon",
+        "link": "https://kodistilling.com/bare-knuckle-straight-bourbon-whiskey/"
+      },
+      {
+        "name": "Bare Knuckle Bourbon Whiskey (Single Barrel)",
+        "type": "bourbon",
+        "link": "https://kodistilling.com/bare-knuckle-straight-bourbon-whiskey/"
+      },
+      {
+        "name": "Bare Knuckle Bourbon Whiskey (Cask Strength) (Around 60%-64% ABV / Around 120-128 Proof)",
+        "type": "bourbon",
+        "link": "https://kodistilling.com/bare-knuckle-straight-bourbon-whiskey/"
+      },
+      {
+        "name": "Bare Knuckle Straight Rye Whiskey (45% ABV / 90 Proof)",
+        "type": "rye",
+        "link": "https://kodistilling.com/bare-knuckle-straight-rye-whiskey/"
+      },
+      {
+        "name": "Bare Knuckle Straight Wheat Whiskey (45% ABV / 90 Proof)",
+        "type": "other whiskey",
+        "link": "https://kodistilling.com/bare-knuckle-straight-wheat-whiskey/"
+      },
+      {
+        "name": "Bare Knuckle American Whiskey (Aged 1 Day) (45% ABV / 90 Proof)",
+        "type": "other whiskey",
+        "link": "https://kodistilling.com/bare-knuckle-american-whiskey/"
+      }
+    ]
   },
   {
     "name": "Mean Spirits",
