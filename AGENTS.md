@@ -10,10 +10,11 @@ The full vision is in ROADMAP.md. Current phase: static website for bracket expl
 
 ## Rules
 
-1. **Do not edit files in `/data` directly**: These are the source of truth for tournament data. Only edit them if explicitly instructed. Use the provided markdown format for BRACKET.md and TOURNAMENT_NOTES.md.
-2. **Use test files for verification**: If you need to verify changes, check if a test file already exists (e.g., `test_responsive_visual.js`, `test_bout_data.mjs`). If it exists, use it. If you need a new test, create a permanent test file in the repo that future agents can reuse. Do not write one-off test commands in bash or temporary files. Write the test file first then run it.
-3. **Use playwright for visual tests**: For any changes that affect layout or styling, use the existing Playwright test files to verify the visual output at different viewport sizes. Create new tests if obviously a new UI that is not already tested. Do not rely on manual browser testing alone.
-4. **Do not directly edit files in `distilleries/` which are all generated files.** Instead edit the generator and then run `node scripts/generate-distillery-stubs.js` to regenerate the stubs. The stubs are generated from the distillery data in `data/distillery-data.json`. If you need to add a new distillery, add it to `data/distillery-data.json` and then run the generator script.
+1. **Data in `/data/` is source of truth**: Files like `tournament-data.json`, `distillery-data.json`, and `bout-data.json` are authoritative. The `bracket.js` data sections (firstRound, distilleryProfiles, boutData) are **generated** from these sources. **After updating any `/data` file, regenerate bracket.js** by running `node scripts/generate-bracket-data.js`. See DATA_DUPLICATION.md for context.
+2. **Keep distillery names synchronized**: Distillery short names must match exactly between `tournament-data.json` (entrants) and `distillery-data.json` (profiles). If adding/renaming a distillery, update both files, then regenerate.
+3. **Use test files for verification**: If you need to verify changes, check if a test file already exists (e.g., `test_responsive_visual.js`, `test_bout_data.mjs`). If it exists, use it. If you need a new test, create a permanent test file in the repo that future agents can reuse. Do not write one-off test commands in bash or temporary files. Write the test file first then run it.
+4. **Use playwright for visual tests**: For any changes that affect layout or styling, use the existing Playwright test files to verify the visual output at different viewport sizes. Create new tests if obviously a new UI that is not already tested. Do not rely on manual browser testing alone.
+5. **Do not directly edit files in `distilleries/` which are all generated files.** Instead edit the generator and then run `node scripts/generate-distillery-stubs.js` to regenerate the stubs. The stubs are generated from the distillery data in `data/distillery-data.json`. If you need to add a new distillery, add it to `data/distillery-data.json` and then run the generator script.
 
 ## Architecture
 
