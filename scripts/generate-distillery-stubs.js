@@ -728,8 +728,10 @@ function renderCss() {
       }
 
       .bouts-table .bout-vote-label {
-        width: auto;
-        flex-shrink: 0;
+        width: 44px;
+        min-width: 44px;
+        flex: 0 0 44px;
+        text-align: left;
       }
 
       .bouts-table .voting-link {
@@ -760,14 +762,18 @@ function renderCss() {
       }
 
       .bout-vote-label {
-        width: auto;
+        width: 44px;
+        min-width: 44px;
       }
 
       .bout-links {
-        width: 100%;
+        width: auto;
+        min-width: 0;
+        flex: 1 1 auto;
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
+        align-items: center;
       }
 
       .voting-link {
