@@ -543,6 +543,14 @@ function renderCss() {
       min-height: 16px;
     }
 
+    .bout-vote-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      width: 44px;
+    }
+
     .bout-links-placeholder {
       display: inline-block;
       min-width: 1px;
@@ -684,6 +692,7 @@ function renderCss() {
 
       .bouts-table .bout-label,
       .bouts-table .bout-dates,
+      .bouts-table .bout-vote-label,
       .bouts-table .bout-links {
         white-space: nowrap;
         font-size: 12px;
@@ -718,6 +727,11 @@ function renderCss() {
         flex-shrink: 0;
       }
 
+      .bouts-table .bout-vote-label {
+        width: auto;
+        flex-shrink: 0;
+      }
+
       .bouts-table .voting-link {
         padding: 3px 8px;
         font-size: 0 !important;
@@ -743,6 +757,10 @@ function renderCss() {
 
       .bout-dates {
         width: 100%;
+      }
+
+      .bout-vote-label {
+        width: auto;
       }
 
       .bout-links {
@@ -827,7 +845,14 @@ function isBoutWinner(item, boutInfo) {
 }
 
 function renderBoutLinks(boutInfo) {
-  if (!boutInfo || !boutInfo.links) return '<span class="bout-links-placeholder">&nbsp;</span>';
+  const placeholder = '<span class="bout-links-placeholder">&nbsp;</span>';
+  if (!boutInfo || !boutInfo.links) {
+    return {
+      labelHtml: placeholder,
+      linksHtml: placeholder
+    };
+  }
+
   const links = boutInfo.links;
   const linkConfigs = [
     { key: "instagram", label: "Instagram", abbr: "IG", title: "Vote on Instagram" },
@@ -842,7 +867,15 @@ function renderBoutLinks(boutInfo) {
       return `<a class="voting-link" data-abbr="${escapeHtml(abbr)}" href="${escapeHtml(links[key])}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(title)}">${escapeHtml(label)}</a>`;
     });
 
-  return linkElements.length ? `Vote: ${linkElements.join(" • ")}` : '<span class="bout-links-placeholder">&nbsp;</span>';
+  return linkElements.length
+    ? {
+        labelHtml: "Vote",
+        linksHtml: linkElements.join(" • ")
+      }
+    : {
+        labelHtml: placeholder,
+        linksHtml: placeholder
+      };
 }
 
 function renderProductPortfolio(products) {
@@ -958,7 +991,7 @@ function renderBoutList(item) {
     .map(({ boutKey, bout }) => {
       const isActive = isBoutActive(bout);
       const dateStr = formatBoutDate(bout);
-      const linksHtml = renderBoutLinks(bout);
+      const { labelHtml, linksHtml } = renderBoutLinks(bout);
       const rowClass = isActive ? " is-active" : "";
       const indicator = isActive
         ? '<span class="bout-active-indicator" aria-label="This bout is currently active"></span>'
@@ -969,6 +1002,7 @@ function renderBoutList(item) {
             <td class="bout-indicator-cell">${indicator}</td>
             <td class="bout-label">${escapeHtml(boutKey.toUpperCase())}</td>
             <td class="bout-dates">${escapeHtml(dateStr)}</td>
+            <td class="bout-vote-label">${labelHtml}</td>
             <td class="bout-links">${linksHtml}</td>
           </tr>`;
     })

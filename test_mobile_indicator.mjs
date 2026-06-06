@@ -199,6 +199,51 @@ async function checkInactivePlaceholderCell() {
   await page.close();
 }
 
+async function checkVoteLabelAndLinkCells() {
+  const page = await context.newPage();
+  await page.setViewportSize({ width: 1024, height: 667 });
+  await page.goto(`file://${path.resolve(__dirname, 'distilleries/three-crosses.html')}`, { waitUntil: 'networkidle' });
+
+  const activeRow = page.locator('.bouts-table .bout-row', { hasText: 'R1B1' }).first();
+  const inactiveRow = page.locator('.bouts-table .bout-row', { hasText: 'R2B1' }).first();
+  const activeVoteCell = activeRow.locator('.bout-vote-label');
+  const activeLinksCell = activeRow.locator('.bout-links');
+  const inactiveVoteCell = inactiveRow.locator('.bout-vote-label');
+  const inactiveLinksCell = inactiveRow.locator('.bout-links');
+
+  const activeVoteText = (await activeVoteCell.textContent())?.trim();
+  const activeLinkCount = await activeLinksCell.locator('.voting-link').count();
+  const inactiveVotePlaceholderCount = await inactiveVoteCell.locator('.bout-links-placeholder').count();
+  const inactiveLinksPlaceholderCount = await inactiveLinksCell.locator('.bout-links-placeholder').count();
+  const activeVoteCellIndex = await activeVoteCell.evaluate((el) => el.cellIndex);
+  const activeLinksCellIndex = await activeLinksCell.evaluate((el) => el.cellIndex);
+  const inactiveVoteCellIndex = await inactiveVoteCell.evaluate((el) => el.cellIndex);
+  const inactiveLinksCellIndex = await inactiveLinksCell.evaluate((el) => el.cellIndex);
+
+  if (activeVoteText !== 'Vote') {
+    console.error(`FAIL desktop profile: active row vote label cell should contain "Vote", got "${activeVoteText}"`);
+    failures++;
+  } else if (activeLinkCount === 0) {
+    console.error('FAIL desktop profile: active row links cell should contain voting links');
+    failures++;
+  } else if (inactiveVotePlaceholderCount !== 1 || inactiveLinksPlaceholderCount !== 1) {
+    console.error(`FAIL desktop profile: inactive row should have vote and links placeholders, got ${inactiveVotePlaceholderCount} and ${inactiveLinksPlaceholderCount}`);
+    failures++;
+  } else if (
+    activeVoteCellIndex !== inactiveVoteCellIndex ||
+    activeLinksCellIndex !== inactiveLinksCellIndex ||
+    activeVoteCellIndex !== 3 ||
+    activeLinksCellIndex !== 4
+  ) {
+    console.error(`FAIL desktop profile: vote/link cells should stay in columns 3/4, got active ${activeVoteCellIndex}/${activeLinksCellIndex} inactive ${inactiveVoteCellIndex}/${inactiveLinksCellIndex}`);
+    failures++;
+  } else {
+    console.log('PASS desktop profile: vote label and link buttons render in separate stable cells');
+  }
+
+  await page.close();
+}
+
 for (const pageInfo of pages) {
   await checkIndicator(pageInfo);
   await checkRowAlignment(pageInfo);
@@ -207,6 +252,7 @@ for (const pageInfo of pages) {
 
 await checkDesktopIndicatorCell();
 await checkInactivePlaceholderCell();
+await checkVoteLabelAndLinkCells();
 
 await browser.close();
 
