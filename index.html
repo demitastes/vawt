@@ -919,14 +919,25 @@
       });
     }
 
-    function clearDownstream(round, bout) {
+    function clearDownstream(round, bout, previousWinner) {
+      if (!previousWinner) return;
+
       let target = targetFor(round, bout);
+      let displacedWinner = previousWinner;
 
       while (target.round <= 5) {
         const targetKey = key(target.round, target.bout);
+        const targetWinner = winners.get(targetKey);
+
+        if (targetWinner !== displacedWinner) {
+          break;
+        }
+
         if (!organizerWinners.has(targetKey)) {
           winners.delete(targetKey);
         }
+
+        displacedWinner = targetWinner;
         if (target.round === 5) break;
         target = targetFor(target.round, target.bout);
       }
@@ -942,10 +953,13 @@
     }
 
     function selectWinner(round, bout, winner) {
-      if (organizerWinners.has(key(round, bout))) return;
+      const boutKey = key(round, bout);
+      if (organizerWinners.has(boutKey)) return;
+      const previousWinner = winners.get(boutKey);
+      if (previousWinner === winner) return;
       const restoreScroll = preserveScrollPosition();
-      clearDownstream(round, bout);
-      winners.set(key(round, bout), winner);
+      clearDownstream(round, bout, previousWinner);
+      winners.set(boutKey, winner);
       saveSelections();
       render({ restoreScroll });
     }
