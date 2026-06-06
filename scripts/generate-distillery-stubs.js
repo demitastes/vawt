@@ -993,9 +993,14 @@ function renderIndex() {
     const title = pageTitle(item);
     const slug = slugify(title);
     const productTypes = getProductTypesForIndex(item.products);
+    const isActive = item.bouts && item.bouts.some(({ bout }) => isBoutActive(bout));
+    const activeClass = isActive ? " is-active" : "";
+    const activeIndicator = isActive
+      ? '<span class="bout-active-indicator" aria-label="This bout is currently voting"></span>'
+      : '';
     return `
-      <tr>
-        <td>${index + 1}</td>
+      <tr class="distillery-row${activeClass}">
+        <td>${activeIndicator}${index + 1}</td>
         <td><a href="./${slug}.html">${escapeHtml(title)}</a></td>
         <td>${escapeHtml(item.bout)}</td>
         <td>${escapeHtml(item.dateRange)}</td>
@@ -1063,6 +1068,39 @@ function renderIndex() {
       min-width: 200px;
     }
 
+    tbody tr.distillery-row {
+      transition: background-color 0.2s ease;
+    }
+
+    tbody tr.distillery-row:hover {
+      background-color: var(--panel-strong);
+    }
+
+    tbody tr.distillery-row.is-active {
+      background-color: #f0fdf4;
+    }
+
+    tbody tr.distillery-row.is-active:hover {
+      background-color: #e8fbea;
+    }
+
+    tbody tr.distillery-row.is-active td {
+      color: #2d8e2d;
+      font-weight: 500;
+    }
+
+    .distillery-row .bout-active-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2d8e2d;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
     @media (max-width: 760px) {
       table,
       thead,
@@ -1105,6 +1143,12 @@ function renderIndex() {
       td:nth-child(4),
       td:nth-child(5) {
         font-size: 12px;
+      }
+
+      .distillery-row .bout-active-indicator {
+        width: 6px;
+        height: 6px;
+        margin-right: 4px;
       }
     }
   </style>

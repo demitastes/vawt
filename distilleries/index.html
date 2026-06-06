@@ -542,6 +542,39 @@
       min-width: 200px;
     }
 
+    tbody tr.distillery-row {
+      transition: background-color 0.2s ease;
+    }
+
+    tbody tr.distillery-row:hover {
+      background-color: var(--panel-strong);
+    }
+
+    tbody tr.distillery-row.is-active {
+      background-color: #f0fdf4;
+    }
+
+    tbody tr.distillery-row.is-active:hover {
+      background-color: #e8fbea;
+    }
+
+    tbody tr.distillery-row.is-active td {
+      color: #2d8e2d;
+      font-weight: 500;
+    }
+
+    .distillery-row .bout-active-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2d8e2d;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
     @media (max-width: 760px) {
       table,
       thead,
@@ -585,6 +618,12 @@
       td:nth-child(5) {
         font-size: 12px;
       }
+
+      .distillery-row .bout-active-indicator {
+        width: 6px;
+        height: 6px;
+        margin-right: 4px;
+      }
     }
   </style>
 </head>
@@ -610,39 +649,39 @@
           </tr>
         </thead>
         <tbody>
-      <tr>
-        <td>1</td>
+      <tr class="distillery-row is-active">
+        <td><span class="bout-active-indicator" aria-label="This bout is currently voting"></span>1</td>
         <td><a href="./open-road.html">Open Road</a></td>
         <td>R1B1</td>
         <td>May 30-Jun 6, 2026</td>
         <td>Bourbon, Rye, Vodka, Gin, Other</td>
       </tr>
 
-      <tr>
-        <td>2</td>
+      <tr class="distillery-row is-active">
+        <td><span class="bout-active-indicator" aria-label="This bout is currently voting"></span>2</td>
         <td><a href="./bradys.html">Brady's</a></td>
         <td>R1B1</td>
         <td>May 30-Jun 6, 2026</td>
         <td>Bourbon, Rye, Vodka, Gin, Rum</td>
       </tr>
 
-      <tr>
-        <td>3</td>
+      <tr class="distillery-row is-active">
+        <td><span class="bout-active-indicator" aria-label="This bout is currently voting"></span>3</td>
         <td><a href="./old-house.html">Old House</a></td>
         <td>R1B1</td>
         <td>May 30-Jun 6, 2026</td>
         <td>Other Whiskey, Vodka, Rum, Agave, Liqueur</td>
       </tr>
 
-      <tr>
-        <td>4</td>
+      <tr class="distillery-row is-active">
+        <td><span class="bout-active-indicator" aria-label="This bout is currently voting"></span>4</td>
         <td><a href="./three-crosses.html">Three Crosses</a></td>
         <td>R1B1</td>
         <td>May 30-Jun 6, 2026</td>
         <td>Bourbon, Rye, Other Whiskey, Vodka, Gin, Rum</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>5</td>
         <td><a href="./new-realm-brewing-and-distilling.html">New Realm Brewing &amp; Distilling</a></td>
         <td>R1B2</td>
@@ -650,7 +689,7 @@
         <td>Bourbon, Vodka, Gin, Rum, Agave, Liqueur, Other</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>6</td>
         <td><a href="./lost-whiskey.html">Lost Whiskey</a></td>
         <td>R1B2</td>
@@ -658,7 +697,7 @@
         <td>Bourbon, Other Whiskey</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>7</td>
         <td><a href="./highlands-distilling-co.html">Highlands Distilling Co</a></td>
         <td>R1B2</td>
@@ -666,7 +705,7 @@
         <td>Bourbon, Rye, American Single Malt Whiskey, Other Whiskey, Moonshine, Vodka, Gin</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>8</td>
         <td><a href="./springfield-distillery.html">Springfield Distillery</a></td>
         <td>R1B2</td>
@@ -674,7 +713,7 @@
         <td>Bourbon, Rye, Other Whiskey, Flavored Whiskey, Vodka, Liqueur, Other</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>9</td>
         <td><a href="./ko-distilling.html">KO Distilling</a></td>
         <td>R1B3</td>
@@ -682,7 +721,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>10</td>
         <td><a href="./mean-spirits-distilling.html">Mean Spirits Distilling</a></td>
         <td>R1B3</td>
@@ -690,7 +729,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>11</td>
         <td><a href="./reservoir-distillery.html">Reservoir Distillery</a></td>
         <td>R1B3</td>
@@ -698,7 +737,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>12</td>
         <td><a href="./deep-creek.html">Deep Creek</a></td>
         <td>R1B4</td>
@@ -706,7 +745,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>13</td>
         <td><a href="./five-mile-mountain.html">Five Mile Mountain</a></td>
         <td>R1B4</td>
@@ -714,7 +753,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>14</td>
         <td><a href="./ironclad.html">Ironclad</a></td>
         <td>R1B4</td>
@@ -722,7 +761,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>15</td>
         <td><a href="./river-hill.html">River Hill</a></td>
         <td>R1B5</td>
@@ -730,7 +769,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>16</td>
         <td><a href="./cape-charles.html">Cape Charles</a></td>
         <td>R1B5</td>
@@ -738,7 +777,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>17</td>
         <td><a href="./virginia-distillery-co.html">Virginia Distillery Co.</a></td>
         <td>R1B5</td>
@@ -746,7 +785,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>18</td>
         <td><a href="./silverback.html">Silverback</a></td>
         <td>R1B6</td>
@@ -754,7 +793,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>19</td>
         <td><a href="./river-city.html">River City</a></td>
         <td>R1B6</td>
@@ -762,7 +801,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>20</td>
         <td><a href="./spirit-lab-distilling.html">Spirit Lab Distilling</a></td>
         <td>R1B6</td>
@@ -770,7 +809,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>21</td>
         <td><a href="./reverend-spirits.html">Reverend Spirits</a></td>
         <td>R1B7</td>
@@ -778,7 +817,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>22</td>
         <td><a href="./bon-durant-brothers-distillery.html">Bon Durant Brothers Distillery</a></td>
         <td>R1B7</td>
@@ -786,7 +825,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>23</td>
         <td><a href="./twin-creeks-distillery.html">Twin Creeks Distillery</a></td>
         <td>R1B7</td>
@@ -794,7 +833,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>24</td>
         <td><a href="./george-washingtons-grist-mill-distillery.html">George Washington's Grist Mill Distillery</a></td>
         <td>R1B7</td>
@@ -802,7 +841,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>25</td>
         <td><a href="./ragged-branch.html">Ragged Branch</a></td>
         <td>R1B8</td>
@@ -810,7 +849,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>26</td>
         <td><a href="./devils-backbone.html">Devil's Backbone</a></td>
         <td>R1B8</td>
@@ -818,7 +857,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>27</td>
         <td><a href="./tarnished-truth.html">Tarnished Truth</a></td>
         <td>R1B8</td>
@@ -826,7 +865,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>28</td>
         <td><a href="./blue-sky.html">Blue Sky</a></td>
         <td>R1B8</td>
@@ -834,7 +873,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>29</td>
         <td><a href="./blue-shepherd-spirits.html">Blue Shepherd Spirits</a></td>
         <td>R1B9</td>
@@ -842,7 +881,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>30</td>
         <td><a href="./caiseal-vanguard.html">Caiseal (Vanguard)</a></td>
         <td>R1B9</td>
@@ -850,7 +889,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>31</td>
         <td><a href="./bold-rock-distillery.html">Bold Rock Distillery</a></td>
         <td>R1B9</td>
@@ -858,7 +897,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>32</td>
         <td><a href="./three-wives-distillery-winchester.html">Three Wives Distillery Winchester</a></td>
         <td>R1B10</td>
@@ -866,7 +905,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>33</td>
         <td><a href="./davis-valley-distillery.html">Davis Valley Distillery</a></td>
         <td>R1B10</td>
@@ -874,7 +913,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>34</td>
         <td><a href="./climax.html">Climax</a></td>
         <td>R1B10</td>
@@ -882,7 +921,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>35</td>
         <td><a href="./filibuster-distillery.html">Filibuster Distillery</a></td>
         <td>R1B11</td>
@@ -890,7 +929,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>36</td>
         <td><a href="./a-smith-bowman.html">A. Smith Bowman</a></td>
         <td>R1B11</td>
@@ -898,7 +937,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>37</td>
         <td><a href="./mt-defiance-cidery-and-distillery-old-bolstead.html">Mt Defiance Cidery &amp; Distillery (Old Bolstead)</a></td>
         <td>R1B11</td>
@@ -906,7 +945,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>38</td>
         <td><a href="./catoctin-creek-distilling-co.html">Catoctin Creek Distilling Co.</a></td>
         <td>R1B12</td>
@@ -914,7 +953,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>39</td>
         <td><a href="./virginia-foothills-distillery.html">Virginia Foothills Distillery</a></td>
         <td>R1B12</td>
@@ -922,7 +961,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>40</td>
         <td><a href="./copper-fox.html">Copper Fox</a></td>
         <td>R1B12</td>
@@ -930,7 +969,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>41</td>
         <td><a href="./appalachian-heritage-distillery.html">Appalachian Heritage Distillery</a></td>
         <td>R1B13</td>
@@ -938,7 +977,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>42</td>
         <td><a href="./sandy-river-distillery.html">Sandy River Distillery</a></td>
         <td>R1B13</td>
@@ -946,7 +985,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>43</td>
         <td><a href="./belmont-farm-distillery.html">Belmont Farm Distillery</a></td>
         <td>R1B13</td>
@@ -954,7 +993,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>44</td>
         <td><a href="./creek-bottom.html">Creek Bottom</a></td>
         <td>R1B14</td>
@@ -962,7 +1001,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>45</td>
         <td><a href="./cool-springs.html">Cool Springs</a></td>
         <td>R1B14</td>
@@ -970,7 +1009,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>46</td>
         <td><a href="./trial-and-error.html">Trial &amp; Error</a></td>
         <td>R1B14</td>
@@ -978,7 +1017,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>47</td>
         <td><a href="./j-h-bards.html">J.H. Bards</a></td>
         <td>R1B14</td>
@@ -986,7 +1025,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>48</td>
         <td><a href="./murlarkey.html">Murlarkey</a></td>
         <td>R1B15</td>
@@ -994,7 +1033,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>49</td>
         <td><a href="./three-notches-brewery-and-distillery.html">Three Notches (Brewery &amp; Distillery)</a></td>
         <td>R1B15</td>
@@ -1002,7 +1041,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>50</td>
         <td><a href="./lincoln-ridge-distillery.html">Lincoln Ridge Distillery</a></td>
         <td>R1B15</td>
@@ -1010,7 +1049,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>51</td>
         <td><a href="./hilltop-distillery.html">Hilltop Distillery</a></td>
         <td>R1B15</td>
@@ -1018,7 +1057,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>52</td>
         <td><a href="./sleepy-fox.html">Sleepy Fox</a></td>
         <td>R1B16</td>
@@ -1026,7 +1065,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>53</td>
         <td><a href="./bell-isle.html">Bell Isle</a></td>
         <td>R1B16</td>
@@ -1034,7 +1073,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>54</td>
         <td><a href="./franklin-county-distillers.html">Franklin County Distillers</a></td>
         <td>R1B16</td>
@@ -1042,7 +1081,7 @@
         <td>Research pending</td>
       </tr>
 
-      <tr>
+      <tr class="distillery-row">
         <td>55</td>
         <td><a href="./axe-handle-distilling.html">Axe Handle Distilling</a></td>
         <td>R1B16</td>
