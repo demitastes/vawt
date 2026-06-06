@@ -10,6 +10,25 @@ This repo currently ships a single static bracket experience in `index.html`. Th
 - Desktop uses absolute-positioned bouts plus SVG connectors.
 - Mobile switches to a stacked grid layout and disables connector rendering.
 
+## Distillery Profiles
+
+- Files in `distilleries/` are generated profile pages, not hand-authored pages.
+- `scripts/generate-distillery-stubs.js` is the source generator for those profiles.
+- The generator reads `data/distillery-data.json` for distillery metadata.
+- It reads `data/tournament-data.json` for the distillery-to-bout participation list and supporting bout annotations.
+- It reads `data/bout-data.json` for bout metadata such as dates, links, and organizer-defined winners.
+- The generated profile pages include a bout table plus summary and source sections, and the profile index links to each generated page.
+
+## Profile Bout Tables
+
+- The profile page bout table starts with the distillery’s direct tournament entries from `tournament-data.json`.
+- Each row shows the bout key, voting window, and any voting links for that bout.
+- The generator then adds later-round rows when the distillery advances by winning a bout.
+- Advanced rows are computed from organizer-defined winners in `bout-data.json`, so a profile can show both the original appearance and later brackets it has reached.
+- The table should not use an "advances to" column; the current design keeps each bout as its own row.
+- Active bouts receive the same active indicator treatment used in the bracket view.
+- If a distillery name changes in `distillery-data.json`, the generator expects the canonical name used in `tournament-data.json` to match.
+
 ## Bracket State
 
 - Current selections live in a `winners` map keyed as `r{round}b{bout}`.
@@ -51,6 +70,7 @@ This repo currently ships a single static bracket experience in `index.html`. Th
 
 - `test_local_storage.mjs` verifies save, reload, reset, and organizer-winner preservation.
 - `test_responsive_visual.js` verifies the desktop/mobile layout split, interactivity, and profile-link isolation.
+- `test_distillery_profiles.js` verifies the generated profile pages, including the bout table rows and generated navigation links.
 - Any change to bracket layout, selection flow, or winner styling should be validated with the existing test files rather than ad hoc checks.
 
 ## Future Direction
