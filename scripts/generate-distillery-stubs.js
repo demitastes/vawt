@@ -663,10 +663,6 @@ function renderCss() {
         height: 220px;
       }
 
-      .bouts-table {
-        margin-bottom: 28px;
-      }
-
       .bout-row {
         padding: 16px 0;
       }
