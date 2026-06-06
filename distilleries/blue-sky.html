@@ -218,7 +218,6 @@
     .bout-row {
       border-bottom: 1px solid var(--border);
       transition: background-color 0.2s ease;
-      height: 40px;
     }
 
     .bout-row:hover {
@@ -234,26 +233,31 @@
     }
 
     .bouts-table td {
-      padding: 0 12px;
+      padding: 8px 12px;
       font-size: 14px;
       vertical-align: middle;
-      height: 40px;
+    }
+
+    .bout-indicator-cell {
+      width: 28px;
+      padding: 8px 4px 8px 12px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 0;
     }
 
     .bout-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
       font-weight: 800;
       color: var(--accent);
       width: 80px;
-      height: 40px;
     }
 
     .bout-label-spacer {
+      display: inline-block;
       width: 8px;
       height: 8px;
       flex-shrink: 0;
+      margin: 3px;
     }
 
     .bout-row.is-active .bout-label {
@@ -276,18 +280,29 @@
       min-height: 16px;
     }
 
+    .bout-vote-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      width: 44px;
+    }
+
     .bout-links-placeholder {
       display: inline-block;
       min-width: 1px;
     }
 
     .bout-active-indicator {
+      display: inline-block;
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #2d8e2d;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+      vertical-align: middle;
+      margin: 3px;
     }
 
     .voting-link {
@@ -408,12 +423,13 @@
         border-bottom: 1px solid var(--border);
         display: flex !important;
         gap: 8px;
-        align-items: flex-start;
+        align-items: center;
         flex-wrap: nowrap;
       }
 
       .bouts-table .bout-label,
       .bouts-table .bout-dates,
+      .bouts-table .bout-vote-label,
       .bouts-table .bout-links {
         white-space: nowrap;
         font-size: 12px;
@@ -424,20 +440,35 @@
         height: auto;
       }
 
+      .bouts-table .bout-indicator-cell {
+        width: auto;
+        padding: 0;
+        flex-shrink: 0;
+      }
+
       .bouts-table .bout-label {
         font-weight: 700;
         flex-shrink: 0;
       }
 
       .bouts-table .bout-active-indicator {
-        width: 6px;
-        height: 6px;
-        margin-right: 4px;
+        display: inline-block !important;
+        width: 8px;
+        height: 8px;
+        margin: 3px;
+        border-radius: 50%;
       }
 
       .bouts-table .bout-dates {
         color: var(--muted);
         flex-shrink: 0;
+      }
+
+      .bouts-table .bout-vote-label {
+        width: 44px;
+        min-width: 44px;
+        flex: 0 0 44px;
+        text-align: left;
       }
 
       .bouts-table .voting-link {
@@ -467,11 +498,19 @@
         width: 100%;
       }
 
+      .bout-vote-label {
+        width: 44px;
+        min-width: 44px;
+      }
+
       .bout-links {
-        width: 100%;
+        width: auto;
+        min-width: 0;
+        flex: 1 1 auto;
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
+        align-items: center;
       }
 
       .voting-link {
@@ -515,8 +554,10 @@
           <table class="bouts-table">
             <tbody>
           <tr class="bout-row">
-            <td class="bout-label"><span class="bout-label-spacer"></span>R1B8</td>
+            <td class="bout-indicator-cell"><span class="bout-label-spacer"></span></td>
+            <td class="bout-label">R1B8</td>
             <td class="bout-dates">Jun 20 – Jun 26</td>
+            <td class="bout-vote-label"><span class="bout-links-placeholder">&nbsp;</span></td>
             <td class="bout-links"><span class="bout-links-placeholder">&nbsp;</span></td>
           </tr>
             </tbody>

@@ -218,7 +218,6 @@
     .bout-row {
       border-bottom: 1px solid var(--border);
       transition: background-color 0.2s ease;
-      height: 40px;
     }
 
     .bout-row:hover {
@@ -234,26 +233,31 @@
     }
 
     .bouts-table td {
-      padding: 0 12px;
+      padding: 8px 12px;
       font-size: 14px;
       vertical-align: middle;
-      height: 40px;
+    }
+
+    .bout-indicator-cell {
+      width: 28px;
+      padding: 8px 4px 8px 12px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 0;
     }
 
     .bout-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
       font-weight: 800;
       color: var(--accent);
       width: 80px;
-      height: 40px;
     }
 
     .bout-label-spacer {
+      display: inline-block;
       width: 8px;
       height: 8px;
       flex-shrink: 0;
+      margin: 3px;
     }
 
     .bout-row.is-active .bout-label {
@@ -276,18 +280,29 @@
       min-height: 16px;
     }
 
+    .bout-vote-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      width: 44px;
+    }
+
     .bout-links-placeholder {
       display: inline-block;
       min-width: 1px;
     }
 
     .bout-active-indicator {
+      display: inline-block;
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #2d8e2d;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
+      vertical-align: middle;
+      margin: 3px;
     }
 
     .voting-link {
@@ -408,12 +423,13 @@
         border-bottom: 1px solid var(--border);
         display: flex !important;
         gap: 8px;
-        align-items: flex-start;
+        align-items: center;
         flex-wrap: nowrap;
       }
 
       .bouts-table .bout-label,
       .bouts-table .bout-dates,
+      .bouts-table .bout-vote-label,
       .bouts-table .bout-links {
         white-space: nowrap;
         font-size: 12px;
@@ -424,20 +440,35 @@
         height: auto;
       }
 
+      .bouts-table .bout-indicator-cell {
+        width: auto;
+        padding: 0;
+        flex-shrink: 0;
+      }
+
       .bouts-table .bout-label {
         font-weight: 700;
         flex-shrink: 0;
       }
 
       .bouts-table .bout-active-indicator {
-        width: 6px;
-        height: 6px;
-        margin-right: 4px;
+        display: inline-block !important;
+        width: 8px;
+        height: 8px;
+        margin: 3px;
+        border-radius: 50%;
       }
 
       .bouts-table .bout-dates {
         color: var(--muted);
         flex-shrink: 0;
+      }
+
+      .bouts-table .bout-vote-label {
+        width: 44px;
+        min-width: 44px;
+        flex: 0 0 44px;
+        text-align: left;
       }
 
       .bouts-table .voting-link {
@@ -467,11 +498,19 @@
         width: 100%;
       }
 
+      .bout-vote-label {
+        width: 44px;
+        min-width: 44px;
+      }
+
       .bout-links {
-        width: 100%;
+        width: auto;
+        min-width: 0;
+        flex: 1 1 auto;
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
+        align-items: center;
       }
 
       .voting-link {
@@ -501,7 +540,7 @@
       padding: 10px;
       border-bottom: 1px solid var(--border);
       text-align: left;
-      vertical-align: top;
+      vertical-align: middle;
       font-size: 14px;
     }
 
@@ -513,31 +552,38 @@
 
     th:nth-child(1),
     td:nth-child(1) {
-      width: 40px;
+      width: 28px;
       text-align: center;
       white-space: nowrap;
     }
 
     th:nth-child(2),
     td:nth-child(2) {
-      width: 0;
-      min-width: 150px;
+      width: 40px;
+      text-align: center;
+      white-space: nowrap;
     }
 
     th:nth-child(3),
     td:nth-child(3) {
-      width: 60px;
-      white-space: nowrap;
+      width: 0;
+      min-width: 150px;
     }
 
     th:nth-child(4),
     td:nth-child(4) {
-      width: 140px;
+      width: 60px;
       white-space: nowrap;
     }
 
     th:nth-child(5),
     td:nth-child(5) {
+      width: 140px;
+      white-space: nowrap;
+    }
+
+    th:nth-child(6),
+    td:nth-child(6) {
       width: 0;
       min-width: 200px;
     }
@@ -579,7 +625,7 @@
       background: #2d8e2d;
       flex-shrink: 0;
       box-shadow: 0 0 0 2px #fff, 0 0 0 3px #2d8e2d;
-      margin-right: 6px;
+      margin: 3px;
       vertical-align: middle;
     }
 
@@ -599,7 +645,7 @@
         padding: 2px 0;
         border-bottom: 1px solid var(--border);
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 20px 1fr;
         gap: 1px;
       }
 
@@ -612,25 +658,34 @@
       }
 
       td:nth-child(1) {
+        grid-column: 1;
         font-weight: 700;
         font-size: 11px;
       }
 
       td:nth-child(2) {
+        grid-column: 2;
+        font-weight: 700;
+        font-size: 11px;
+      }
+
+      td:nth-child(3) {
+        grid-column: 1 / -1;
         font-weight: 700;
         font-size: 13px;
       }
 
-      td:nth-child(3),
       td:nth-child(4),
-      td:nth-child(5) {
+      td:nth-child(5),
+      td:nth-child(6) {
+        grid-column: 1 / -1;
         font-size: 12px;
       }
 
       .distillery-row .bout-active-indicator {
-        width: 6px;
-        height: 6px;
-        margin-right: 4px;
+        width: 8px;
+        height: 8px;
+        margin: 3px;
       }
     }
   </style>
@@ -648,17 +703,19 @@
       <p>Each page contains links to official website, Instagram, and Facebook, an "about the distillery" summary, a list of products, whiskey and spirits categories the distillery produces, and source-backed summary copy.</p>
       <table>
         <thead>
-          <tr>
-            <th>#</th>
-            <th>Distillery</th>
-            <th>Bout</th>
+        <tr>
+          <th></th>
+          <th>#</th>
+          <th>Distillery</th>
+          <th>Bout</th>
             <th>Voting window</th>
             <th>Product types</th>
           </tr>
         </thead>
         <tbody>
       <tr class="distillery-row is-active">
-        <td><span class="bout-active-indicator" aria-label="This bout is currently voting"></span>1</td>
+        <td class="distillery-indicator-cell"><span class="bout-active-indicator" aria-label="This bout is currently voting"></span></td>
+        <td>1</td>
         <td><a href="./open-road.html">Open Road</a></td>
         <td>R1B1</td>
         <td>May 30-Jun 6, 2026</td>
@@ -666,7 +723,8 @@
       </tr>
 
       <tr class="distillery-row is-active">
-        <td><span class="bout-active-indicator" aria-label="This bout is currently voting"></span>2</td>
+        <td class="distillery-indicator-cell"><span class="bout-active-indicator" aria-label="This bout is currently voting"></span></td>
+        <td>2</td>
         <td><a href="./bradys.html">Brady's</a></td>
         <td>R1B1</td>
         <td>May 30-Jun 6, 2026</td>
@@ -674,7 +732,8 @@
       </tr>
 
       <tr class="distillery-row is-active">
-        <td><span class="bout-active-indicator" aria-label="This bout is currently voting"></span>3</td>
+        <td class="distillery-indicator-cell"><span class="bout-active-indicator" aria-label="This bout is currently voting"></span></td>
+        <td>3</td>
         <td><a href="./old-house.html">Old House</a></td>
         <td>R1B1</td>
         <td>May 30-Jun 6, 2026</td>
@@ -682,7 +741,8 @@
       </tr>
 
       <tr class="distillery-row is-active">
-        <td><span class="bout-active-indicator" aria-label="This bout is currently voting"></span>4</td>
+        <td class="distillery-indicator-cell"><span class="bout-active-indicator" aria-label="This bout is currently voting"></span></td>
+        <td>4</td>
         <td><a href="./three-crosses.html">Three Crosses</a></td>
         <td>R1B1</td>
         <td>May 30-Jun 6, 2026</td>
@@ -690,6 +750,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>5</td>
         <td><a href="./new-realm-brewing-and-distilling.html">New Realm Brewing &amp; Distilling</a></td>
         <td>R1B2</td>
@@ -698,6 +759,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>6</td>
         <td><a href="./lost-whiskey.html">Lost Whiskey</a></td>
         <td>R1B2</td>
@@ -706,6 +768,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>7</td>
         <td><a href="./highlands-distilling-co.html">Highlands Distilling Co</a></td>
         <td>R1B2</td>
@@ -714,6 +777,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>8</td>
         <td><a href="./springfield-distillery.html">Springfield Distillery</a></td>
         <td>R1B2</td>
@@ -722,6 +786,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>9</td>
         <td><a href="./ko-distilling.html">KO Distilling</a></td>
         <td>R1B3</td>
@@ -730,6 +795,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>10</td>
         <td><a href="./mean-spirits-distilling.html">Mean Spirits Distilling</a></td>
         <td>R1B3</td>
@@ -738,6 +804,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>11</td>
         <td><a href="./reservoir-distillery.html">Reservoir Distillery</a></td>
         <td>R1B3</td>
@@ -746,6 +813,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>12</td>
         <td><a href="./deep-creek.html">Deep Creek</a></td>
         <td>R1B4</td>
@@ -754,6 +822,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>13</td>
         <td><a href="./five-mile-mountain.html">Five Mile Mountain</a></td>
         <td>R1B4</td>
@@ -762,6 +831,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>14</td>
         <td><a href="./ironclad.html">Ironclad</a></td>
         <td>R1B4</td>
@@ -770,6 +840,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>15</td>
         <td><a href="./river-hill.html">River Hill</a></td>
         <td>R1B5</td>
@@ -778,6 +849,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>16</td>
         <td><a href="./cape-charles.html">Cape Charles</a></td>
         <td>R1B5</td>
@@ -786,6 +858,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>17</td>
         <td><a href="./virginia-distillery-co.html">Virginia Distillery Co.</a></td>
         <td>R1B5</td>
@@ -794,6 +867,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>18</td>
         <td><a href="./silverback.html">Silverback</a></td>
         <td>R1B6</td>
@@ -802,6 +876,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>19</td>
         <td><a href="./river-city.html">River City</a></td>
         <td>R1B6</td>
@@ -810,6 +885,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>20</td>
         <td><a href="./spirit-lab-distilling.html">Spirit Lab Distilling</a></td>
         <td>R1B6</td>
@@ -818,6 +894,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>21</td>
         <td><a href="./reverend-spirits.html">Reverend Spirits</a></td>
         <td>R1B7</td>
@@ -826,6 +903,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>22</td>
         <td><a href="./bon-durant-brothers-distillery.html">Bon Durant Brothers Distillery</a></td>
         <td>R1B7</td>
@@ -834,6 +912,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>23</td>
         <td><a href="./twin-creeks-distillery.html">Twin Creeks Distillery</a></td>
         <td>R1B7</td>
@@ -842,6 +921,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>24</td>
         <td><a href="./george-washingtons-grist-mill-distillery.html">George Washington's Grist Mill Distillery</a></td>
         <td>R1B7</td>
@@ -850,6 +930,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>25</td>
         <td><a href="./ragged-branch.html">Ragged Branch</a></td>
         <td>R1B8</td>
@@ -858,6 +939,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>26</td>
         <td><a href="./devils-backbone.html">Devil's Backbone</a></td>
         <td>R1B8</td>
@@ -866,6 +948,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>27</td>
         <td><a href="./tarnished-truth.html">Tarnished Truth</a></td>
         <td>R1B8</td>
@@ -874,6 +957,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>28</td>
         <td><a href="./blue-sky.html">Blue Sky</a></td>
         <td>R1B8</td>
@@ -882,6 +966,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>29</td>
         <td><a href="./blue-shepherd-spirits.html">Blue Shepherd Spirits</a></td>
         <td>R1B9</td>
@@ -890,6 +975,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>30</td>
         <td><a href="./caiseal-vanguard.html">Caiseal (Vanguard)</a></td>
         <td>R1B9</td>
@@ -898,6 +984,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>31</td>
         <td><a href="./bold-rock-distillery.html">Bold Rock Distillery</a></td>
         <td>R1B9</td>
@@ -906,6 +993,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>32</td>
         <td><a href="./three-wives-distillery-winchester.html">Three Wives Distillery Winchester</a></td>
         <td>R1B10</td>
@@ -914,6 +1002,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>33</td>
         <td><a href="./davis-valley-distillery.html">Davis Valley Distillery</a></td>
         <td>R1B10</td>
@@ -922,6 +1011,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>34</td>
         <td><a href="./climax.html">Climax</a></td>
         <td>R1B10</td>
@@ -930,6 +1020,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>35</td>
         <td><a href="./filibuster-distillery.html">Filibuster Distillery</a></td>
         <td>R1B11</td>
@@ -938,6 +1029,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>36</td>
         <td><a href="./a-smith-bowman.html">A. Smith Bowman</a></td>
         <td>R1B11</td>
@@ -946,6 +1038,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>37</td>
         <td><a href="./mt-defiance-cidery-and-distillery-old-bolstead.html">Mt Defiance Cidery &amp; Distillery (Old Bolstead)</a></td>
         <td>R1B11</td>
@@ -954,6 +1047,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>38</td>
         <td><a href="./catoctin-creek-distilling-co.html">Catoctin Creek Distilling Co.</a></td>
         <td>R1B12</td>
@@ -962,6 +1056,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>39</td>
         <td><a href="./virginia-foothills-distillery.html">Virginia Foothills Distillery</a></td>
         <td>R1B12</td>
@@ -970,6 +1065,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>40</td>
         <td><a href="./copper-fox.html">Copper Fox</a></td>
         <td>R1B12</td>
@@ -978,6 +1074,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>41</td>
         <td><a href="./appalachian-heritage-distillery.html">Appalachian Heritage Distillery</a></td>
         <td>R1B13</td>
@@ -986,6 +1083,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>42</td>
         <td><a href="./sandy-river-distillery.html">Sandy River Distillery</a></td>
         <td>R1B13</td>
@@ -994,6 +1092,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>43</td>
         <td><a href="./belmont-farm-distillery.html">Belmont Farm Distillery</a></td>
         <td>R1B13</td>
@@ -1002,6 +1101,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>44</td>
         <td><a href="./creek-bottom.html">Creek Bottom</a></td>
         <td>R1B14</td>
@@ -1010,6 +1110,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>45</td>
         <td><a href="./cool-springs.html">Cool Springs</a></td>
         <td>R1B14</td>
@@ -1018,6 +1119,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>46</td>
         <td><a href="./trial-and-error.html">Trial &amp; Error</a></td>
         <td>R1B14</td>
@@ -1026,6 +1128,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>47</td>
         <td><a href="./j-h-bards.html">J.H. Bards</a></td>
         <td>R1B14</td>
@@ -1034,6 +1137,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>48</td>
         <td><a href="./murlarkey.html">Murlarkey</a></td>
         <td>R1B15</td>
@@ -1042,6 +1146,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>49</td>
         <td><a href="./three-notches-brewery-and-distillery.html">Three Notches (Brewery &amp; Distillery)</a></td>
         <td>R1B15</td>
@@ -1050,6 +1155,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>50</td>
         <td><a href="./lincoln-ridge-distillery.html">Lincoln Ridge Distillery</a></td>
         <td>R1B15</td>
@@ -1058,6 +1164,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>51</td>
         <td><a href="./hilltop-distillery.html">Hilltop Distillery</a></td>
         <td>R1B15</td>
@@ -1066,6 +1173,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>52</td>
         <td><a href="./sleepy-fox.html">Sleepy Fox</a></td>
         <td>R1B16</td>
@@ -1074,6 +1182,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>53</td>
         <td><a href="./bell-isle.html">Bell Isle</a></td>
         <td>R1B16</td>
@@ -1082,6 +1191,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>54</td>
         <td><a href="./franklin-county-distillers.html">Franklin County Distillers</a></td>
         <td>R1B16</td>
@@ -1090,6 +1200,7 @@
       </tr>
 
       <tr class="distillery-row">
+        <td class="distillery-indicator-cell"><span class="bout-label-spacer"></span></td>
         <td>55</td>
         <td><a href="./axe-handle-distilling.html">Axe Handle Distilling</a></td>
         <td>R1B16</td>
