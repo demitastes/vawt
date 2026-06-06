@@ -792,7 +792,7 @@ function renderCss() {
 function isBoutActive(boutInfo) {
   if (!boutInfo || !boutInfo.dateRange) return false;
   const now = new Date();
-  const startDate = new Date(boutInfo.dateRange.start + "T12:00:00-04:00");
+  const startDate = new Date(boutInfo.dateRange.start + "T00:00:00-04:00");
   const endDate = new Date(boutInfo.dateRange.end + "T23:59:59-04:00");
   return now >= startDate && now <= endDate;
 }
