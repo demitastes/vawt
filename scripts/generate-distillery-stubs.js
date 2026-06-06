@@ -559,6 +559,30 @@ function renderCss() {
       color: #fff;
     }
 
+    .spirit-types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .spirit-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1.5px solid currentColor;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .spirit-badge.no {
+      color: #dc2626;
+    }
+
+    .spirit-badge.yes {
+      color: #059669;
+    }
+
     @media (max-width: 760px) {
       .page {
         width: min(100% - 24px, 1080px);
@@ -572,15 +596,44 @@ function renderCss() {
       }
 
       .grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      .grid > div {
+        width: 100%;
+        min-width: 0;
+      }
+
+      section {
+        width: 100%;
+        display: flow-root;
       }
 
       dl {
-        grid-template-columns: 1fr;
+        grid-template-columns: 70px 1fr;
+        gap: 6px 8px;
+        font-size: 13px;
+      }
+
+      dt {
+        font-size: 11px;
+      }
+
+      dd {
+        font-size: 13px;
       }
 
       .map-frame {
         height: 220px;
+      }
+
+      .bouts-table {
+        margin-bottom: 28px;
+      }
+
+      .bout-row {
+        padding: 16px 0;
       }
 
       .bouts-table,
@@ -591,12 +644,48 @@ function renderCss() {
         width: 100%;
       }
 
-      .bout-row {
-        padding: 12px 0;
+      .bouts-table .bout-row {
+        height: auto;
+        padding: 8px 0;
         border: 0;
         border-bottom: 1px solid var(--border);
-        display: grid;
-        gap: 4px;
+        display: flex !important;
+        gap: 8px;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+      }
+
+      .bouts-table .bout-label,
+      .bouts-table .bout-dates,
+      .bouts-table .bout-links {
+        white-space: nowrap;
+        font-size: 12px;
+        display: inline !important;
+        padding: 0;
+        width: auto;
+        line-height: 1;
+        height: auto;
+      }
+
+      .bouts-table .bout-label {
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .bouts-table .bout-dates {
+        color: var(--muted);
+        flex-shrink: 0;
+      }
+
+      .bouts-table .voting-link {
+        padding: 3px 8px;
+        font-size: 0 !important;
+        margin: 0;
+        display: inline-block;
+      }
+
+      .bouts-table .voting-link::before {
+        font-size: 11px;
       }
 
       .bouts-table td {
@@ -609,7 +698,6 @@ function renderCss() {
       .bout-label {
         width: 100%;
         font-size: 13px;
-        margin-bottom: 4px;
       }
 
       .bout-dates {
@@ -621,12 +709,20 @@ function renderCss() {
         display: flex;
         flex-wrap: wrap;
         gap: 6px;
-        margin-top: 4px;
       }
 
       .voting-link {
-        font-size: 11px;
+        font-size: 0;
         padding: 3px 6px;
+      }
+
+      .voting-link::before {
+        font-size: 11px;
+        content: attr(data-abbr);
+      }
+
+      section + section {
+        margin-top: 20px;
       }
     }
   `;
@@ -652,19 +748,19 @@ function renderBoutLinks(boutInfo) {
   if (!boutInfo || !boutInfo.links) return '<span class="bout-links-placeholder">&nbsp;</span>';
   const links = boutInfo.links;
   const linkConfigs = [
-    { key: "instagram", label: "Instagram", title: "Vote on Instagram" },
-    { key: "youtube", label: "YouTube", title: "Vote on YouTube" },
-    { key: "twitter", label: "Twitter/X", title: "Vote on Twitter/X" },
-    { key: "discord", label: "Discord", title: "Join Discord" }
+    { key: "instagram", label: "Instagram", abbr: "IG", title: "Vote on Instagram" },
+    { key: "youtube", label: "YouTube", abbr: "YT", title: "Vote on YouTube" },
+    { key: "twitter", label: "Twitter/X", abbr: "X", title: "Vote on Twitter/X" },
+    { key: "discord", label: "Discord", abbr: "DC", title: "Join Discord" }
   ];
 
   const linkElements = linkConfigs
     .filter(({ key }) => links[key])
-    .map(({ key, label, title }) => {
-      return `<a class="voting-link" href="${escapeHtml(links[key])}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(title)}">${escapeHtml(label)}</a>`;
+    .map(({ key, label, abbr, title }) => {
+      return `<a class="voting-link" data-abbr="${escapeHtml(abbr)}" href="${escapeHtml(links[key])}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(title)}">${escapeHtml(label)}</a>`;
     });
 
-  return linkElements.length ? `Voting links: ${linkElements.join(" • ")}` : '<span class="bout-links-placeholder">&nbsp;</span>';
+  return linkElements.length ? `Vote: ${linkElements.join(" • ")}` : '<span class="bout-links-placeholder">&nbsp;</span>';
 }
 
 function renderProductPortfolio(products) {
@@ -721,18 +817,18 @@ function renderProductPortfolio(products) {
 function getSpiritTypeSummary(products) {
   const producedTypes = new Set((products || []).map(p => p.type?.toLowerCase()));
 
-  return SPIRIT_TYPES.ALL.map(type => {
+  const badges = SPIRIT_TYPES.ALL.map(type => {
     const hasType = type === "other"
       ? Array.from(producedTypes).some(t => !SPIRIT_TYPES.KNOWN.includes(t))
       : producedTypes.has(type);
 
-    const color = hasType ? "#059669" : "#dc2626";
     const label = hasType ? "yes" : "no";
-    const badgeStyle = `display: inline-block; padding: 4px 8px; border: 1.5px solid ${color}; border-radius: 4px; color: ${color}; font-weight: 700; font-size: 12px;`;
     const displayLabel = SPIRIT_TYPES.LABELS_SHORT[type] || SPIRIT_TYPES.LABELS[type] || type;
 
-    return `<dt>${escapeHtml(displayLabel)}</dt>\n          <dd><span style="${badgeStyle}">${label}</span></dd>`;
+    return `<span class="spirit-badge ${label}">${escapeHtml(displayLabel)}: ${label}</span>`;
   }).join("\n          ");
+
+  return badges;
 }
 
 function getProductTypesForIndex(products) {
@@ -875,9 +971,9 @@ ${locationEmbeds}
         </dl>
 
         <h3 style="margin: 20px 0 0; padding-top: 20px; border-top: 1px solid var(--border); font-size: 18px; line-height: 1.2; letter-spacing: 0;">Spirit types</h3>
-        <dl style="margin-top: 12px;">
+        <div class="spirit-types" style="margin-top: 12px;">
           ${getSpiritTypeSummary(item.products)}
-        </dl>
+        </div>
       </aside>
     </div>
   </main>
@@ -974,13 +1070,35 @@ function renderIndex() {
       thead { display: none; }
 
       tr {
-        padding: 10px 0;
+        padding: 2px 0;
         border-bottom: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1px;
       }
 
       td {
-        padding: 4px 0;
+        padding: 1px 0;
         border: 0;
+        word-break: break-word;
+        font-size: 12px;
+        line-height: 1.3;
+      }
+
+      td:nth-child(1) {
+        font-weight: 700;
+        font-size: 11px;
+      }
+
+      td:nth-child(2) {
+        font-weight: 700;
+        font-size: 13px;
+      }
+
+      td:nth-child(3),
+      td:nth-child(4),
+      td:nth-child(5) {
+        font-size: 12px;
       }
     }
   </style>

@@ -10,7 +10,7 @@
       "Bash(node scripts/generate-distillery-stubs.js)",
       "Bash(node test_distillery_mobile_layout.js)",
       "Bash(node run-tests.mjs)",
-      "Bash(node verify_bouts.mjs)",
+      "Bash(node verify_bouts.js)",
       "Bash(node verify_desktop_labels.mjs)",
       "Bash(node verify_mobile_labels.mjs)",
       "Bash(node verify-changes.mjs)",
