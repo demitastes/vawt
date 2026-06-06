@@ -805,6 +805,11 @@ function formatBoutDate(boutInfo) {
   return `${start} – ${end}`;
 }
 
+function formatDateRange(dateRangeStr) {
+  if (!dateRangeStr) return "";
+  return dateRangeStr.replace(/(\d)-([A-Z])/g, '$1–$2');
+}
+
 function targetFor(round, bout) {
   if (round >= 5) return null;
 
@@ -1048,7 +1053,7 @@ function renderStubPage(item, index) {
 
     <header class="hero">
       <h1>${escapeHtml(sourceName(item))}</h1>
-      <p class="subtitle">VAWT 2026 entrant #${index + 1} - ${escapeHtml(item.bout)} - ${escapeHtml(item.dateRange)}</p>
+      <p class="subtitle">VAWT 2026 entrant #${index + 1} - ${escapeHtml(item.bout)} - ${escapeHtml(formatDateRange(item.dateRange))}</p>
       <nav class="top-links" aria-label="Official links">
         ${renderSocialLinks(item)}
       </nav>
@@ -1084,7 +1089,7 @@ ${locationEmbeds}
           <dt>Bout</dt>
           <dd>${escapeHtml(item.bout)}</dd>
           <dt>Voting window</dt>
-          <dd>${escapeHtml(item.dateRange)}</dd>
+          <dd>${escapeHtml(formatDateRange(item.dateRange))}</dd>
           <dt>Location</dt>
           <dd>${escapeHtml(locationLabel(item))}</dd>
         </dl>
@@ -1117,7 +1122,7 @@ function renderIndex() {
         <td>${index + 1}</td>
         <td><a href="./${slug}.html">${escapeHtml(title)}</a></td>
         <td>${escapeHtml(item.bout)}</td>
-        <td>${escapeHtml(item.dateRange)}</td>
+        <td>${escapeHtml(formatDateRange(item.dateRange))}</td>
         <td>${escapeHtml(productTypes)}</td>
       </tr>`;
   }).join("\n");
