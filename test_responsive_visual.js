@@ -142,7 +142,7 @@ async function runVisualTests() {
     page = await browser.newPage({ viewport: { width: 375, height: 812 } });
     await page.goto(HTML_FILE, { waitUntil: 'networkidle' });
 
-    const competitors = await page.locator('.competitor').first();
+    const competitors = await page.locator('.competitor:not(:disabled)').first();
     const initialClass = await competitors.getAttribute('class');
 
     await competitors.click();
@@ -171,6 +171,7 @@ async function runVisualTests() {
       throw new Error('No profile links were rendered in the bracket');
     }
 
+    const winnerCountBeforeProfileClick = await page.locator('.competitor.is-winner').count();
     const currentUrlBeforeProfileClick = page.url();
     const [profilePage] = await Promise.all([
       page.waitForEvent('popup'),
@@ -184,14 +185,14 @@ async function runVisualTests() {
 
     console.log(`  ✅ Rendered profile links: ${profileLinkCount}`);
     console.log(`  ✅ Profile link opened new tab: ${profileUrl.includes('/distilleries/')}`);
-    console.log(`  ✅ Profile link did not select winner: ${winnerCountAfterProfileClick === 0}`);
+    console.log(`  ✅ Profile link did not select winner: ${winnerCountAfterProfileClick === winnerCountBeforeProfileClick}`);
     console.log(`  ✅ Bracket stayed on current page: ${currentUrlBeforeProfileClick === currentUrlAfterProfileClick}`);
 
     if (!profileUrl.includes('/distilleries/')) {
       throw new Error(`Profile link opened unexpected URL: ${profileUrl}`);
     }
-    if (winnerCountAfterProfileClick !== 0) {
-      throw new Error(`Profile link selected ${winnerCountAfterProfileClick} winner(s)`);
+    if (winnerCountAfterProfileClick !== winnerCountBeforeProfileClick) {
+      throw new Error(`Profile link changed winner count from ${winnerCountBeforeProfileClick} to ${winnerCountAfterProfileClick}`);
     }
     if (currentUrlBeforeProfileClick !== currentUrlAfterProfileClick) {
       throw new Error(`Profile link navigated bracket page from ${currentUrlBeforeProfileClick} to ${currentUrlAfterProfileClick}`);
