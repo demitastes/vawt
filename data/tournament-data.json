@@ -1,10 +1,10 @@
 {
   "year": 2026,
   "entrants": [
-    { "name": "Open Road", "bout": "R1B1", "dateRange": "May 30-Jun 5, 2026" },
-    { "name": "Brady's", "bout": "R1B1", "dateRange": "May 30-Jun 5, 2026" },
-    { "name": "Old House", "bout": "R1B1", "dateRange": "May 30-Jun 5, 2026" },
-    { "name": "Three Crosses", "bout": "R1B1", "dateRange": "May 30-Jun 5, 2026" },
+    { "name": "Open Road", "bout": "R1B1", "dateRange": "May 30-Jun 6, 2026" },
+    { "name": "Brady's", "bout": "R1B1", "dateRange": "May 30-Jun 6, 2026" },
+    { "name": "Old House", "bout": "R1B1", "dateRange": "May 30-Jun 6, 2026" },
+    { "name": "Three Crosses", "bout": "R1B1", "dateRange": "May 30-Jun 6, 2026" },
     { "name": "New Realm", "bout": "R1B2", "dateRange": "May 30-Jun 5, 2026" },
     { "name": "Lost Whiskey", "bout": "R1B2", "dateRange": "May 30-Jun 5, 2026" },
     { "name": "Highlands Distilling", "bout": "R1B2", "dateRange": "May 30-Jun 5, 2026" },

@@ -167,6 +167,13 @@
       z-index: 2;
     }
 
+    .vote-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
     .bout-active-indicator {
       display: none;
       width: 8px;
@@ -659,7 +666,7 @@
     ];
 
     let boutData = [
-      {"round":1,"bout":1,"dateRange":{"start":"2026-05-30","end":"2026-06-05"},"links":{"instagram":"https://www.instagram.com/p/DZDF_ikASrH/","youtube":"https://www.youtube.com/post/UgkxUmjksF2IY9cTtGlu9wRG0uFsW-KZ0O22"}},
+      {"round":1,"bout":1,"dateRange":{"start":"2026-05-30","end":"2026-06-06"},"links":{"instagram":"https://www.instagram.com/p/DZDF_ikASrH/","youtube":"https://www.youtube.com/post/UgkxUmjksF2IY9cTtGlu9wRG0uFsW-KZ0O22"}},
       {"round":1,"bout":2,"dateRange":{"start":"2026-05-30","end":"2026-06-05"},"links":{"instagram":"https://www.instagram.com/p/DZDGxpYgkms/","youtube":"https://www.youtube.com/post/Ugkxb0oL3X_mBtAPzHmf5X9Y8oiwGaqwgfVW"}},
       {"round":1,"bout":3,"dateRange":{"start":"2026-06-06","end":"2026-06-12"},"links":{}},
       {"round":1,"bout":4,"dateRange":{"start":"2026-06-06","end":"2026-06-12"},"links":{}},
@@ -877,6 +884,11 @@
       if (links && (links.instagram || links.twitter || links.youtube || links.discord)) {
         const linksContainer = document.createElement("div");
         linksContainer.className = "bout-links";
+
+        const voteLabel = document.createElement("span");
+        voteLabel.className = "vote-label";
+        voteLabel.textContent = "Vote:";
+        linksContainer.appendChild(voteLabel);
 
         const linkConfigs = [
           { key: "instagram", label: "IG", title: "Vote on Instagram" },
